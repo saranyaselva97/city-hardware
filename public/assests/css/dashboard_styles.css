@@ -1,0 +1,21 @@
+.header-name{
+    font-size: 40px;
+    color: #7e7d7b;
+}
+
+.dashboard-data-box{
+    border: none;
+    box-shadow: none;
+    border-radius: 0px;
+    min-height: 100px;
+    color: #fff;
+    margin-left: 20px;
+}
+
+.light-blue{
+    background-color: #3490e6;
+}
+
+.light-red{
+    background-color: #ef3c3c;
+}

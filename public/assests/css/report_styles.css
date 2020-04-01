@@ -1,0 +1,85 @@
+.full-width{
+    float: left;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+}
+
+.details-table thead tr th{
+    font-family: sans-serif;
+    background-color: #ccc !important;
+    padding: 5px;
+    text-align: center;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+
+.details-table tbody tr td{
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.full-width .details-table{
+    width: 80%;
+    font-size: 12px;
+    margin: 0 auto;
+}
+
+.details-table .number-column{
+    text-align: right;
+}
+
+.details-table .total-row td{
+    font-weight: bold;
+    border-top: 1px solid black;
+    border-bottom: 1px double black;
+    background-color: #eee !important;
+}
+
+.report-header{
+    border-bottom: 2px solid black;
+}
+
+.report-header .company-name{
+    font-size: 30px;
+    color: black;
+    /*line-height: 0px;*/
+    font-weight: bold;
+}
+
+.report-header p{
+    color: #5c5c5c;
+    /*line-height: 2px;*/
+}
+
+@media print{
+    .no-print{
+        display: none;
+    }
+    
+    .full-width .details-table{
+        width: 100%;
+    }
+    
+    .dataTables_info{
+        display: none;
+    }
+    
+    .dataTables_paginate{
+        display: none;
+    }
+    
+    .dataTables_length{
+        display: none;
+    }
+    
+    .dataTables_filter{
+        display: none;
+    }
+}
+
+@page { 
+    size: auto;  margin: 0mm; size: A4;
+}

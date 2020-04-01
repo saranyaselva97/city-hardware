@@ -1,0 +1,575 @@
+.login-panel{
+    margin-top: 100px;
+}
+
+.login-header{
+    min-height: 30px;
+    background-color: #1BC45C;
+    color: #fff;
+    font-size: 30px;
+    text-align: center;
+    z-index: 10;
+}
+
+.login-body{
+    padding: 15px;
+    background-color: #fff;
+    -webkit-box-shadow: 1px 1px 20px 7px #C5C9C7;
+    box-shadow: 1px 1px 20px 7px #C5C9C7;
+    margin-top: -4px;
+}
+
+.login-body .btn{
+    float: right;
+}
+
+/* enable absolute positioning */
+.inner-addon { 
+    position: relative; 
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+}
+
+/* align icon */
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+/*input.ng-invalid {
+    border: 1px solid red;
+}
+
+input.ng-valid {
+    border: 1px solid #C5C9C7;
+}*/
+
+
+.navbar{
+    border-radius: 0px;
+}
+
+.navbar li a{
+    font-size: 17px;
+}
+
+.navbar li span{
+    font-size: 22px;
+}
+
+.hdnfield{
+    border: none;
+    width: 100%;
+}
+
+.editfield{
+    width: 100%;
+}
+
+.data-box{
+    border: 1px solid #00c0ef;
+    border-top: 3px solid #00c0ef;
+    padding: 10px;
+}
+
+.data-content{
+    min-height: 50px;
+    height: 50px;
+    color: #fff;
+    font-size: 12px;
+    padding: 5px
+}
+
+.orange-accent{
+    background-color: #f56854;
+}
+
+.green{
+    background-color: #00a65a;
+}
+
+.doc-no{
+    font-size: 13px; 
+    font-weight: bold;
+}
+
+.data-content .fa{
+    font-size: 35px;
+    opacity: 0.5;
+}
+
+.invoice-details{
+    font-size: 13px;
+}
+
+.invoice-details thead tr th{
+    font-weight: bold;
+}
+
+.print-inovice{
+    font-size: 14px;
+}
+
+.print-inovice > tbody > tr > td{
+    border: none;
+}
+
+.prep-details{
+    font-size: 11px;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.number-field{
+    text-align: right;
+}
+
+/*.despatch-print-full .table{
+    max-width: 125%;
+}*/
+
+.print-despatch th{
+    width: min-content;
+}
+
+.despatch-details, .print-despatch{
+    font-size: 13px;
+}
+
+.sign-box{
+    border-top: 1px dashed #000;
+    text-align: center;
+    padding-top: 3px;
+}
+
+.lorry-details{
+    margin-top: 20px;
+}
+
+.format-detail{
+    margin-top: 20px;
+}
+
+.print-despatch thead tr th{
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.print-despatch tbody tr td{
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+a{
+    cursor: pointer;
+}
+
+.master-row{
+    cursor: pointer;
+}
+
+.master-row .collapse{
+    cursor: pointer;
+}
+
+#check_box_ul{
+    list-style: none;
+}
+
+.danger-row{
+    background-color: #f87578;
+    color: #670204;
+}
+
+.warning-row{
+    background-color: #fbdf9b;
+    color: #f5a33a;
+}
+
+.report-copyright{
+    font-size: 12px;
+    color: #a0a0a0;
+    text-align: center;
+}
+
+#ajaxLoader{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(75, 75, 75, 0.4);
+    min-height: 100%;
+    height: 100%;
+    max-height: 100%;
+    z-index: 100;
+    padding: 0px;
+    display: none;
+    overflow: hidden;
+}
+
+.print-inovice{
+    width: 100%; border: none
+}
+
+.legend{
+    list-style: none;
+    border: none;
+    border-radius: 0px;
+    box-shadow: none;
+}
+
+.legend li{
+    border: none;
+    box-shadow: none;
+    font-size: 16px;
+}
+
+.legend li .color{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #4d4d4d;
+}
+
+.shutout{
+    background-color: #ccffff;
+}
+
+.unsold{
+    background-color: #ffffb3;
+}
+
+.reprint{
+    background-color: #ffc299;
+}
+
+.canceled{
+    background-color: #ddff99;
+}
+
+.reinvoice{
+    background-color: #d9b18c;
+}
+
+.sales-report{
+    font-size: 12px;
+    color: black;
+}
+
+.sales-report > tbody > tr > td{
+    border: none;
+}
+
+.sum-row{
+    font-weight: bold;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+}
+
+.report-header{
+    text-align: left;
+    color: black;
+    min-width: 100%;
+    width: 100%;
+    margin-top: 50px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.report-footer{
+    color: black;
+    border-top: 1px solid black;
+    margin-top: 50px;
+}
+
+.rep-params .form-control{
+    width: 170px;
+}
+
+.rep-btn{
+    width: 200px;
+    height: 40px;
+    background-color: #3a3a3a;
+    color: #fff;
+    border: 1px solid #3a3a3a;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 50px;
+}
+
+.rep-btn:hover{
+    border: 1px solid #515151;
+    background-color: #515151;
+}
+
+.letter-header{
+    text-align: center;
+    text-decoration: underline;
+    font-weight: bold;
+    font-family: TimesNewRoman, 'Times New Roman', Times, Baskerville, Georgia, serif;
+}
+
+.claim-letter{
+    color: #000;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.sales-report > thead > tr >th{
+    border: none !important;
+}
+
+.align-right{
+    text-align: right;
+}
+
+.align-center{
+    text-align: center;
+}
+
+.align-left{
+    text-align: left;
+}
+
+.footer-container{
+    display: none;
+}
+
+.gross-sales-report > tbody >tr >td{
+    border: 1px solid #000;
+    border-left: 2px solid #000;
+    border-right: 2px solid #000;
+}
+
+.gross-sales-report > thead >tr >td{
+    border: 1px solid #000;
+    border-left: 2px solid #000;
+    border-right: 2px solid #000;
+    text-align: center;
+    font-weight: bold;
+}
+
+.sub-total-row td{
+    border-top: 2px solid #000 !important;
+    border-bottom: 2px solid #000 !important;
+}
+
+.ledger-report{
+    font-size: 14px;
+}
+
+.prompt-report .table tbody  tr  td{
+    padding: 0px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 14px;
+    border: none;
+}
+
+@media print
+{   
+    .doc-no{
+        position: relative;
+        top: 25px;
+        left: -40px;
+        font-size: 15pt;
+    }
+    
+    .invoice-details, .print-inovice, .prep-details, header-details, .print-despatch, .despatch-details{
+        font-family: geneva, arial, helvetica, sans-serif;
+    }
+    
+    .table-bordered > tbody > tr > td{
+        border-color: #000;
+    }
+    
+    .invoice-details{
+        font-size: 16pt;
+        margin-left: -10px;
+    }
+
+    .print-inovice{
+        font-size: 18pt;
+    }
+    
+    .prep-details{
+        font-size: 11pt;
+    }
+    
+    .header-details h3{
+        font-size: 24pt;
+    }
+    
+    .header-details h4{
+        font-size: 22pt;
+    }
+    
+    .despatch-details{
+        font-size: 13pt;
+    }
+    
+    .print-despatch{
+        font-size: 12pt;
+    }
+    
+    .sign-box{
+        font-size: 14px;
+    }
+    
+    .format-header{
+        font-weight: bold;
+    }
+    
+    .format-header, .format-detail{
+        font-size: 14px;
+    }
+
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+    
+    .lorry-details{
+        font-size: 14px;
+    }
+
+    .print-full{
+        min-width: 125%;
+        width: 125%;
+        max-width: 125%;
+        /*margin-left: -220px !important;*/
+        margin-top: 30px;
+    }
+    
+    .claim-letter{
+        min-width: 95%;
+        width: 95%;
+        max-width: 95%;
+        margin-left: -220px;
+        margin-top: 50px;
+        font-size: 21px;
+    }
+    
+    .sales-report{
+        margin-left: -220px;
+        min-width: 120%;
+        margin-top: 30px;
+        font-size: 17px;
+    }
+    
+    .print-width-95{
+        min-width: 80%;
+        width: 80%;
+        max-width: 80%;
+        margin-top: 0px;
+        font-size: 14px;
+    }
+    
+    .print-width-95 table tbody tr td{
+        line-height: 15px;
+        font-size: 14px;
+    }
+    
+    .print-width-95 table{
+        margin-bottom: 20px;
+    }
+    
+    .report-header{
+        margin-left: -220px;
+        min-width: 118%;
+        width: 118%;
+    }
+    
+    .report-footer{
+        /*margin: 0px 2px 0px 7px;*/
+        min-width: 118%;
+        margin-left: -220px;
+        position: fixed;
+        bottom: -250px;
+        font-size: 17px !important;
+    }
+    
+    .footer-container{
+        display: inline;
+    }
+    
+    footer.report-footer{
+        min-width: 93%;
+        margin-left: -220px;
+        position: fixed;
+        bottom: 0px;
+        font-size: 17px !important;
+    }
+    
+    .despatch-print-full{
+        min-width: 125%;
+        width: 125%;
+        max-width: 100%;
+        margin-left: -220px;
+        margin-top: 30px;
+    }
+    
+    .print-full .col-xs-12{
+        width: 50%;
+    }
+    
+    .invoice-sign{
+        width: 50%;
+        margin-right: 50px;
+    }
+    
+    .print-table .table-responsive{
+        overflow: visible;
+    }
+    
+    .small-font *{
+        font-size: 12px !important;
+    }
+    
+    .print-font-13 *{
+        font-size: 13px !important;
+    }
+    
+    .ledger-report{
+        font-size: 11px;
+        max-width: 30%;
+        margin-left: -220px;
+    }
+    
+    .prompt-header{
+        margin-left: 0px !important;
+    }
+    
+    
+    .prompt-report{
+        width: 85% !important;
+        margin-left: 220px !important;
+    }
+    
+    /*.prompt-report .table > tr > td{
+        font-size: 11px;
+    }*/
+    
+    a[href]:after { content: none !important; }
+    img[src]:after { content: none !important; }
+   
+}
+
+@page { 
+    size: auto;  margin: 0mm; size: A4;
+}
+
+/*body {counter-reset:page}
+div.pages{page-break-before:always; counter-increment:page}
+div.pages:after {display:block; text-align:right; content:"Page " counter(page); font-weight: bold}
+div.first.pages {page-break-before:avoid}*/
+

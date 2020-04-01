@@ -1,0 +1,155 @@
+.text-darkcyan{
+    color: #16a085;
+}
+
+.text-teal{
+    color: #028c71;
+}
+
+.text-tomato{
+    color: #e66a48;
+}
+
+.text-darkorange{
+    color: #fb8d17;
+}
+
+.text-firebrick{
+    color: #cc3300;
+}
+
+.darkcyan{
+    background-color: #16a085;
+    color: #fff;
+}
+
+.teal{
+    background-color: #028c71;
+    color: #fff;
+}
+
+.tomato{
+    background-color: #e66a48;
+    color: #fff;
+}
+
+.darkorange{
+    background-color: #fb8d17;
+    color: #fff;
+}
+
+.firebrick{
+    background-color: #cc3300;
+    color: #fff;
+}
+
+.btn{
+    border-radius: 3px;
+}
+
+.btn-primary{
+    background-color: #23c6c8;
+    border-color: #23c6c8;
+}
+
+.btn-primary:hover{
+    background-color: #21b9bb;
+    border-color: #21b9bb;
+}
+
+.btn-primary:active, .btn-primary:focus{
+    background-color: #21b9bb !important;
+    border-color: #21b9bb !important;
+}
+
+.btn-primary:disabled, .btn-primary[disabled]{
+    background-color: #66bbaa !important;
+}
+
+.btn-warning{
+    background-color: #fb8d17;
+    border-color: #fb8d17;
+}
+
+.btn-warning:hover, .btn-warning:active, .btn-warning:focus{
+    background-color: #dc7910;
+    border-color: #dc7910;
+}
+
+.btn-danger{
+    background-color: #ed5565;
+    border-color: #ed5565;
+}
+
+.btn-danger:hover, .btn-danger:active, .btn-danger:focus{
+    background-color: #d9534f;
+    border-color: #d9534f;
+}
+
+.form-control{
+    border-radius: 0px;
+}
+
+label{
+    font-size: 13px;
+}
+
+.breadcrumb{
+    margin-top: 15px;
+    background: #fff !important;
+    font-weight: bold;
+}
+
+.breadcrumb .breadcrumb-item a{
+    color: #23c6c8 !important;
+    text-decoration: none;
+}
+
+.breadcrumb > .active{
+    color: #ccc !important;
+}
+
+.breadcrumb > .active:hover{
+    color: #19b5b5 !important;
+}
+
+.breadcrumb > .active:hover{
+    color: #eee !important;
+}
+
+.shadow{
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+}
+
+.alert {
+    padding: 20px;
+    color: white;
+    border-radius: 0px;
+    opacity: 1;
+    transition: opacity 0.6s;
+}
+
+.alert-danger{
+    background-color: #ed5565;
+}
+
+.alert-success{
+    background-color: #18a689;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}
