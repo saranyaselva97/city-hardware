@@ -146,8 +146,8 @@
           <a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
         </li>
 
+        @can('admin')
        
-          
           <li>
             <a href="#">
               <i class="fa fa-edit"></i> <span>Transactions</span>
@@ -167,8 +167,8 @@
               <li><a href="/item_transfer"><i class="fa fa-puzzle-piece"></i>Item Transfer</a></li>
             </ul>
           </li>
-           
-
+           @endcan
+           @can('admin')
           <li class="treeview ">
             <a href="#">
               <i class="glyphicon glyphicon-folder-open"></i> <span>Transaction Reports</span>
@@ -188,7 +188,8 @@
               
             </ul>
           </li>
-
+          @endcan
+          @can('admin')
           <li class="treeview ">
             <a href="#">
               <i class="glyphicon glyphicon-folder-open"></i> <span>Supplier Reports</span>
@@ -201,7 +202,8 @@
               <li class=""><a href="http://127.0.0.1:8000/sales/view"><i class="fa fa-file-o"></i> All Suppier Report</a></li>
             </ul>
           </li>
-
+          @endcan
+          @can('admin')
           <li class="treeview ">
             <a href="#">
               <i class="glyphicon glyphicon-folder-open"></i> <span>Customer Reports</span>
@@ -214,7 +216,8 @@
               <li class=""><a href="http://127.0.0.1:8000/sales/view"><i class="fa fa-file-o"></i> All Customer Report</a></li>
             </ul>
           </li>
-
+          @endcan
+          @can('admin')
           <li class="treeview ">
             <a href="#">
               <i class="glyphicon glyphicon-folder-open"></i> <span>Stock Reports</span>
@@ -226,7 +229,8 @@
               <li class=""><a href="http://127.0.0.1:8000/sales/create"><i class="fa fa-file-o"></i>Stock Sheets</a></li>
             </ul>
           </li>
-
+          @endcan
+          @can('admin')
           <li class="treeview ">
             <a href="#">
               <i class="glyphicon glyphicon-folder-open"></i> <span>Master Data</span>
@@ -240,6 +244,7 @@
               <li><a href="/item"><i class="fa fa-user-secret"></i>Item Master</a></li>
             </ul>
           </li>
+          @endcan
           @can('Administer roles & permissions')
           <li>
             <a href="#">
