@@ -48,6 +48,7 @@ Route::get('/customer_master', 'CustomerController2@create');
 
 /**Item master */
 Route::get('/item', 'ItemController2@create');
+Route::post('/item_store', 'ItemController2@store');
 
 
 Auth::routes();

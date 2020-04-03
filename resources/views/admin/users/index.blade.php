@@ -3,6 +3,16 @@
 @section('title', '| Users')
 
 @section('content')
+<div class="col-md-12">
+            <ol class="breadcrumb shadow">
+                <li class="breadcrumb-item"><a href="c_home.php">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">User Management</a></li>
+                <li class="breadcrumb-item active"><span class="fa fa-users"></span>  User Administration</li>
+            </ol>
+        </div>
+
+        <div class="col-md-12">
+              
 
 <div class="col-lg-10 col-lg-offset-1">
     <h2><i class="fa fa-users"></i> User Administration <a href="{{ route('roles.index') }}" class="btn btn-default pull-right">Roles</a>
@@ -47,5 +57,8 @@
     <a href="{{ route('users.create') }}" class="btn btn-success">Add User</a>
 
 </div>
+          
+        </div>
+
 
 @endsection

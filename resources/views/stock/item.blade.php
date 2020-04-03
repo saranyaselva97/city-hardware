@@ -12,6 +12,12 @@
             </ol>
         </div>
     </div>
+    @if(\Session::has('success'))
+      <div class="alert alert-success">
+      <p>{{\Session::get('success')}}</p>
+      </div>
+    
+    @endif
 
     <div class="row" style="padding: 15px; padding-top: 0px;">
                 <div class="col-md-12 shadow" style="padding: 15px; padding-bottom: 0px; margin-bottom: 15px;">
@@ -19,8 +25,10 @@
                 <span class="closebtn" onclick="closeAlert(this.parentElement)">×</span>
                 <span id="error_msg"></span>
             </div>
-                        <form action="c_master.php?action=sitm" method="post">
+                        <form method="post" action="{{action('ItemController2@store')}}">
+                     @csrf
                 <table class="table">
+                 
                     <thead>
                         <tr>
                             <th>Item Code <span style="color: red">*</span></th>
@@ -65,7 +73,7 @@
                                                                                 <option value="2">Packets</option>
                                                                                 <option value="1">Unit</option>
                                                                         </select>
-                                <button type="button" class="btn btn-primary" id="btn_add_item" style="margin-top: 10px" onclick="addItemRow();">
+                                <button type="submit" class="btn btn-primary" id="btn_add_item" style="margin-top: 10px">
                                     <span class="fa fa-plus"></span> Add Item
                                 </button>
                             </td>
