@@ -77,7 +77,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="/img/user2-160x160.png" class="user-image" alt="User Image">
-              <span class="hidden-xs">Administrator</span>
+              <span class="hidden-xs"> {{ Auth::user()->name }} </span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -85,8 +85,8 @@
                 <img src="/img/user2-160x160.png" class="img-circle" alt="User Image">
 
                 <p>
-                  Administrator
-                  <small>admin@mystocks.in</small>
+                {{ Auth::user()->name }} 
+                  <small> {{ Auth::user()->email }} </small>
                 </p>
               </li>
               
@@ -96,11 +96,14 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                    <a href="http://127.0.0.1:8000/logout" class="btn btn-default btn-flat"
-                        onclick="event.preventDefault();
-                                 document.getElementById('logout-form').submit();">
-                        Logout
-                    </a>
+                <a href="{{ route('logout') }}" 
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();"  class="btn btn-default btn-flat">
+                                            Logout
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
 
                     
                 </div>
@@ -125,7 +128,7 @@
           <img src="/img/user2-160x160.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Administrator</p>
+          <p>{{ Auth::user()->email }}</p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -237,7 +240,7 @@
               <li><a href="/item"><i class="fa fa-user-secret"></i>Item Master</a></li>
             </ul>
           </li>
-
+          @can('Administer roles & permissions')
           <li>
             <a href="#">
               <i class="fa fa-users"></i> <span>User Management</span>
@@ -246,12 +249,12 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="/add_user"><i class="fa fa-user"></i>New Users</a></li>
-              <li><a href="/usergroups"><i class="fa fa-user-secret"></i>User Groups</a></li>
+              <li><a href="/users"><i class="fa fa-user"></i>Add Users</a></li>
+              <li><a href="/roles"><i class="fa fa-user-secret"></i>Add User Groups and Roles </a></li>
           
             </ul>
           </li>
-       
+          @endcan
 
       </ul>
     </section>
