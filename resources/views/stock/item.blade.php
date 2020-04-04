@@ -92,85 +92,22 @@
                     <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Item Code: activate to sort column descending" style="width: 102px;">Item Code</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Item Name: activate to sort column ascending" style="width: 127px;">Item Name</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Re-Order Level: activate to sort column ascending" style="width: 145px;">Re-Order Level</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Selling Price: activate to sort column ascending" style="width: 120px;">Selling Price</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Label Price: activate to sort column ascending" style="width: 110px;">Label Price</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 180px;">Category</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Measurement Unit: activate to sort column ascending" style="width: 173px;">Measurement Unit</th></tr>
                 </thead>
                 <tbody>
-                                            
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                        <tr role="row" class="odd">
-                            <!--<td><a href="c_master.php?action=ditm&crd="><span class="fa fa-times" style="font-size: 20px; color: #3a3a3a"></span></a></td>
-                            <td><a href="c_master.php?action=eitm&crd="><span class="fa fa-pencil" style="font-size: 20px; color: #3a3a3a"></span></a></td>-->
-                            <td class="sorting_1">f001</td>
-                            <td>Temp Item</td>
-                            <td>200</td>
-                            <td>50</td>
-                            <td>55</td>
-                            <td>Other Machinary</td>
-                            <td>Packets</td>
-                        </tr><tr role="row" class="even">
-                            <!--<td><a href="c_master.php?action=ditm&crd="><span class="fa fa-times" style="font-size: 20px; color: #3a3a3a"></span></a></td>
-                            <td><a href="c_master.php?action=eitm&crd="><span class="fa fa-pencil" style="font-size: 20px; color: #3a3a3a"></span></a></td>-->
-                            <td class="sorting_1">f001</td>
-                            <td>Temp Item</td>
-                            <td>1</td>
-                            <td>100</td>
-                            <td>105</td>
-                            <td>Other Machinary</td>
-                            <td>Packets</td>
-                        </tr><tr role="row" class="odd">
-                            <!--<td><a href="c_master.php?action=ditm&crd="><span class="fa fa-times" style="font-size: 20px; color: #3a3a3a"></span></a></td>
-                            <td><a href="c_master.php?action=eitm&crd="><span class="fa fa-pencil" style="font-size: 20px; color: #3a3a3a"></span></a></td>-->
-                            <td class="sorting_1">f002</td>
-                            <td>Temp Item</td>
-                            <td>100</td>
-                            <td>300</td>
-                            <td>320</td>
-                            <td>Other Machinary</td>
-                            <td>Packets</td>
-                        </tr><tr role="row" class="even">
-                            <!--<td><a href="c_master.php?action=ditm&crd="><span class="fa fa-times" style="font-size: 20px; color: #3a3a3a"></span></a></td>
-                            <td><a href="c_master.php?action=eitm&crd="><span class="fa fa-pencil" style="font-size: 20px; color: #3a3a3a"></span></a></td>-->
-                            <td class="sorting_1">f003</td>
-                            <td>Temp Item</td>
-                            <td>100</td>
-                            <td>300</td>
-                            <td>320</td>
-                            <td>Other Machinary</td>
-                            <td>Boxes</td>
-                        </tr><tr role="row" class="odd">
-                            <!--<td><a href="c_master.php?action=ditm&crd="><span class="fa fa-times" style="font-size: 20px; color: #3a3a3a"></span></a></td>
-                            <td><a href="c_master.php?action=eitm&crd="><span class="fa fa-pencil" style="font-size: 20px; color: #3a3a3a"></span></a></td>-->
-                            <td class="sorting_1">f004</td>
-                            <td>Temp Item</td>
-                            <td>20</td>
-                            <td>100</td>
-                            <td>120</td>
-                            <td>Agriculture Machinary</td>
-                            <td>Boxes</td>
-                        </tr><tr role="row" class="even">
-                            <!--<td><a href="c_master.php?action=ditm&crd="><span class="fa fa-times" style="font-size: 20px; color: #3a3a3a"></span></a></td>
-                            <td><a href="c_master.php?action=eitm&crd="><span class="fa fa-pencil" style="font-size: 20px; color: #3a3a3a"></span></a></td>-->
-                            <td class="sorting_1">v0001</td>
-                            <td>Temp Item</td>
-                            <td>100</td>
-                            <td>35</td>
-                            <td>30</td>
-                            <td>Agriculture Machinary</td>
-                            <td>Boxes</td>
-                        </tr><tr role="row" class="odd">
-                            <!--<td><a href="c_master.php?action=ditm&crd="><span class="fa fa-times" style="font-size: 20px; color: #3a3a3a"></span></a></td>
-                            <td><a href="c_master.php?action=eitm&crd="><span class="fa fa-pencil" style="font-size: 20px; color: #3a3a3a"></span></a></td>-->
-                            <td class="sorting_1">v0002</td>
-                            <td>Temp Item </td>
-                            <td>25</td>
-                            <td>110</td>
-                            <td>150</td>
-                            <td>Agriculture Machinary</td>
-                            <td>Boxes</td>
-                        </tr></tbody>
-            </table><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 7 of 7 entries</div><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><a class="paginate_button previous disabled" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" id="DataTables_Table_0_previous">Previous</a><span><a class="paginate_button current" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a></span><a class="paginate_button next disabled" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" id="DataTables_Table_0_next">Next</a></div></div>
+                    @foreach($items as $row)
+              
+                        <tr role="row" class="odd">
+                        
+                            <td class="sorting_1">{{$row->item_code}}</td>
+                            <td>{{$row->item_name}}</td>
+                            <td>{{$row->re_order_level}}</td>
+                            <td>{{$row->selling_price}}</td>
+                            <td>{{$row->label_price}}</td>
+                            <td>{{$row->category}}</td>
+                            <td>{{$row->measure_unit}}</td>
+                       
+                        </tr>
+                        @endforeach
+                        </tbody>
+            </table><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite"></div><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><a class="paginate_button previous disabled" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" id="DataTables_Table_0_previous">Previous</a><span><a class="paginate_button current" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a></span><a class="paginate_button next disabled" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" id="DataTables_Table_0_next">Next</a></div></div>
         </div>
     </div>
 </div>                                </div>

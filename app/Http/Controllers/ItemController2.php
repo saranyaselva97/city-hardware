@@ -8,7 +8,8 @@ use App\Items;
 class ItemController2 extends Controller
 {
     public function create(){
-        return view('stock.item');
+        $items = Items::all(); //fetch the data from Items model
+        return view('stock.item')->with('items',$items);
     }
 
     public function store(Request $request){
