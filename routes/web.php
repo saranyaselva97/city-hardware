@@ -41,6 +41,7 @@ Route::get('/item_transfer', 'TransactionController_2@itemTransfer');
 
 /**Supplier */
 Route::get('/suplier_master', 'SupplierController2@create');
+Route::post('/store_supplier', 'SupplierController2@store');
 
 /**Customer */
 Route::get('/customer_master', 'CustomerController2@create');

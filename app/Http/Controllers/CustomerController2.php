@@ -21,7 +21,7 @@ class CustomerController2 extends Controller
             'contact'=>'required',
           ]);
 
-          $customers = new customers;   //declaring items model
+          $customers = new customers;   //declaring customers model
 
           $customers->customer_code=$request->input('customer_code');
           $customers->customer_name=$request->input('customer_name');
