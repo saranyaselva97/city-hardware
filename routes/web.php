@@ -44,6 +44,7 @@ Route::get('/suplier_master', 'SupplierController2@create');
 
 /**Customer */
 Route::get('/customer_master', 'CustomerController2@create');
+Route::post('/store_customer', 'CustomerController2@store');
 
 
 /**Item master */
