@@ -283,7 +283,7 @@
 <script src="/js/app.min.js"></script>
 <script src="/js/bootstrapValidator.min.js"></script>
 <script src="/js/default.js"></script>
-
+@yield('scripts')
 
 <script src="/js/bootstrap-table.js"></script>
 <script src="/js/jquery-ui.min.js"></script>
@@ -296,8 +296,10 @@
    
     <script src="../assests/js/jquery.auto-complete.js" type="text/javascript"></script>
 <!-- for content-->
-@yield('scripts')
+
 <script>
+
+
         $("#menu-toggle").click(function (e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
@@ -319,6 +321,9 @@
         $('.datepicker').datepicker({format: "yyyy/mm/dd"});
         
         $("#tabs").tabs();
+
+        
     </script>
+   
 </body>
 </html>

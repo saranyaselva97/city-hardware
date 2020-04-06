@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Categories;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -49,8 +49,12 @@ Route::post('/store_customer', 'CustomerController2@store');
 
 
 /**Item master */
+
 Route::get('/item', 'ItemController2@create');
+
 Route::post('/item_store', 'ItemController2@store');
+Route::post('/category_store', 'ItemController2@storeCategory');
+Route::post('/measurementunit_store', 'ItemController2@StoreMeasurementUnit');
 
 
 Auth::routes();

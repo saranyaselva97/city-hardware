@@ -1,19 +1,55 @@
 @extends('layouts.home')
+
 @section('content')
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 home-box" id="content_box" style="padding: 0px">
-                                    <div class="col-md-12 content-box">
-    <div class="row">
-        <div class="col-md-12">
-            <ol class="breadcrumb shadow">
-                <li class="breadcrumb-item"><a href="c_home.php">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Master Data</a></li>
-                <li class="breadcrumb-item"><a href="c_master.php?action=nitm">Item Master</a></li>
-                <li class="breadcrumb-item active"><span class="fa fa-cubes"></span> New Item</li>
-            </ol>
+                                    <div  class="col-md-12 content-box">
+                                    
+
+    <div id="myDIV" class="row" style="padding: 15px; padding-top: 0px;">
+        <div  id="tabs" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 border-radius-all-0 ui-tabs ui-widget ui-widget-content ui-corner-all">
+            <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">
+                <li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active" role="tab" tabindex="0" aria-controls="tabs-1" aria-labelledby="ui-id-1" aria-selected="true"><a href="#tabs-1" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-1">Add New Category</a></li>
+                <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-2" aria-labelledby="ui-id-2" aria-selected="false"><a href="#tabs-2" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-2">Measurement Unit</a></li>
+            </ul>
+            <div id="tabs-1" aria-labelledby="ui-id-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-expanded="false" aria-hidden="true" style="display: block;">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                   <form method="post" action="{{action('ItemController2@storeCategory')}}">
+                    @csrf
+                        <div class="col-md-3">
+                            <label for="group_name">Category Code</label>
+                            <input type="text" name="category_code" class="form-control" id="category_code" required="">
+                            <label for="group_name">Category Name</label>
+                            <input type="text" name="category_Name" class="form-control" id="category_Name" required="">
+                        </div>
+                        <div class="col-md-3">
+                            <br>
+                            <button type="submit" class="btn btn-primary"><span class="fa fa-send"></span> Save Category</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="tabs-2" aria-labelledby="ui-id-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-expanded="true" aria-hidden="false" style="display: none;">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <form method="post" action="{{action('ItemController2@StoreMeasurementUnit')}}">
+                        @csrf
+                        <div class="col-md-3">
+                            <label for="user_group">Add Measurement Unit</label>
+                            <input type="text" name="measurement_Name" class="form-control" id="measurement_name" required="">
+                        </div> 
+                        <div class="col-md-3">
+                            <br>
+                            <button type="submit" class="btn btn-primary"><span class="fa fa-send"></span> Measurement Unit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
+    
+
+    <button id="myButton2" type="button" onclick="myFunction()" class="btn btn-primary"><span class="fa fa-send"></span>Click Here to Add New Category</button>
     @if(\Session::has('success'))
-      <div class="alert alert-success">
+      <div id='divMessahge'class="alert alert-success">
       <p>{{\Session::get('success')}}</p>
       </div>
     
@@ -58,32 +94,39 @@
                                 <input type="text" name="label_price" id="label_price" class="form-control" onkeypress="return isNumberKey(event)">
                             </td>
                             <td style="width: 150px;">
-                                <select name="category" id="category" class="form-control">
+                                <select name="categories" id="categories" class="form-control">
                                     <option value="">-Select-</option>
-                                                                            <option value="4">Agriculture Machinary</option>
-                                                                                <option value="6">Electronic Applicance</option>
-                                                                                <option value="5">Other Machinary</option>
-                                                                                <option value="1">Spare Parts</option>
-                                                                        </select>
+                                    @foreach ($classname_array  as $ct) 
+                                        {
+                                            <option value='{{ $ct->category_Name }}'>{{ $ct->category_Name }}</option>
+                                        }
+                                    @endforeach
+                              </select>
                             </td>
                             <td style="width: 150px; text-align: center">
                                 <select name="measure_unit" id="measure_unit" class="form-control">
                                     <option value="">-Select-</option>
-                                                                            <option value="3">Boxes</option>
-                                                                                <option value="2">Packets</option>
-                                                                                <option value="1">Unit</option>
-                                                                        </select>
+                                    @foreach ($measurements  as $mt) 
+                                        {
+                                            <option value='{{ $mt->measurement_Name }}'>{{ $mt->measurement_Name }}</option>
+                                        }
+                                    @endforeach
+                                  
+                                    </select>
+                                                                    
+                                
                                 <button type="submit" class="btn btn-primary" id="btn_add_item" style="margin-top: 10px">
                                     <span class="fa fa-plus"></span> Add Item
                                 </button>
+                                
+                               
                             </td>
+                         
                         </tr>
                     </tbody>
+                   
                 </table>
-                <div class="col-md-12" style="padding: 15px;">
-                    <input type="hidden" name="item_row_count" id="item_row_count">
-                    <button type="submit" class="btn btn-primary pull-right" style="display: none;" id="save_item_button"><span class="fa fa-send-o"></span> Save Items</button>
-                </div>
+                
             </form>
         </div>
                 <div class="col-md-12 shadow" style="background-color: #fff; padding: 15px;"> 
@@ -94,7 +137,7 @@
                 <tbody>
                     @foreach($items as $row)
               
-                        <tr role="row" class="odd">
+                        <tr role="row" class="odd" style="text-align: center" >
                         
                             <td class="sorting_1">{{$row->item_code}}</td>
                             <td>{{$row->item_name}}</td>
@@ -116,3 +159,37 @@
 
 
 
+@section('scripts')
+        <script>
+    
+
+         $(document).ready(function () {
+          // Hide the div
+          $("#myDIV").hide();
+        
+        
+      });  
+        
+
+        function myFunction() {
+        var x = document.getElementById("myDIV");
+       
+        if (x.style.display === "none") {
+            x.style.display = "block";
+            $("#myButton2").html("Close");
+           
+            
+        } else {
+           
+            x.style.display = "none";
+            $("#myButton2").html("Click Here to Add New Category");
+            $("#divMessahge").hide();
+           
+        }
+        
+        }
+
+        
+</script>
+
+@endsection
