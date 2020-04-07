@@ -50,18 +50,16 @@
                 <div class="col-md-4">
                     <table style="width: 100%; border: none">
                         <tbody><tr>
+                       
                             <td style="padding-top: 5px; padding-bottom: 5px">
+                           
                                 <select name="Item" id="item_list" class="form-control" size="6" onchange="getStockDetailsByItem(this);">
-                                                                            <option value="4">Item</option>
-                                                                                <option value="2">Item</option>
-                                                                                <option value="3">Item</option>
-                                                                                <option value="1">Item</option>
-                                                                                <option value="7">Item</option>
-                                                                                <option value="6">Item </option>
-                                                                                <option value="5">Item</option>
-                                                                        </select>
+                                      
+                                   </select>
+                                                                       
+                                                                       
                             </td>
-                        </tr>
+                           </tr>
                     </tbody></table>
                 </div>
                 <div class="col-md-4">

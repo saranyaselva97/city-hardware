@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Categories;
 use App\Measurement;
+use App\Items;
 
 class DropDownProvider extends ServiceProvider
 {
@@ -28,6 +29,7 @@ class DropDownProvider extends ServiceProvider
         view()->composer('*',function($view){
             $view->with('classname_array',Categories::all());
             $view->with('measurements',Measurement::all());
+           // $view->with('items',Items::all());
         });
 
     }

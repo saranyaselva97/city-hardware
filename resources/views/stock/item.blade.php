@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 home-box" id="content_box" style="padding: 0px">
-                                    <div  class="col-md-12 content-box">
+       <div  class="col-md-12 content-box">
                                     
 
     <div id="myDIV" class="row" style="padding: 15px; padding-top: 0px;">
@@ -61,7 +61,7 @@
                 <span class="closebtn" onclick="closeAlert(this.parentElement)">×</span>
                 <span id="error_msg"></span>
             </div>
-                        <form method="post" action="{{action('ItemController2@store')}}">
+                <form method="post" action="{{action('ItemController2@store')}}">
                      @csrf
                 <table class="table">
                  
@@ -94,11 +94,11 @@
                                 <input type="text" name="label_price" id="label_price" class="form-control" onkeypress="return isNumberKey(event)">
                             </td>
                             <td style="width: 150px;">
-                                <select name="categories" id="categories" class="form-control">
+                                <select name="category" id="category" class="form-control">
                                     <option value="">-Select-</option>
                                     @foreach ($classname_array  as $ct) 
                                         {
-                                            <option value='{{ $ct->category_Name }}'>{{ $ct->category_Name }}</option>
+                                            <option value='{{ $ct->id }}'>{{ $ct->category_Name }}</option>
                                         }
                                     @endforeach
                               </select>
@@ -108,7 +108,7 @@
                                     <option value="">-Select-</option>
                                     @foreach ($measurements  as $mt) 
                                         {
-                                            <option value='{{ $mt->measurement_Name }}'>{{ $mt->measurement_Name }}</option>
+                                            <option value='{{ $mt->id }}'>{{ $mt->measurement_Name }}</option>
                                         }
                                     @endforeach
                                   

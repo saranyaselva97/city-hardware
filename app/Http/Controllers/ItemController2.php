@@ -26,7 +26,7 @@ class ItemController2 extends Controller
           'measure_unit'=>'required',
 
         ]);
-        $item = new items;   //declaring items model
+        $item = new Items;   //declaring items model
 
         $item->item_code=$request->input('item_code');
         $item->item_name=$request->input('item_name');

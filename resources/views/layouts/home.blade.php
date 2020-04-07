@@ -270,9 +270,11 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+  @can('admin')
     <!-- Content Header (Page header) -->
     @yield('content')
   </div>
+  @endcan
   <!-- /.content-wrapper -->
 
  
