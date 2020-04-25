@@ -242,6 +242,7 @@
               <li><a href="/suplier_master"><i class="fa fa-male"></i>Supllier Master</a></li>
               <li><a href="/customer_master"><i class="fa fa-user"></i>Customer Master</a></li>
               <li><a href="/item"><i class="fa fa-user-secret"></i>Item Master</a></li>
+              <li><a href="/loc"><i class="fa fa-user-secret"></i>Location Master</a></li>
             </ul>
           </li>
           @endcan

@@ -35,9 +35,9 @@
                             <td style="padding-top: 5px; padding-bottom: 5px">
                                 <select name="Sale_Location" id="sale_location" class="form-control" onchange="updateInvoiceNumber(this)">
                                     <option value="">-Select-</option>
-                                                                        <option value="O">Outlet</option>
-                                                                        <option value="V">Vehicle</option>
-                                                                        <option value="W">Warehouse</option>
+                                                                        @foreach($locations as $it)
+                                                                        <option value='{{ $it->loc_code}}'>{{ $it->loc_name }}</option>
+                                                                        @endforeach
                                                                     </select>
                             </td>
                         </tr>
@@ -64,14 +64,12 @@
                         <tbody><tr>
                             <td style="padding-top: 5px; padding-bottom: 5px">
                                 <select name="Item" id="item_list" class="form-control" size="9" onchange="getItemDetailsToInvoice(this);">
-                                                                            <option value="4">item</option>
-                                                                                <option value="2">item</option>
-                                                                                <option value="3">item</option>
-                                                                                <option value="1">item</option>
-                                                                                <option value="7">item</option>
-                                                                                <option value="6">item </option>
-                                                                                <option value="5">item</option>
+                                                                        @foreach($items as $it)
+                                                                        <option value='{{ $it->id }}'>{{ $it->item_name }}</option>
+                                                                        @endforeach
+                                                                        
                                                                         </select>
+                                                                     
                             </td>
                         </tr>
                     </tbody></table>

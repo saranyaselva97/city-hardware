@@ -1,6 +1,8 @@
 
 @extends('layouts.home')
 @section('content')
+
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 home-box" id="content_box" style="padding: 0px">
                                     <link rel="stylesheet" href="assests/css/report_styles.css">
 
@@ -136,3 +138,10 @@
 @endsection
 
 
+
+@section('scripts')
+<script>
+    alert("hii");
+</script>
+
+@endsection

@@ -12,9 +12,10 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
+                background-image: url("https://wallpaper-house.com/data/out/9/wallpaper2you_345455.jpg");
+                color: #ffffff;
+                font-family: 'Arial', sans-serif;
+                
                 font-weight: 200;
                 height: 100vh;
                 margin: 0;
@@ -49,7 +50,7 @@
             }
 
             .links > a {
-                color: #636b6f;
+                color: #ffffff;
                 padding: 0 25px;
                 font-size: 13px;
                 font-weight: 600;
@@ -68,7 +69,7 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/dashboard') }}">Home</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
 

@@ -53,8 +53,11 @@
                        
                             <td style="padding-top: 5px; padding-bottom: 5px">
                            
+                               
                                 <select name="Item" id="item_list" class="form-control" size="6" onchange="getStockDetailsByItem(this);">
-                                      
+                                                                         @foreach($items as $it)
+                                                                        <option value='{{ $it->id }}'>{{ $it->item_name }}</option>
+                                                                        @endforeach    
                                    </select>
                                                                        
                                                                        

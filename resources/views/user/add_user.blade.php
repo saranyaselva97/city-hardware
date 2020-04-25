@@ -29,6 +29,7 @@
                             <th>Last Name <span style="color: red">*</span></th>
                             <th>Username <span style="color: red">*</span></th>
                             <th>Password <span style="color: red">*</span></th>
+                            
                             <th>Confirm Password <span style="color: red">*</span></th>
                            
                             <th>User Group</th>

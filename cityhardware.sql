@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2020 at 06:00 PM
+-- Generation Time: Apr 25, 2020 at 07:56 PM
 -- Server version: 10.4.11-MariaDB
--- PHP Version: 7.2.26
+-- PHP Version: 7.2.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -46,7 +46,8 @@ INSERT INTO `categories` (`id`, `category_code`, `category_Name`, `created_at`, 
 (3, 'WIR', 'Wiring', '2020-04-05 12:51:14', '2020-04-05 12:51:14'),
 (4, 'LMP', 'Lamps', '2020-04-05 12:52:11', '2020-04-05 12:52:11'),
 (5, 'CUR', 'Motors', '2020-04-06 07:04:48', '2020-04-06 07:04:48'),
-(6, 'TJ', 'Teejay', '2020-04-06 08:38:05', '2020-04-06 08:38:05');
+(6, 'TJ', 'Teejay', '2020-04-06 08:38:05', '2020-04-06 08:38:05'),
+(7, 'SAR', 'SARANYA', '2020-04-07 09:42:25', '2020-04-07 09:42:25');
 
 -- --------------------------------------------------------
 
@@ -70,7 +71,20 @@ CREATE TABLE `customers` (
 
 INSERT INTO `customers` (`id`, `customer_code`, `customer_name`, `address`, `contact`, `created_at`, `updated_at`) VALUES
 (2, 'C001', 'Tharjalan Jeyaradnam', 'Atchuvely, North. Jaffna', '0773014681', '2020-04-04 06:08:09', '2020-04-04 06:08:09'),
-(3, 'C002', 'Saranya Selvanesan', 'Navakuli ,Jaffna', '0773014681', '2020-04-04 06:10:09', '2020-04-04 06:10:09');
+(3, 'C002', 'Saranya Selvanesan', 'Navakuli ,Jaffna', '0773014681', '2020-04-04 06:10:09', '2020-04-04 06:10:09'),
+(4, 'c003', 'xxx', 'colombo', '0775463214', '2020-04-16 09:35:00', '2020-04-16 09:35:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `expenses`
+--
+
+CREATE TABLE `expenses` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -115,7 +129,35 @@ INSERT INTO `items` (`id`, `item_code`, `item_name`, `re_order_level`, `selling_
 (2, 'I002', 'Sant', 2, 10000, 80000, 5, 1, '2020-04-03 12:09:34', '2020-04-03 12:09:34'),
 (3, 'I003', 'Steel', 2, 1000, 900, 6, 1, '2020-04-04 04:16:56', '2020-04-04 04:16:56'),
 (4, 'I004', 'Rod', 2, 2000, 1500, 6, 2, '2020-04-04 05:53:04', '2020-04-04 05:53:04'),
-(5, 'cm', 'cm', 3, 3, 3, 6, 3, '2020-04-05 05:46:33', '2020-04-05 05:46:33');
+(5, 'cm', 'cm', 3, 3, 3, 6, 3, '2020-04-05 05:46:33', '2020-04-05 05:46:33'),
+(6, 'tj001', 'paithyam', 100, 0, 0, 6, 1, '2020-04-07 09:41:32', '2020-04-07 09:41:32'),
+(7, 'i007', 'ffhgjgjhuuu', 7, 123, 345, 1, 2, '2020-04-16 09:37:35', '2020-04-16 09:37:35');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `locations`
+--
+
+CREATE TABLE `locations` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `loc_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `loc_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `locations`
+--
+
+INSERT INTO `locations` (`id`, `loc_code`, `loc_name`, `created_at`, `updated_at`) VALUES
+(1, 'B1', 'Branch01', NULL, NULL),
+(2, 'B2', 'Branch02', NULL, NULL),
+(3, 'B3', 'Branch03', NULL, NULL),
+(4, 'W', 'Warehouse', NULL, NULL),
+(5, 'G', 'Goods', '2020-04-25 12:23:16', '2020-04-25 12:23:16'),
+(6, 'H', 'Hats', '2020-04-25 12:24:30', '2020-04-25 12:24:30');
 
 -- --------------------------------------------------------
 
@@ -135,7 +177,9 @@ CREATE TABLE `measurements` (
 --
 
 INSERT INTO `measurements` (`id`, `measurement_Name`, `created_at`, `updated_at`) VALUES
-(1, 'Liter', '2020-04-06 08:53:00', '2020-04-06 08:53:00');
+(1, 'Liter', '2020-04-06 08:53:00', '2020-04-06 08:53:00'),
+(2, 'metre', '2020-04-07 09:43:34', '2020-04-07 09:43:34'),
+(3, 'kg', '2020-04-07 09:43:56', '2020-04-07 09:43:56');
 
 -- --------------------------------------------------------
 
@@ -163,7 +207,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (7, '2020_04_04_190801_create_suppliers_table', 4),
 (8, '2020_04_04_192035_create_suppliers_table', 5),
 (9, '2020_04_05_193410_create_categories_table', 6),
-(10, '2020_04_06_154700_create_measurements_table', 7);
+(10, '2020_04_06_154700_create_measurements_table', 7),
+(11, '2020_04_11_151241_create_expenses_table', 8),
+(12, '2020_04_25_161828_create_locations_table', 8);
 
 -- --------------------------------------------------------
 
@@ -195,7 +241,7 @@ CREATE TABLE `model_has_roles` (
 
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
 (1, 'App\\User', 1),
-(2, 'App\\User', 2);
+(3, 'App\\User', 4);
 
 -- --------------------------------------------------------
 
@@ -208,6 +254,13 @@ CREATE TABLE `password_resets` (
   `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `password_resets`
+--
+
+INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
+('saran@gmail.com', '$2y$10$VNHKwnvCP6cyjev59KhabuEeuJi7aEIXiMorTUGwNbU1NzVsWpp0m', '2020-04-23 06:14:51');
 
 -- --------------------------------------------------------
 
@@ -297,7 +350,8 @@ CREATE TABLE `suppliers` (
 
 INSERT INTO `suppliers` (`id`, `supplier_code`, `supplier_name`, `address`, `contact`, `created_at`, `updated_at`) VALUES
 (1, 'S001', 'Saranya', 'Mars', '0774038291', '2020-04-04 12:24:51', '2020-04-04 12:24:51'),
-(2, 'S002', 'TEEJAY', 'Jaffna', '0773014681', '2020-04-04 12:25:54', '2020-04-04 12:25:54');
+(2, 'S002', 'TEEJAY', 'Jaffna', '0773014681', '2020-04-04 12:25:54', '2020-04-04 12:25:54'),
+(3, 'Soo3', 'xxx', 'somewhare on earth', '0775463214', '2020-04-16 09:24:55', '2020-04-16 09:24:55');
 
 -- --------------------------------------------------------
 
@@ -322,8 +376,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'saran', 'saran@gmail.com', NULL, '$2y$10$ezQEQLP.OQhi2EW05pcY3ukqjWcXG3xzbGTuocvuPGwtrY.r8uVXu', NULL, '2020-04-03 05:30:54', '2020-04-03 05:33:36'),
-(2, 'tj', 'tj@gmail.com', NULL, '$2y$10$1I7q6Po148jehBk9tMahSOJZhGP36b03AuqDC5w5/xNogH80SM77m', NULL, '2020-04-03 05:31:32', '2020-04-03 05:33:57'),
-(3, 'Normal user', 'normal@gmail.com', NULL, '$2y$10$h2i3JITtuvXI8Up.lb6oge7HBzt39ZmCfn6nvvFQ51V8J0DLJPuBm', NULL, '2020-04-03 05:34:25', '2020-04-03 05:34:25');
+(3, 'Normal user', 'normal@gmail.com', NULL, '$2y$10$h2i3JITtuvXI8Up.lb6oge7HBzt39ZmCfn6nvvFQ51V8J0DLJPuBm', NULL, '2020-04-03 05:34:25', '2020-04-03 05:34:25'),
+(4, 'tharju', 'tharju@gmail.com', NULL, '$2y$10$2F72POlj3I6fKTilF9vJFOp4oPQz4/tvWeofyMNTYCLvuNJKisbxa', NULL, '2020-04-07 09:50:04', '2020-04-07 09:50:04'),
+(5, 'sathu', 'sathu@gmail.com', NULL, '$2y$10$465HVr0W1IF2oyDNI9GgheZrOU0pe5.jL2VFXPgbLkjpHKmL9iCVa', NULL, '2020-04-19 04:45:03', '2020-04-19 04:45:03');
 
 --
 -- Indexes for dumped tables
@@ -342,6 +397,12 @@ ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `expenses`
+--
+ALTER TABLE `expenses`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -351,6 +412,12 @@ ALTER TABLE `failed_jobs`
 -- Indexes for table `items`
 --
 ALTER TABLE `items`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `locations`
+--
+ALTER TABLE `locations`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -425,13 +492,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `expenses`
+--
+ALTER TABLE `expenses`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -443,19 +516,25 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `locations`
+--
+ALTER TABLE `locations`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `measurements`
 --
 ALTER TABLE `measurements`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -473,13 +552,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `suppliers`
 --
 ALTER TABLE `suppliers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables

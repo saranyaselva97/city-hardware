@@ -46,17 +46,17 @@
                         <td>
                             <select id="from_location" class="form-control">
                                 <option value="">-Select-</option>
-                                                                    <option value="O">Outlet</option>
-                                                                        <option value="V">Vehicle</option>
-                                                                        <option value="W">Warehouse</option>
+                                                                     @foreach($locations as $it)
+                                                                        <option value='{{ $it->loc_code}}'>{{ $it->loc_name }}</option>
+                                                                        @endforeach 
                                                                 </select>
                         </td>
                         <td>
                             <select id="to_location" class="form-control">
                                 <option value="">-Select-</option>
-                                                                    <option value="O">Outlet</option>
-                                                                        <option value="V">Vehicle</option>
-                                                                        <option value="W">Warehouse</option>
+                                                                          @foreach($locations as $it)
+                                                                        <option value='{{ $it->loc_code}}'>{{ $it->loc_name }}</option>
+                                                                        @endforeach
                                                                 </select>
                         </td>
                         <td>

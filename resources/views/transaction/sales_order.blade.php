@@ -66,13 +66,11 @@
                         <tbody><tr>
                             <td style="padding-top: 5px; padding-bottom: 5px">
                                 <select name="Item" id="item_list" class="form-control" size="9" onchange="getStockDetailsByItem(this);">
-                                                                            <option value="4">Item</option>
-                                                                                <option value="2">Item</option>
-                                                                                <option value="3">Item</option>
-                                                                                <option value="1">Item</option>
-                                                                                <option value="7">Item</option>
-                                                                                <option value="6">Item </option>
-                                                                                <option value="5">Item</option>
+                                                                         @foreach($items as $it)
+
+                                                                        <option value='{{ $it->id }}'>{{ $it->item_name }}</option>
+                                                                        
+                                                                        @endforeach
                                                                         </select>
                             </td>
                         </tr>

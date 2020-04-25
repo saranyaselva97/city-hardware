@@ -56,10 +56,12 @@ Route::post('/item_store', 'ItemController2@store');
 Route::post('/category_store', 'ItemController2@storeCategory');
 Route::post('/measurementunit_store', 'ItemController2@StoreMeasurementUnit');
 
+Route::post('/locations', 'LocationController@storeLocations');
+Route::get('/loc', 'LocationController@create');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 Route::get('create','RegisterController@create');
 
 
