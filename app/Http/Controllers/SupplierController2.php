@@ -31,4 +31,14 @@ class SupplierController2 extends Controller
           $suppliers->save();
           return redirect('/suplier_master')->with('success','Supplier Added Successfully');
     }
+
+    //for auto complete in GRN supplier text feild
+    public function autocomplete_Supplier(Request $request)
+    {
+        $data = Suppliers::select("supplier_name")
+                ->where("supplier_name","LIKE","%{$request->input('query')}%")
+                ->get();
+   
+        return response()->json($data);
+    }
 }

@@ -67,5 +67,16 @@ class ItemController2 extends Controller
         return redirect('/item')->with('success',' New Measurement Unit Added Successfully');
 
     }
+
+    //Fetch Data from Item Model and sent it to AJEX Script
+    public function getProduct(Request $req)
+    {
+        $product = Items::find($req->id); // Item is the model
+        //dd($product);
+        if ($product) 
+        {
+         return response()->json(['item_name' => $product->item_name,'label_price' => $product->label_price]); //sending Item name and Label price
+        }
+   }
     
 }

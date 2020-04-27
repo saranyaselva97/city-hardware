@@ -12,10 +12,9 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-image: url("https://wallpaper-house.com/data/out/9/wallpaper2you_345455.jpg");
-                color: #ffffff;
-                font-family: 'Arial', sans-serif;
-                
+                background-color: #fff;
+                color: #636b6f;
+                font-family: 'Nunito', sans-serif;
                 font-weight: 200;
                 height: 100vh;
                 margin: 0;
@@ -50,7 +49,7 @@
             }
 
             .links > a {
-                color: #ffffff;
+                color: #636b6f;
                 padding: 0 25px;
                 font-size: 13px;
                 font-weight: 600;
@@ -74,7 +73,7 @@
                         <a href="{{ route('login') }}">Login</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            
                         @endif
                     @endauth
                 </div>
@@ -82,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Welcome To City Hardware Stock Management System
+                   City Hardware
                 </div>
 
                

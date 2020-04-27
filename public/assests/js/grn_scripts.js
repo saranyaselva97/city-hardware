@@ -16,7 +16,7 @@ function getSimilarItemList() {
 function getStockDetailsByItem(element) {
     $.ajax({
         type: "POST",
-        url: 'a_get_stock_details_by_id.php',
+        url: 'itemlist',
         data: {item_id: element.value},
         success: function (data) {
             var arr = JSON.parse(data);
@@ -60,7 +60,7 @@ $(function () {
         }
     });
 });
-
+/** 
 function  calculateGrnLineAmounts() {
     var quantityField = document.getElementById("qty");
     var unitPriceField = document.getElementById("unit_price");
@@ -80,7 +80,7 @@ function  calculateGrnLineAmounts() {
     grossAmountField.value = grossAmount.toFixed(2);
     netAmountField.value = netAmount.toFixed(2);
 }
-
+**/
 function addGrnRow() {
     var validateFields = validateGrnDetailFields();//create a new function to validate required fields
     var isValid = new Boolean(validateFields);

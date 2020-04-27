@@ -298,6 +298,10 @@
     <script src="../assests/js/master_data_scripts.js" type="text/javascript"></script>
    
     <script src="../assests/js/jquery.auto-complete.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+   
+   
+    
 <!-- for content-->
 
 <script>

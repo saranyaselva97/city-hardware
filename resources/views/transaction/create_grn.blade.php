@@ -54,10 +54,10 @@
                             <td style="padding-top: 5px; padding-bottom: 5px">
                            
                                
-                                <select name="Item" id="item_list" class="form-control" size="6" onchange="getStockDetailsByItem(this);">
-                                                                         @foreach($items as $it)
-                                                                        <option value='{{ $it->id }}'>{{ $it->item_name }}</option>
-                                                                        @endforeach    
+                                <select name="product_title" id="product_title" class="form-control" size="6" >
+                                     @foreach($items as $it)
+                                      <option value='{{ $it->id }}'>{{ $it->item_name }}</option>
+                                     @endforeach    
                                    </select>
                                                                        
                                                                        
@@ -102,7 +102,7 @@
                         </tr>
                     </tbody></table>
                 </div>
-                <div class="col-md-12" style="margin-top: 20px;">
+                <div   class="col-md-12" style="margin-top: 20px;">
                     <div class="col-md-2">
                         <label for="line_item_name">Item</label>
                         <input type="text" name="Line_Item_Name" id="line_item_name" class="form-control" readonly="">
@@ -248,5 +248,59 @@
 
 
 @section('scripts')
+
+<script>
+//fetching Item data by ID from Select Box
+$(document).ready(function(){
+  $("#product_title").change(function(){
+      alert("hi");
+    
+               $.ajaxSetup({
+                  headers: {
+                      'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                  }
+              });
+         jQuery.ajax({
+                  url: "{{ url('/itemlist') }}",  //routin url to controller
+                  method: 'get',
+                  data: {
+                     id: jQuery('#product_title').val()
+                  },
+                  success: function(result){
+                    jQuery('#item_name').val(result.item_name);   //parsing value to text by label name
+                    jQuery('#line_item_name').val(result.item_name);
+                    jQuery('#unit_price').val(result.label_price);
+              
+                    
+
+                  }});
+
+  });
+ });
+
+//Calculation part of GRN 
+ function  calculateGrnLineAmounts() {
+    var quantityField = document.getElementById("qty");
+    var unitPriceField = document.getElementById("unit_price");
+    var grossAmountField = document.getElementById("line_gross_amount");
+    var discountField = document.getElementById("discount");
+    var netAmountField = document.getElementById("line_net_amount");
+
+    var quantity = parseFloat((quantityField.value === "" ? "0" : quantityField.value));
+    var unitPrice = parseFloat((unitPriceField.value === "" ? "0" : unitPriceField.value));
+
+    var discountRate = parseFloat((discountField.value === "" ? "0" : discountField.value));
+
+    var grossAmount = (quantity * unitPrice);
+    var discount = ((grossAmount * discountRate) / 100);
+    var netAmount = grossAmount - discount;
+
+    grossAmountField.value = grossAmount.toFixed(2);
+    netAmountField.value = netAmount.toFixed(2);
+}
+//Auto complete the supplier name by typing names
+
+
+</script>
 
 @endsection
