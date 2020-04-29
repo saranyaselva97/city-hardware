@@ -18,7 +18,7 @@
                 <span class="closebtn" onclick="closeAlert(this.parentElement)">×</span>
                 <span id="error_msg"></span>
             </div>
-                        <form action="c_transactions.php?action=sgrn" method="post" id="grn_form" onsubmit="return validateGrnForm();">
+                        <form action="" method="post" id="grn_form" >
                 <div class="col-md-4">
                     <table style="width: 100%; border: none">
                         <tbody><tr style="padding: 5px">
@@ -71,10 +71,11 @@
                             <td style="padding-top: 5px; padding-bottom: 5px">
                                 <label for="supplier">Supplier</label>
                             </td>
-                            <td style="padding-top: 5px; padding-bottom: 5px">
-                                <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input type="text" name="Supplier_Name" id="supplier_name" class="form-control ui-autocomplete-input" autocomplete="off">
-                                <input type="hidden" name="Supplier_Id" id="supplier_id">
-                            </td>
+                              <td>
+                              <input type="text" name="sup_name" id="sup_name" class="form-control" >
+                                 <div id="supplierList"></div>
+                              </td>
+                            
                         </tr>
                         <tr>
                             <td style="padding-top: 5px; padding-bottom: 5px">
@@ -102,6 +103,7 @@
                         </tr>
                     </tbody></table>
                 </div>
+                @csrf
                 <div   class="col-md-12" style="margin-top: 20px;">
                     <div class="col-md-2">
                         <label for="line_item_name">Item</label>
@@ -243,7 +245,8 @@
             </div>
         </div>
     </div>
-</div>                                </div>
+</div>  
+  </div>
 @endsection
 
 
@@ -253,7 +256,7 @@
 //fetching Item data by ID from Select Box
 $(document).ready(function(){
   $("#product_title").change(function(){
-      alert("hi");
+   
     
                $.ajaxSetup({
                   headers: {
@@ -270,11 +273,8 @@ $(document).ready(function(){
                     jQuery('#item_name').val(result.item_name);   //parsing value to text by label name
                     jQuery('#line_item_name').val(result.item_name);
                     jQuery('#unit_price').val(result.label_price);
-              
-                    
 
                   }});
-
   });
  });
 
@@ -299,7 +299,28 @@ $(document).ready(function(){
     netAmountField.value = netAmount.toFixed(2);
 }
 //Auto complete the supplier name by typing names
-
+$(document).ready(function(){
+  $('#sup_name').keyup(function(){
+    var query = $(this).val();
+    if(query != ''){
+        var _token =$('input[name="_token"]').val();
+        $.ajax({
+            url:"{{ url('/supplier_autocomplete') }}",
+            method:"POST",
+            data:{query:query,_token:_token},
+            success:function(data){
+                $('#supplierList').fadeIn();
+                $('#supplierList').html(data);
+             
+            }
+            })
+    }
+  });
+  $(document).on('click', 'li', function(){  
+        $('#sup_name').val($(this).text());  
+        $('#supplierList').fadeOut();  
+    });  
+ });
 
 </script>
 

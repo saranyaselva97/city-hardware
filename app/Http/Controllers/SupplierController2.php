@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Suppliers;
+use DB;
 class SupplierController2 extends Controller
 {
     public function create(){
@@ -35,10 +36,21 @@ class SupplierController2 extends Controller
     //for auto complete in GRN supplier text feild
     public function autocomplete_Supplier(Request $request)
     {
-        $data = Suppliers::select("supplier_name")
-                ->where("supplier_name","LIKE","%{$request->input('query')}%")
-                ->get();
-   
-        return response()->json($data);
+        if($request->get('query'))
+        {
+         $query = $request->get('query');
+         $data = DB::table('suppliers')
+           ->where('supplier_name', 'LIKE', "%{$query}%")
+           ->get();
+         $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+         foreach($data as $row)
+         {
+          $output .= '
+          <li><a href="#">'.$row->supplier_name.'</a></li>
+          ';
+         }
+         $output .= '</ul>';
+         echo $output;
+        }
     }
 }
