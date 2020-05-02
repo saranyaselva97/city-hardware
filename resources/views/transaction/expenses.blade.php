@@ -16,13 +16,20 @@
             </ol>
         </div>
     </div>
+    @if(\Session::has('success'))
+               <div class="alert alert-success">
+                <p>{{\Session::get('success')}}</p>
+                </div>
+                            
+        @endif
     <div class="row" style="padding: 15px;">
         <div class="col-md-12 shadow no-print" style="padding: 15px; margin-bottom: 15px;">
             <div class="alert alert-danger col-md-12" id="item_error_msg" style="display: none;">
                 <span class="closebtn" onclick="closeAlert(this.parentElement)">×</span>
                 <span id="error_msg"></span>
             </div>
-                        <form action="c_transactions.php?action=save" method="post" id="expence_form" onsubmit="">
+                        <form action="{{action('expencesController@addExpences')}}" method="post" id="expence_form" onsubmit="">
+                        @csrf
                 <div class="col-md-12">
                     
                     <table style="width: 100%; border: none">
@@ -46,25 +53,25 @@
                         <tr style="padding: 5px">
                             <td style="padding: 5px;">
                                 
-                                <select name="Expence_Type" id="expence_type" class="form-control">
+                                <select name="expence_type" id="expence_type" class="form-control">
                                     <option value="">-Select-</option>
-                                                                        <option value="1">Free Of Charge</option>
-                                                                        <option value="2">Petty Cash</option>
-                                                                        <option value="3">Service Charge</option>
-                                                                    </select>
+                                                @foreach($exp as $expty)
+                                                 <option value="{{$expty->id}}">{{$expty->Types}}</option>
+                                                @endforeach             
+                                                </select>
                                 
                             </td>
                             <td style="padding: 5px;">
-                                <input type="text" name="Description" id="description" class="form-control" style="background-color: #fff">
+                                <input type="text" name="description" id="description" class="form-control" style="background-color: #fff">
                             </td>
                             <td style="padding: 5px;">
-                                <input type="text" name="Amount" id="amount" class="form-control" onkeypress="return isNumberKey(event);" style="background-color: #fff">
+                                <input type="text" name="amount" id="amount" class="form-control" onkeypress="return isNumberKey(event);" style="background-color: #fff">
                             </td>
                             <td style="padding: 5px;">
-                                <input type="text" name="Dated" id="dated" class="form-control datepicker" value="2020/03/30" readonly="">
+                                <input type="text" name="dated" id="dated" class="form-control datepicker" value="2020/01/05">
                             </td>
                             <td style="padding: 5px;">
-                                <input type="text" name="Customer" id="customer" class="form-control" onkeyup="">
+                                <input type="text" name="customer" id="customer" class="form-control" onkeyup="">
                             </td>
                         </tr>
                     </tbody></table>
@@ -92,39 +99,18 @@
                         <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Expence Type: activate to sort column descending" style="width: 220px;">Expence Type</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Description: activate to sort column ascending" style="width: 170px;">Description</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Amount: activate to sort column ascending" style="width: 140px;">Amount</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 149px;">Date</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Customer: activate to sort column ascending" style="width: 166px;">Customer</th><td class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="User: activate to sort column ascending" style="width: 101px;">User</td></tr>
                     </thead>
                     <tbody>
-                                                
-                                                
-                                                
-                                                
-                                            <tr role="row" class="odd">
-                            <td class="sorting_1">Free Of Charge</td>
-                            <td>test</td>
-                            <td>13334</td>
-                            <td>2020-03-29</td>
-                            <td>tj</td>
-                            <td>Admin</td>
-                        </tr><tr role="row" class="even">
-                            <td class="sorting_1">Free Of Charge</td>
-                            <td>test</td>
-                            <td>13334</td>
-                            <td>2020-03-29</td>
-                            <td>tj</td>
-                            <td>Admin</td>
-                        </tr><tr role="row" class="odd">
-                            <td class="sorting_1">Petty Cash</td>
-                            <td>jhghgv</td>
-                            <td>600</td>
-                            <td>2019-01-31</td>
-                            <td>5</td>
-                            <td>Admin</td>
-                        </tr><tr role="row" class="even">
-                            <td class="sorting_1">Service Charge</td>
-                            <td>sdcvss</td>
-                            <td>5511</td>
-                            <td>2019-01-31</td>
-                            <td>axq</td>
-                            <td>krisAdminhan</td>
-                        </tr></tbody>
+                         @foreach($expence as $row)
+                            <tr role="row" class="odd" style="text-align: center">
+                            <td class="sorting_1">{{$row->expence_type}}</td>
+                            <td>{{$row->description}}</td>
+                            <td>{{$row->amount}}</td>
+                            <td>{{$row->dated}}</td>
+                            <td>{{$row->customer}}</td>
+                            <td>{{$row->user_id}}</td>
+                       
+                        </tr>
+                        @endforeach   
+                        </tbody>
                 </table><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 4 of 4 entries</div><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><a class="paginate_button previous disabled" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" id="DataTables_Table_0_previous">Previous</a><span><a class="paginate_button current" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a></span><a class="paginate_button next disabled" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" id="DataTables_Table_0_next">Next</a></div></div>
             </div>
             <div class="full-width">
@@ -140,8 +126,6 @@
 
 
 @section('scripts')
-<script>
-    alert("hii");
-</script>
+
 
 @endsection

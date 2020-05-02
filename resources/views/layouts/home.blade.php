@@ -298,6 +298,7 @@
     <script src="../assests/js/master_data_scripts.js" type="text/javascript"></script>
    
     <script src="../assests/js/jquery.auto-complete.js" type="text/javascript"></script>
+    <script src="../assests/js/bootstrap-datepicker.js" type="text/javascript"></script>
 <!-- for content-->
 
 <script>
@@ -321,8 +322,10 @@
             }, 600);
         }
 
-        $('.datepicker').datepicker({format: "yyyy/mm/dd"});
-        
+    
+        $('.datepicker').datepicker({
+        format: 'yyyy/mm/dd'
+      });
         $("#tabs").tabs();
 
         

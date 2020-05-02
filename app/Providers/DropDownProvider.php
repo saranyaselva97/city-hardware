@@ -7,6 +7,8 @@ use App\Categories;
 use App\Measurement;
 use App\Items;
 use App\Locations;
+use App\ExpencesTypes;
+use App\Expences;
 
 class DropDownProvider extends ServiceProvider
 {
@@ -34,6 +36,8 @@ class DropDownProvider extends ServiceProvider
             $view->with('items',Items::all());
               
             $view->with('locations',Locations::all());
+            $view->with('expence',Expences::all());
+            $view->with('exp',ExpencesTypes::all());
         });
 
     }
