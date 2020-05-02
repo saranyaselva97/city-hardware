@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2020 at 07:56 PM
+-- Generation Time: May 02, 2020 at 04:04 PM
 -- Server version: 10.4.11-MariaDB
--- PHP Version: 7.2.28
+-- PHP Version: 7.2.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -73,6 +73,54 @@ INSERT INTO `customers` (`id`, `customer_code`, `customer_name`, `address`, `con
 (2, 'C001', 'Tharjalan Jeyaradnam', 'Atchuvely, North. Jaffna', '0773014681', '2020-04-04 06:08:09', '2020-04-04 06:08:09'),
 (3, 'C002', 'Saranya Selvanesan', 'Navakuli ,Jaffna', '0773014681', '2020-04-04 06:10:09', '2020-04-04 06:10:09'),
 (4, 'c003', 'xxx', 'colombo', '0775463214', '2020-04-16 09:35:00', '2020-04-16 09:35:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `expences`
+--
+
+CREATE TABLE `expences` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `expence_type` int(11) NOT NULL,
+  `description` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `amount` double NOT NULL,
+  `dated` date NOT NULL,
+  `customer` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `expences`
+--
+
+INSERT INTO `expences` (`id`, `expence_type`, `description`, `amount`, `dated`, `customer`, `user_id`, `created_at`, `updated_at`) VALUES
+(4, 1, 'Test', 1000, '2020-01-06', 'Teejay', 1, '2020-05-01 13:25:18', '2020-05-01 13:25:18'),
+(5, 2, 'This is for testing', 500, '2020-01-16', 'Saran', 1, '2020-05-02 05:36:31', '2020-05-02 05:36:31');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `expences_types`
+--
+
+CREATE TABLE `expences_types` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `Types` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `expences_types`
+--
+
+INSERT INTO `expences_types` (`id`, `Types`, `created_at`, `updated_at`) VALUES
+(1, 'Free of Charge', NULL, NULL),
+(2, 'Petty Cash', NULL, NULL),
+(3, 'Service Charge ', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -209,7 +257,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (9, '2020_04_05_193410_create_categories_table', 6),
 (10, '2020_04_06_154700_create_measurements_table', 7),
 (11, '2020_04_11_151241_create_expenses_table', 8),
-(12, '2020_04_25_161828_create_locations_table', 8);
+(12, '2020_04_25_161828_create_locations_table', 8),
+(13, '2020_05_01_150227_create_expences_table', 9),
+(14, '2020_05_01_181614_create_expences_types_table', 10);
 
 -- --------------------------------------------------------
 
@@ -397,6 +447,19 @@ ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `expences`
+--
+ALTER TABLE `expences`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `expences_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `expences_types`
+--
+ALTER TABLE `expences_types`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `expenses`
 --
 ALTER TABLE `expenses`
@@ -501,6 +564,18 @@ ALTER TABLE `customers`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `expences`
+--
+ALTER TABLE `expences`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `expences_types`
+--
+ALTER TABLE `expences_types`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `expenses`
 --
 ALTER TABLE `expenses`
@@ -534,7 +609,7 @@ ALTER TABLE `measurements`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -563,6 +638,12 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `expences`
+--
+ALTER TABLE `expences`
+  ADD CONSTRAINT `expences_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `model_has_permissions`

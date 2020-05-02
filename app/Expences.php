@@ -11,4 +11,6 @@ class Expences extends Model
         'expence_type','description','amount','dated',
         'customer','user_id'
     ];
+   
+   
 }

@@ -28,4 +28,6 @@ class expencesController extends Controller
           $expences->save();
           return redirect('/expenses')->with('success','Expences Added Successfully');
     }
+
+    
 }
