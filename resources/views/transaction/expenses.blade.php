@@ -99,14 +99,14 @@
                         <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Expence Type: activate to sort column descending" style="width: 220px;">Expence Type</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Description: activate to sort column ascending" style="width: 170px;">Description</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Amount: activate to sort column ascending" style="width: 140px;">Amount</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 149px;">Date</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Customer: activate to sort column ascending" style="width: 166px;">Customer</th><td class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="User: activate to sort column ascending" style="width: 101px;">User</td></tr>
                     </thead>
                     <tbody>
-                         @foreach($expence as $row)
+                         @foreach($expence as $row =>$expenceValue)
                             <tr role="row" class="odd" style="text-align: center">
-                            <td class="sorting_1">{{$row->expence_type}}</td>
-                            <td>{{$row->description}}</td>
-                            <td>{{$row->amount}}</td>
-                            <td>{{$row->dated}}</td>
-                            <td>{{$row->customer}}</td>
-                            <td>{{$row->user_id}}</td>
+                            <td class="sorting_1">{{$expenceValue->expence_types->Types}}</td>
+                            <td>{{$expenceValue->description}}</td>
+                            <td>{{$expenceValue->amount}}</td>
+                            <td>{{$expenceValue->dated}}</td>
+                            <td>{{$expenceValue->customer}}</td>
+                            <td>{{$expenceValue->user->name}}</td>
                        
                         </tr>
                         @endforeach   

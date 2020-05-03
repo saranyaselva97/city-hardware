@@ -10,4 +10,8 @@ class ExpencesTypes extends Model
     protected $fillable = [
         'Types'
     ];
+
+    public function expence(){
+        return $this->hasMany(Expences::class);
+       }
 }

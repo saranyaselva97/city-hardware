@@ -15,13 +15,14 @@ class CreateExpencesTable extends Migration
     {
         Schema::create('expences', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('expence_type');
+            $table->unsignedBigInteger('expence_type');
             $table->string('description');
             $table->double('amount');
             $table->date('dated');
             $table->string('customer');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('expence_type')->references('id')->on('expences_types')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -34,6 +35,7 @@ class CreateExpencesTable extends Migration
     public function down()
     {
         $table->dropForeign('expences_user_id_foreign');
+        $table->dropForeign('expences_expence_type_foreign');
         Schema::dropIfExists('expences');
     }
 }

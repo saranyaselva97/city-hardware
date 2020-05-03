@@ -18,6 +18,7 @@ class expencesController extends Controller
 
          $expences = new Expences;   //declaring suppliers model
          $user_id = Auth::user()->id;
+         
           $expences->expence_type=$request->input('expence_type');
           $expences->description=$request->input('description');
           $expences->amount=$request->input('amount');
