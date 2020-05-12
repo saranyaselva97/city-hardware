@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Items;
+use App\Stocks;
 use App\Categories;
 use App\Measurement;
 
@@ -71,12 +72,19 @@ class ItemController2 extends Controller
     //Fetch Data from Item Model and sent it to AJEX Script
     public function getProduct(Request $req)
     {
-        $product = Items::find($req->id); // Item is the model
-        //dd($product);
-        if ($product) 
-        {
-         return response()->json(['item_name' => $product->item_name,'label_price' => $product->label_price]); //sending Item name and Label price
-        }
-   }
+        $data=Items::select('id','item_name','label_price')->where('id',$req->id)->take(100)->get();
+        
+        return response()->json($data);
+       
+    }
+
+    public function findQty(Request $request){
+	
+		//it will get price if its id match with product id
+		$stocks=Stocks::select('Quantity')->where('Item',$request->id)->take(100)->get();
+		
+    	return response()->json($stocks);
+	}
+
     
 }

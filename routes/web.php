@@ -39,8 +39,11 @@ Route::get('/expenses', 'TransactionController_2@addexpense');
 Route::get('/sales_order', 'TransactionController_2@salesOrder');
 Route::get('/item_transfer', 'TransactionController_2@itemTransfer');
 Route::get('/itemlist','ItemController2@getProduct'); //fetch data with ajex
-Route::post('/supplier_autocomplete', 'SupplierController2@autocomplete_Supplier')->name('supplier_autocomplete');;//auto compete the supllier textbox results in Create GRN Page
+Route::get('/itemqty','ItemController2@findQty'); //fetch data with ajex
+Route::get('/supplier_autocomplete', 'SupplierController2@autocomplete_Supplier')->name('supplier_autocomplete');;//auto compete the supllier textbox results in Create GRN Page
 Route::post('/addExpences', 'expencesController@addExpences');
+Route::post('/addGrn', 'GrnController@store');
+
 /**Supplier */
 Route::get('/suplier_master', 'SupplierController2@create');
 Route::post('/store_supplier', 'SupplierController2@store');

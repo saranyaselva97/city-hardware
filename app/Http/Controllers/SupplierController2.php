@@ -36,21 +36,21 @@ class SupplierController2 extends Controller
     //for auto complete in GRN supplier text feild
     public function autocomplete_Supplier(Request $request)
     {
-        if($request->get('query'))
-        {
-         $query = $request->get('query');
-         $data = DB::table('suppliers')
-           ->where('supplier_name', 'LIKE', "%{$query}%")
-           ->get();
-         $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
-         foreach($data as $row)
-         {
-          $output .= '
-          <li><a href="#">'.$row->supplier_name.'</a></li>
-          ';
-         }
-         $output .= '</ul>';
-         echo $output;
-        }
+
+       $term = $request->term;
+       $suppliers = Suppliers::where('supplier_name', 'LIKE',"%"."$term"."%" )->get();
+    
+       $supplierDetails = array();
+       if(count($suppliers)==0){
+        $supplierDetails[] = "No Such Supplier";
+       }
+       else{
+       foreach($suppliers as $supplier){
+    
+           $supplierDetails[] = array("label"=>$supplier->supplier_name, "value"=>$supplier->id);
+       }
     }
+       return json_encode($supplierDetails);
+    }
+    
 }
