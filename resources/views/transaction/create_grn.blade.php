@@ -34,7 +34,7 @@
                                 <label for="grn_code">GRN Code</label>
                             </td>
                             <td style="padding-top: 5px; padding-bottom: 5px">
-                                <input type="text" name="Grn_Code" id="grn_code" class="form-control" value="GRN000012" readonly="" style="background-color: #fff">
+                                <input type="text" name="Grn_Code" id="grn_code" class="form-control" value="{{ $grn }}" readonly="" style="background-color: #fff">
                             </td>
                         </tr>
                        

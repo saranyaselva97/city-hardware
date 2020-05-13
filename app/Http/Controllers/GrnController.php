@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Grn_Header;
 use App\Grn_details;
 use App\Stocks;
+use App\Doc_settings;
 use Auth;
 use DB;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 class GrnController extends Controller
 {
     /**
@@ -39,6 +41,7 @@ class GrnController extends Controller
     public function store(Request $request)
     {
         $user_id = Auth::user()->id;
+        
 
         $grnCode = filter_input(INPUT_POST, "Grn_Code", FILTER_SANITIZE_STRING);
         $supplierId = filter_input(INPUT_POST, "supplier_id", FILTER_SANITIZE_NUMBER_INT);
@@ -97,11 +100,15 @@ class GrnController extends Controller
             } else {
                 $previousQty = $stock->Quantity;
                 $newQty = $stock->quantity + $quantity;
-
                 $stock->quantity += $quantity;
                 $stock->average_price = $averagePrice;
                 $stock->save();
             }
+
+            $docSettings = Doc_settings::where('Prefix',"GRN")->first();
+    
+            $docSettings->Next_No += 1;
+            $docSettings->save();
 
         return redirect('/create_grn')->with('success','GRN Added Successfully');
     }

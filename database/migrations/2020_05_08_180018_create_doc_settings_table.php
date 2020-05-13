@@ -19,7 +19,7 @@ class CreateDocSettingsTable extends Migration
             $table->integer('Next_No');
             $table->integer('Length');
             $table->String('Code');
-         
+            $table->timestamps();
         });
     }
 
