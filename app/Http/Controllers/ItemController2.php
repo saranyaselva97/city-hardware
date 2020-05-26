@@ -79,9 +79,18 @@ class ItemController2 extends Controller
     }
 
     public function findQty(Request $request){
-	
+    
+        $location = $request->location;
+        if($location){
+            $matchThese = ['Item' => $request->id, 'Location' => $location];
+            $stocks=Stocks::select('Quantity')->where($matchThese)->take(100)->get();
+        }
+        else{
+            $matchThese = ['Item' => $request->id, 'Location' => "W"];
+            $stocks=Stocks::select('Quantity')->where($matchThese)->take(100)->get();
+        }
 		//it will get price if its id match with product id
-		$stocks=Stocks::select('Quantity')->where('Item',$request->id)->take(100)->get();
+	
 		
     	return response()->json($stocks);
 	}

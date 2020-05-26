@@ -31,4 +31,23 @@ class CustomerController2 extends Controller
           $customers->save();
           return redirect('/customer_master')->with('success','customer Added Successfully');
     }
+    public function autocomplete_Customer(Request $request)
+    {
+
+       $term = $request->term;
+       $customers = Customers::where('customer_name', 'LIKE',"%"."$term"."%" )->get();
+    
+       $customerDetails = array();
+       if(count($customers)==0){
+        $customerDetails[] = "No Such Customers";
+       }
+       else{
+       foreach($customers as $customer){
+    
+           $customerDetails[] = array("label"=>$customer->customer_name, "value"=>$customer->id);
+       }
+    }
+       return json_encode($customerDetails);
+    }
+
 }

@@ -5,11 +5,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-   
-
     <title>City Hardware</title>
-
-    <link type="text/css"  href="/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+ 
 
     <link rel="stylesheet" href="/css/Ionicons/css/ionicons.min.css">
 
@@ -27,7 +24,7 @@
 <link href="../assests/css/bootstrap-datepicker.css" rel="stylesheet" />
 <link href="../assests/css/jquery.timepicker.css" rel="stylesheet" />
 <link href="../assests/css/notie.css" rel="stylesheet" />
-<link rel="../stylesheet" href="assests/css/font-awesome.min.css" />
+
 <!--<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">-->
 <link href="../assests/css/styles.css" rel="stylesheet" id="dynamic_styles" />
 <link href="../assests/css/main.css" rel="stylesheet" />
@@ -64,16 +61,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
-          <!-- Messages: style can be found in dropdown.less-->
-         
-          <!-- Notifications: style can be found in dropdown.less -->
-        
-          <!-- Tasks: style can be found in dropdown.less -->
-          
-          <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="/img/user2-160x160.png" class="user-image" alt="User Image">
@@ -177,8 +166,8 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li class=""><a href="http://127.0.0.1:8000/sales/create"><i class="fa fa-file-o"></i>Total Sales Amount Report</a></li>
-              <li class=""><a href="http://127.0.0.1:8000/sales/view"><i class="fa fa-cubes"></i> Item wise Sales Report</a></li>
+              <li class=""><a href=""><i class="fa fa-file-o"></i>Total Sales Amount Report</a></li>
+              <li class=""><a href="><i class="fa fa-cubes"></i> Item wise Sales Report</a></li>
               <li class=""><a href="http://127.0.0.1:8000/sales/create"><i class="fa fa-file-o"></i>Loss or Profit Report</a></li>
               <li class=""><a href="http://127.0.0.1:8000/sales/view"><i class="fa fa-file-o"></i>Date wise Incomes</a></li>
               <li class=""><a href="http://127.0.0.1:8000/sales/create"><i class="fa fa-asl-interpreting "></i>Date wise Payments</a></li>
@@ -298,6 +287,7 @@
     <script src="../assests/js/master_data_scripts.js" type="text/javascript"></script>
    
     <script src="../assests/js/jquery.auto-complete.js" type="text/javascript"></script>
+    <script src="../assests/js/bootstrap-datepicker.js" type="text/javascript"></script>
     <script src="../assests/js/bootstrap-datepicker.js" type="text/javascript"></script>
 <!-- for content-->
 

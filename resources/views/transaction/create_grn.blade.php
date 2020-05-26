@@ -375,11 +375,7 @@ $(function () {
     });
 });
 
-
-
-
 /****************ADD GRN ROW****/
-
 
 function addGrnRow() {
     var validateFields = validateGrnDetailFields();//create a new function to validate required fields
@@ -394,7 +390,6 @@ function addGrnRow() {
     }
 
 }
-
 function validateGrnDetailFields() {
     var itemIdField = document.getElementById("item_id");
     var itemNameField = document.getElementById("line_item_name");

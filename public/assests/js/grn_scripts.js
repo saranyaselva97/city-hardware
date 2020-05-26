@@ -12,8 +12,7 @@ function getSimilarItemList() {
         }
     });
 }
-
-function getStockDetailsByItem(element) {
+/** function getStockDetailsByItem(element) {
     $.ajax({
         type: "POST",
         url: 'itemlist',
@@ -34,10 +33,11 @@ function getStockDetailsByItem(element) {
             document.getElementById("discount").value = "0";
         }
     });
-}
+}*/
 
-$(function() {
-    $("#supplier_name").autocomplete({
+
+/**$(function() {
+    $("#").autocomplete({
         source: function(request, response) {
             $.ajax({
                 type: "POST",
@@ -60,6 +60,10 @@ $(function() {
         }
     });
 });
+ * 
+ * 
+ */
+
 /** 
 function  calculateGrnLineAmounts() {
     var quantityField = document.getElementById("qty");
@@ -614,28 +618,7 @@ function changeFreeOfChargeFields() {
     });
 }
 
-function updateInvoiceNumber(locationTypeField) {
-    var prefix;
 
-    if (locationTypeField.value === "O") {
-        prefix = "INVO";
-    } else if (locationTypeField.value === "V") {
-        prefix = "INVV";
-    } else if (locationTypeField.value === "W") {
-        prefix = "INVW";
-    }
-
-    $.ajax({
-        type: "POST",
-        url: 'a_get_the_prefix.php',
-        data: { prefix: prefix },
-        success: function(data) {
-            var nmbr = JSON.parse(data);
-            document.getElementById("invoice_no").value = nmbr;
-        }
-    });
-    clearInvoiceDetailFields();
-}
 
 function showInvoiceChequeModal(paymentTypeField) {
     var grnDetailsTBody = document.getElementById("invoice_details_tbody");

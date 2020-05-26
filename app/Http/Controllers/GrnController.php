@@ -41,7 +41,18 @@ class GrnController extends Controller
     public function store(Request $request)
     {
         $user_id = Auth::user()->id;
-        
+        $this->validate($request,[
+            'Grn_Code'=>'required',
+            'supplier_id'=>'required',
+            'Grn_Invoice_Code'=>'required',
+            'Due_Date'=>'required',
+            'Payment_Type'=>'required',
+            'Gross_Amount'=>'required',
+            'Total_Discount'=>'required',
+            'Net_Amount'=>'required',
+            'Payment'=>'required',
+            'Balance'=>'required',
+          ]);
 
         $grnCode = filter_input(INPUT_POST, "Grn_Code", FILTER_SANITIZE_STRING);
         $supplierId = filter_input(INPUT_POST, "supplier_id", FILTER_SANITIZE_NUMBER_INT);
@@ -79,31 +90,33 @@ class GrnController extends Controller
     
                 $grnDetail = new Grn_details($grnDetails);
                 $grnDetail->save();
+
+                $stock=Stocks::select('id','Quantity','Average_Price','Location')->where('Item',$itemId)->first();
+         
+
+                $previousQty = 0;
+                $newQty = 0;
+    
+                if ($stock === null) {
+                    $stockDetails = array("Quantity" => $quantity, "Average_Price" => $averagePrice, "Location" => "W",
+                        "Item" => $itemId);
+    
+                    $stock = new Stocks($stockDetails);
+                    $stock->save();
+    
+                    $newQty = $quantity;
+                } else {
+                    $previousQty = $stock->Quantity;
+                    $newQty = $stock->Quantity + $quantity;
+                    $stock->Quantity += $quantity;
+                    $stock->average_price = $averagePrice;
+                    $stock->save();
+                }
     
             }
         }
         /**To Add the Stocks */
-        $stock=Stocks::select('id','Quantity','Average_Price','Location')->where('Item',$itemId)->first();
-         
-
-            $previousQty = 0;
-            $newQty = 0;
-
-            if ($stock === null) {
-                $stockDetails = array("Quantity" => $quantity, "Average_Price" => $averagePrice, "Location" => "W",
-                    "Item" => $itemId);
-
-                $stock = new Stocks($stockDetails);
-                $stock->save();
-
-                $newQty = $quantity;
-            } else {
-                $previousQty = $stock->Quantity;
-                $newQty = $stock->quantity + $quantity;
-                $stock->quantity += $quantity;
-                $stock->average_price = $averagePrice;
-                $stock->save();
-            }
+       
 
             $docSettings = Doc_settings::where('Prefix',"GRN")->first();
     
@@ -111,6 +124,15 @@ class GrnController extends Controller
             $docSettings->save();
 
         return redirect('/create_grn')->with('success','GRN Added Successfully');
+    }
+
+    public function get_prefix(Request $request){
+       $prefixCode = $request->prefix;
+
+       $invoiceNumber = Doc_settings::createDocNo($prefixCode);
+
+         echo json_encode($invoiceNumber);
+
     }
 
 

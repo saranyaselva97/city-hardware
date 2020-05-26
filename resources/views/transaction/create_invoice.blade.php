@@ -35,10 +35,10 @@
                             <td style="padding-top: 5px; padding-bottom: 5px">
                                 <select name="Sale_Location" id="sale_location" class="form-control" onchange="updateInvoiceNumber(this)">
                                     <option value="">-Select-</option>
-                                                                        @foreach($locations as $it)
-                                                                        <option value='{{ $it->loc_code}}'>{{ $it->loc_name }}</option>
-                                                                        @endforeach
-                                                                    </select>
+                               @foreach($locations as $it)
+                                  <option value='{{ $it->loc_code}}'>{{ $it->loc_name }}</option>
+                                   @endforeach
+                               </select>
                             </td>
                         </tr>
                         <tr>
@@ -63,13 +63,11 @@
                     <table style="width: 100%; border: none">
                         <tbody><tr>
                             <td style="padding-top: 5px; padding-bottom: 5px">
-                                <select name="Item" id="item_list" class="form-control" size="9" onchange="getItemDetailsToInvoice(this);">
-                                                                        @foreach($items as $it)
-                                                                        <option value='{{ $it->id }}'>{{ $it->item_name }}</option>
-                                                                        @endforeach
-                                                                        
-                                                                        </select>
-                                                                     
+                                <select name="Item" id="item_list" class="form-control product" size="9">
+                              @foreach($items as $it)
+                                 <option value='{{ $it->id }}'>{{ $it->item_name }}</option>
+                                   @endforeach                             
+                                    </select>                             
                             </td>
                         </tr>
                     </tbody></table>
@@ -251,5 +249,139 @@
 @endsection
 
 
+@section('scripts')
+
+<script>
+$(function () {
+    $("#customer_name").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                type: "GET",
+      
+                url: "{{ url('/customer_autocomplete') }}",
+                data: {
+                    term: request.term
+                },
+                success: function (data) {
+                    response(JSON.parse(data));
+                }
+            });
+        },
+        minLength: 1,
+        select: function (event, ui) {
+            $(this).val(ui.item.label);
+           // $("#supplier_due").val(ui.item.due);
+            $("#customer_id").val(ui.item.value);
+
+            return false;
+        }
+    });
+});
 
 
+
+$(document).on('change','.product',function(){
+    var saleLocationField = $("#sale_location");
+    var errorAlert = document.getElementById("item_error_msg");
+
+    if (saleLocationField.val() === "") {
+    saleLocationField.css({ border: "1px solid red" });
+
+    errorAlert.style.display = "block";
+    errorAlert.children[1].innerHTML = "Please Select a Sale Location";
+    } 
+    else {
+            errorAlert.style.display = "none";
+            errorAlert.children[1].innerHTML = "";
+             saleLocationField.css({ border: "1px solid #ccc" });
+             var item_id=$(this).val();
+             var locationval = saleLocationField.val();
+             $.ajax({
+            type:'get',
+            url: '{!!URL::to('itemlist')!!}',
+            data:{'id':item_id,'location':locationval},
+            dataType:'json',
+            success:function(data){
+              if(data.length > 0)
+                            {
+                                for(key in data)
+                                {
+                                    var tmp = data[key];
+                                    /*console.log(tmp.id);
+                                    console.log(tmp.item_name);
+                                    console.log(tmp.label_price);*/
+                                   // a.find('.itm_name').val(tmp.item_name);
+                                    document.getElementById("item_name").value = tmp.item_name;
+                                    document.getElementById("line_item_name").value =tmp.item_name;
+                                    document.getElementById("item_id").value =tmp.id;
+                                    document.getElementById("unit_price").value =tmp.label_price;
+                               }
+                            }
+                            else
+                            {
+                               alert("No Item Found")
+                            }
+            },
+            error:function(){
+            }
+           });
+        $(document).on('change','.product',function(){
+        var item_id=$(this).val();
+        var locationval = saleLocationField.val();
+           $.ajax({
+            type:'get',
+            url: '{!!URL::to('itemqty')!!}',
+            data:{'id':item_id,'location':locationval},
+            dataType:'json',
+            success:function(qtydata){
+                if(qtydata.length > 0)
+                            {
+                                for(key in qtydata)
+                                {
+                                    var tmp = qtydata[key];
+                                     document.getElementById("available_qty").value =tmp.Quantity;
+                                }
+                            }
+                            else{
+                                document.getElementById("available_qty").value =0;
+                            }
+                      },
+            error:function(){
+            }
+           });
+        });
+    }
+});
+
+
+/****To Get the INVOICE number based on the location */
+function updateInvoiceNumber(locationTypeField) {
+    var prefix;
+
+    if (locationTypeField.value === "B1") {
+        prefix = "INVB1";
+    } else if (locationTypeField.value === "B2") {
+        prefix = "INVB2";
+    } else if (locationTypeField.value === "B3") {
+        prefix = "INVB3";
+    }
+     else if (locationTypeField.value === "W") {
+        prefix = "INVW";
+    }
+
+
+    $.ajax({
+        type: "get",
+        url: "{{ url('/get_prefix') }}",
+        data: { prefix: prefix },
+        success: function(data) {
+            var nmbr = JSON.parse(data);
+            document.getElementById("invoice_no").value = nmbr;
+            
+        }
+    });
+    clearInvoiceDetailFields();
+}
+
+</script>
+@endsection
