@@ -12,10 +12,11 @@ function getSimilarItemList() {
         }
     });
 }
-/** function getStockDetailsByItem(element) {
+
+function getStockDetailsByItem(element) {
     $.ajax({
         type: "POST",
-        url: 'itemlist',
+        url: 'a_get_stock_details_by_id.php',
         data: { item_id: element.value },
         success: function(data) {
             var arr = JSON.parse(data);
@@ -31,13 +32,13 @@ function getSimilarItemList() {
             document.getElementById("line_net_amount").value = "";
             document.getElementById("qty").value = "";
             document.getElementById("discount").value = "0";
+            console.log(item_id);
         }
     });
-}*/
+}
 
-
-/**$(function() {
-    $("#").autocomplete({
+$(function() {
+    $("#supplier_name").autocomplete({
         source: function(request, response) {
             $.ajax({
                 type: "POST",
@@ -60,12 +61,8 @@ function getSimilarItemList() {
         }
     });
 });
- * 
- * 
- */
 
-/** 
-function  calculateGrnLineAmounts() {
+function calculateGrnLineAmounts() {
     var quantityField = document.getElementById("qty");
     var unitPriceField = document.getElementById("unit_price");
     var grossAmountField = document.getElementById("line_gross_amount");
@@ -84,8 +81,369 @@ function  calculateGrnLineAmounts() {
     grossAmountField.value = grossAmount.toFixed(2);
     netAmountField.value = netAmount.toFixed(2);
 }
-**/
 
+function addGrnRow() {
+    var validateFields = validateGrnDetailFields(); //create a new function to validate required fields
+    var isValid = new Boolean(validateFields);
+
+    if (isValid == true) {
+        addGrnDetailRow(); //create a new function to calculate average price and add new grn detail row 
+        calculateGrnTotals(); //create a new function to calculate grn header total amounts
+        cleargrnDetailFields(); //create a new function to clear detail fields 
+    } else {
+        return false;
+    }
+
+}
+
+function validateGrnDetailFields() {
+    var itemIdField = document.getElementById("item_id");
+    var itemNameField = document.getElementById("line_item_name");
+    var quantityField = document.getElementById("qty");
+    var unitPriceField = document.getElementById("unit_price");
+    var netAmountField = document.getElementById("line_net_amount");
+
+    var errorAlert = document.getElementById("item_error_msg");
+
+    if (itemIdField.value === "") {
+        itemNameField.style.border = "1px solid #ed5565";
+        document.getElementById("line_item_name").focus();
+
+        errorAlert.style.display = "block";
+        errorAlert.children[1].innerHTML = "Please Select an Item";
+
+        return false;
+    } else {
+        itemNameField.style.border = "1px solid #ccc";
+
+        errorAlert.style.display = "none";
+        errorAlert.children[1].innerHTML = "";
+    }
+
+    if (quantityField.value === "") {
+        quantityField.style.border = "1px solid #ed5565";
+        quantityField.focus();
+
+        errorAlert.style.display = "block";
+        errorAlert.children[1].innerHTML = "Please Enter Buying Quantity";
+
+        return false;
+    } else {
+        quantityField.style.border = "1px solid #ccc";
+
+        errorAlert.style.display = "none";
+        errorAlert.children[1].innerHTML = "";
+    }
+
+    if (unitPriceField.value === "") {
+        unitPriceField.style.border = "1px solid #ed5565";
+        unitPriceField.focus();
+
+        errorAlert.style.display = "block";
+        errorAlert.children[1].innerHTML = "Please Enter Unit Price";
+
+        return false;
+    } else {
+        unitPriceField.style.border = "1px solid #ccc";
+
+        errorAlert.style.display = "none";
+        errorAlert.children[1].innerHTML = "";
+    }
+
+    if (parseFloat(netAmountField.value) < 0) {
+        netAmountField.style.border = "1px solid #ed5565";
+
+        errorAlert.style.display = "block";
+        errorAlert.children[1].innerHTML = "Net Amount can't be Minus(-)";
+
+        return false;
+    } else {
+        netAmountField.style.border = "1px solid #ccc";
+
+        errorAlert.style.display = "none";
+        errorAlert.children[1].innerHTML = "";
+    }
+
+    return true;
+}
+
+function addGrnDetailRow() {
+    var itemIdField = document.getElementById("item_id");
+    var itemNameField = document.getElementById("line_item_name");
+    var quantityField = document.getElementById("qty");
+    var unitPriceField = document.getElementById("unit_price");
+    var netAmountField = document.getElementById("line_net_amount");
+    var grossAmountField = document.getElementById("line_gross_amount");
+    var discountField = document.getElementById("discount");
+
+    var oldAveragePrice = 0; //variable to store average price of current stock
+    var availableStock = 0; //variable to store current available stock
+
+    $.ajax({ //get stock details to calculate average price
+        type: "POST",
+        url: 'route{{""}}',
+        data: { item_id: itemIdField.value },
+        success: function(data) {
+            var arr = JSON.parse(data);
+
+            availableStock = parseFloat(arr.Avg_Price);
+            oldAveragePrice = parseFloat(arr.Available_Stock);
+        }
+    });
+
+    var tbody = document.getElementById("grn_details_tbody");
+
+    var currentRoeCount = tbody.rows.length;
+
+    var buyingQuantity = 0; //variable to store total buying quantity
+    var totalAmount = 0; //variable to store net amount
+
+    for (i = 0; i < currentRoeCount; i++) {
+        var currentItemIdField = tbody.rows[i].cells[0].children[0];
+
+        //if selected item already exists in grn details list then increment quantity and net amount
+        if (currentItemIdField.value === itemIdField.value) {
+            var lineQuantityField = tbody.rows[i].cells[1].children[0]; //get quantity text field of each line
+            var lineNetAmountField = tbody.rows[i].cells[5].children[0]; //get net amount field of each line
+
+            var lineQuantity = parseFloat(lineQuantityField.value);
+            var lineNetAmount = parseFloat(lineNetAmountField.value);
+
+            buyingQuantity += lineQuantity;
+            totalAmount += lineNetAmount;
+        }
+    }
+
+    buyingQuantity += parseFloat((quantityField.value === "" ? "0" : quantityField.value)); // add new quantity to already added quantity
+    totalAmount += parseFloat((netAmountField.value === "" ? "0" : netAmountField.value)); //add new net amlount to already added net amount
+
+    var totalQuantity = availableStock + buyingQuantity; //add current total quantity to available stock
+    var currentAveragePrice = availableStock * oldAveragePrice; //calculate total price for current available stock
+
+    /*********************************************************/
+    // formula to calculate new average price
+    //(currentAveragePrice + totalAmount) = total cost
+    //totalQuantity = total quantity
+    //((currentAveragePrice + totalAmount)/ totalQuantity = total quantity) = cost per an item
+    /*********************************************************/
+
+    var newAveragePrice = ((currentAveragePrice + totalAmount) / totalQuantity); //calculate new average price
+
+    var itemIdText = "<input type='hidden' name='Item_Id" + currentRoeCount + "' value='" + itemIdField.value + "'/>";
+    var itemNameText = "<input type='text' name='Item_Name" + currentRoeCount + "' value='" + itemNameField.value + "' class='hdnfield' readonly/>";
+    var quantityText = "<input type='text' name='Quantity" + currentRoeCount + "' value='" + quantityField.value + "' class='hdnfield' readonly/>";
+    var unitPriceText = "<input type='text' name='Unit_Price" + currentRoeCount + "' value='" + unitPriceField.value + "' class='hdnfield' readonly/>";
+    var grossAmountText = "<input type='text' name='Gross_Amount" + currentRoeCount + "' value='" + grossAmountField.value + "' class='hdnfield' readonly/>";
+    var discountText = "<input type='text' name='Discount" + currentRoeCount + "' value='" + discountField.value + "' class='hdnfield' readonly/>";
+    var netAmountText = "<input type='text' name='Net_Amount" + currentRoeCount + "' value='" + netAmountField.value + "' class='hdnfield' readonly/>";
+    var averagePriceText = "<input type='hidden' name='Average_Price" + currentRoeCount + "' value='" + newAveragePrice + "'/>";
+    var averagePriceText = "<input type='hidden' name='Average_Price" + currentRoeCount + "' value='" + newAveragePrice + "'/>";
+    // var remove = "<a  class='btn btn-danger"++"' ><i class='glyphicon glyphicon-remove'></i></a>";
+
+    var rowText = "<tr><td>" + itemIdText + itemNameText + "</td><td>" + quantityText + "</td><td>" + unitPriceText + "</td><td>" + grossAmountText + "</td><td>" + discountText + "</td><td>" + netAmountText + averagePriceText + "</td></tr>";
+
+    var currentRows = tbody.innerHTML;
+    currentRows += rowText;
+
+    tbody.innerHTML = currentRows;
+
+    var rowCountField = document.getElementById("row_count");
+    rowCountField.value = currentRoeCount;
+}
+
+function calculateGrnTotals() {
+
+    var finalGrossAmountField = document.getElementById("gross_amount");
+    var totalDiscountField = document.getElementById("total_discount");
+    var finalNetAmountField = document.getElementById("net_amount");
+    var paymentField = document.getElementById("payment");
+    var balanceField = document.getElementById("balance");
+
+
+
+    var lineNetAmountField = document.getElementById("line_net_amount");
+
+    var grossAmount = parseFloat((finalGrossAmountField.value === "" ? "0" : finalGrossAmountField.value));
+    var discountRate = parseFloat((totalDiscountField.value === "" ? "0" : totalDiscountField.value));
+
+    grossAmount += parseFloat((lineNetAmountField.value === "" ? "0" : lineNetAmountField.value));
+
+    var discount = ((grossAmount * discountRate) / 100);
+
+    var netAmount = grossAmount - discount;
+
+    finalGrossAmountField.value = grossAmount.toFixed(2);
+    totalDiscountField.value = 0;
+    finalNetAmountField.value = netAmount.toFixed(2);
+    paymentField.value = "0.00";
+    balanceField.value = netAmount.toFixed(2);
+}
+
+
+function cleargrnDetailFields() {
+    var itemIdField = document.getElementById("item_id");
+    var itemNameField = document.getElementById("line_item_name");
+    var unitPriceField = document.getElementById("unit_price");
+    var quantityField = document.getElementById("qty");
+    var netAmountField = document.getElementById("line_net_amount");
+    var grossAmountField = document.getElementById("line_gross_amount");
+    var discountField = document.getElementById("discount");
+    var availableQtyField = document.getElementById("available_qty");
+
+    itemIdField.value = "";
+    itemNameField.value = "";
+    unitPriceField.value = "";
+    quantityField.value = "";
+    netAmountField.value = "";
+    grossAmountField.value = "";
+    discountField.value = "0";
+    availableQtyField.value = "";
+
+    var searchitemNameField = document.getElementById("item_name");
+    searchitemNameField.value = "";
+    searchitemNameField.focus();
+
+}
+
+
+function calculateGrnHeaderTotals() {
+    var grossAmountField = document.getElementById("gross_amount");
+    var discountField = document.getElementById("total_discount");
+    var netAmountField = document.getElementById("net_amount");
+    var paymentField = document.getElementById("payment");
+    var balanceField = document.getElementById("balance");
+
+    var grossAmount = parseFloat((grossAmountField.value === "" ? "0" : grossAmountField.value));
+    var discountRate = parseFloat((discountField.value === "" ? "0" : discountField.value));
+
+    var discountPrice = ((grossAmount * discountRate) / 100);
+    var netAmount = grossAmount - discountPrice;
+    var payment = parseFloat((paymentField.value === "" ? "0" : paymentField.value));
+    var balance = netAmount - payment;
+
+    netAmountField.value = netAmount.toFixed(2);
+    balanceField.value = balance.toFixed(2);
+}
+
+function validateGrnForm() {
+    var grnCodeField = document.getElementById("grn_code");
+    var supplierIdField = document.getElementById("supplier_id");
+    var supplierNameField = document.getElementById("supplier_name");
+    //var supplierInvCodeField = document.getElementById("grn_invoice_code");
+    var dueDateField = document.getElementById("due_date");
+    var detailTBody = document.getElementById("grn_details_tbody");
+    var itemNameField = document.getElementById("item_name");
+    var paymentTypeField = document.getElementById("payment_type");
+    var grossAmountField = document.getElementById("gross_amount");
+    var netAmountField = document.getElementById("net_amount");
+
+    var errorAlert = document.getElementById("item_error_msg");
+
+    if (grnCodeField.value === "") {
+        grnCodeField.style.border = "1px solid #ed5565";
+        grnCodeField.focus();
+
+        errorAlert.style.display = "block";
+        errorAlert.children[1].innerHTML = "GRN Code is Invalid";
+
+        return false;
+    } else {
+        grnCodeField.style.border = "1px solid #ccc";
+
+        errorAlert.style.display = "none";
+        errorAlert.children[1].innerHTML = "";
+    }
+
+    if (supplierIdField.value === "") {
+        supplierNameField.style.border = "1px solid #ed5565";
+        supplierNameField.focus();
+
+        errorAlert.style.display = "block";
+        errorAlert.children[1].innerHTML = "Please Select a Supplier";
+
+        return false;
+    } else {
+        supplierNameField.style.border = "1px solid #ccc";
+
+        errorAlert.style.display = "none";
+        errorAlert.children[1].innerHTML = "";
+    }
+
+    if (dueDateField.value === "") {
+        dueDateField.style.border = "1px solid #ed5565";
+        dueDateField.focus();
+
+        errorAlert.style.display = "block";
+        errorAlert.children[1].innerHTML = "Due Date is Required";
+
+        return false;
+    } else {
+        dueDateField.style.border = "1px solid #ccc";
+
+        errorAlert.style.display = "none";
+        errorAlert.children[1].innerHTML = "";
+    }
+
+    if (detailTBody.rows.length === 0) {
+        itemNameField.style.border = "1px solid #ed5565";
+        itemNameField.focus();
+
+        errorAlert.style.display = "block";
+        errorAlert.children[1].innerHTML = "Please Add GRN Details to List";
+
+        return false;
+    } else {
+        itemNameField.style.border = "1px solid #ccc";
+
+        errorAlert.style.display = "none";
+        errorAlert.children[1].innerHTML = "";
+    }
+
+    if (paymentTypeField.value === "") {
+        paymentTypeField.style.border = "1px solid #ed5565";
+        paymentTypeField.focus();
+
+        errorAlert.style.display = "block";
+        errorAlert.children[1].innerHTML = "Please Select a Payment Type";
+
+        return false;
+    } else {
+        paymentTypeField.style.border = "1px solid #ccc";
+
+        errorAlert.style.display = "none";
+        errorAlert.children[1].innerHTML = "";
+    }
+
+    if (grossAmountField.value === "") {
+        grossAmountField.style.border = "1px solid #ed5565";
+        grossAmountField.focus();
+
+        errorAlert.style.display = "block";
+        errorAlert.children[1].innerHTML = "Gross Amount is Invalid";
+
+        return false;
+    } else {
+        grossAmountField.style.border = "1px solid #ccc";
+
+        errorAlert.style.display = "none";
+        errorAlert.children[1].innerHTML = "";
+    }
+
+    if (netAmountField.value === "") {
+        netAmountField.style.border = "1px solid #ed5565";
+        netAmountField.focus();
+
+        errorAlert.style.display = "block";
+        errorAlert.children[1].innerHTML = "Net Amount is Invalid";
+
+        return false;
+    } else {
+        netAmountField.style.border = "1px solid #ccc";
+
+        errorAlert.style.display = "none";
+        errorAlert.children[1].innerHTML = "";
+    }
+}
 
 function showChequeDetailsModal(paymentTypeField) {
     if (paymentTypeField.value === "CH") {
@@ -105,7 +463,7 @@ function showChequeDetailsModal(paymentTypeField) {
         var bankField = document.getElementById("bank");
 
         var banks = [
-            "Axis Bank Ltd.", "Bank of Ceylon", "Cargills Bank Ltd.", "Citibank N.A.", "Commercial Bank of Ceylon PLC", "Deutsche Bank AG",
+            "Bank of Ceylon", "Cargills Bank Ltd.", "Citibank N.A.", "Commercial Bank of Ceylon PLC", "Deutsche Bank AG",
             "DFCC Vardhana Bank PLC", "Habib Bank Ltd.", "Hatton National Bank PLC", "ICICI Bank Ltd.", "Indian Bank", "Indian Overseas Bank",
             "MCB Bank Ltd.", "National Development Bank PLC", "Nations Trust Bank PLC", "Pan Asia Banking Corporation PLC", "Peoples Bank",
             "Sampath Bank PLC", "Seylan Bank PLC", "Standard Chartered Bank", "State Bank of India",
@@ -361,73 +719,6 @@ function addInvoiceRow() {
     clearInvoiceDetailFields();
 }
 
-function getItemDetailsToInvoice(element) {
-
-    var saleLocationField = $("#sale_location");
-    var errorAlert = document.getElementById("item_error_msg");
-
-    if (saleLocationField.val() === "") {
-        saleLocationField.css({ border: "1px solid red" });
-
-        errorAlert.style.display = "block";
-        errorAlert.children[1].innerHTML = "Please Select a Sale Location";
-    } else {
-        errorAlert.style.display = "none";
-        errorAlert.children[1].innerHTML = "";
-        saleLocationField.css({ border: "1px solid #ccc" });
-
-        $.ajax({
-            type: "POST",
-            url: 'a_get_stock_details_by_id.php',
-            data: { item_id: element.value, location: saleLocationField.val() },
-            success: function(data) {
-                var arr = JSON.parse(data);
-
-                document.getElementById("available_qty").value = arr.Available_Stock;
-
-                document.getElementById("item_name").value = element.options[element.selectedIndex].text;
-
-                document.getElementById("line_item_name").value = element.options[element.selectedIndex].text;
-                document.getElementById("item_id").value = element.value;
-
-                var labelPrice = parseFloat(arr.Label_Price);
-
-                var unitAmountField = document.getElementById("unit_price");
-
-                unitAmountField.value = labelPrice.toFixed(2);
-                unitAmountField.select();
-                unitAmountField.focus();
-                checkTempAvailableQuantityForInvoice();
-            }
-        });
-    }
-
-
-}
-
-function checkTempAvailableQuantityForInvoice() {
-
-    var invoiceTBody = document.getElementById("invoice_details_tbody");
-
-    var rowCount = invoiceTBody.rows.length;
-
-    if (rowCount > 0) {
-        var avbQtyField = document.getElementById("available_qty");
-        var itemNameField = document.getElementById("item_name");
-        var i;
-        var totalLineQuantity = 0;
-
-        for (i = 0; i < rowCount; i++) {
-            var lineItemName = document.getElementById("Item_Name" + i);
-            if (lineItemName.value === itemNameField.value) {
-                var lineQuantity = document.getElementById("Quantity" + i);
-                totalLineQuantity += parseInt(lineQuantity.value);
-            }
-        }
-        var tempAvailableQuantiy = parseInt(avbQtyField.value) - totalLineQuantity;
-        document.getElementById("available_qty").value = tempAvailableQuantiy;
-    }
-}
 
 function calculateInvoiceTotals() {
     var grossAmountField = document.getElementById("gross_amount");

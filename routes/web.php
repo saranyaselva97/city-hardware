@@ -45,6 +45,7 @@ Route::post('/addExpences', 'expencesController@addExpences');
 Route::post('/addGrn', 'GrnController@store');
 Route::get('/customer_autocomplete', 'CustomerController2@autocomplete_Customer')->name('customer_autocomplete');;
 Route::get('/get_prefix','GrnController@get_prefix');
+Route::post('/add_invoice','GrnController@add_invoice');
 /**Supplier */
 Route::get('/suplier_master', 'SupplierController2@create');
 Route::post('/store_supplier', 'SupplierController2@store');

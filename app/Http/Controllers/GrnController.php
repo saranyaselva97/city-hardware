@@ -135,6 +135,12 @@ class GrnController extends Controller
 
     }
 
+    /*****************ADDING INVOICE PART**************************************************************************************** */
+    public function add_invoice(Request $request)
+    {
+            return $request;
+    }
+
 
     /**
      * Display the specified resource.

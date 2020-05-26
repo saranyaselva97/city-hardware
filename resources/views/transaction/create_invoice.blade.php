@@ -17,7 +17,8 @@
                 <span class="closebtn" onclick="closeAlert(this.parentElement)">×</span>
                 <span id="error_msg"></span>
             </div>
-                        <form action="c_transactions.php?action=sinv" method="post" id="invoice_form" onsubmit="return validateInvoiceForm();">
+            <form action="{{action('GrnController@add_invoice')}}" method="post" onsubmit="return validateInvoiceForm();">
+                @csrf 
                 <div class="col-md-4">
                     <table style="width: 100%; border: none">
                         <tbody><tr style="padding: 5px">
@@ -368,6 +369,7 @@ function updateInvoiceNumber(locationTypeField) {
      else if (locationTypeField.value === "W") {
         prefix = "INVW";
     }
+   
 
 
     $.ajax({
@@ -380,7 +382,7 @@ function updateInvoiceNumber(locationTypeField) {
             
         }
     });
-    clearInvoiceDetailFields();
+    
 }
 
 </script>
