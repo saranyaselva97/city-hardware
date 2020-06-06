@@ -8,6 +8,6 @@ class Payment extends Model
 {
     protected $table = 'payments';
     protected $fillable = [
-          'Doc_Type','Doc_No', 'Due_Amount', 'Total_Discount','Gross_Amount', 
-          'payement_Date','System_Date','user_id','status'];
+          'Doc_Type','Doc_No', 'Due_Amount', 
+          'Payment_Amount','Payment_Date','Payment_Type','Balance','System_Date','user_id','status'];
 }

@@ -25,11 +25,10 @@ class CreateTransactionsTable extends Migration
             $table->double('Gross_Amount');
             $table->double('Previous_Quantity');
             $table->double('New_Quantity');
-            $table->string('Payment_Type');
             $table->String('Location');
             $table->unsignedBigInteger('Item');
             $table->unsignedBigInteger('user_id');
-
+            $table->timestamps();
             $table->foreign('Item')->references('id')->on('items')->onUpdate('cascade')->onDelete('cascade');
            
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');

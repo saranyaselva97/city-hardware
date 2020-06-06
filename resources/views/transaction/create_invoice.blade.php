@@ -11,6 +11,12 @@
             </ol>
         </div>
     </div>
+    @if(\Session::has('success'))
+               <div class="alert alert-success">
+                <p>{{\Session::get('success')}}</p>
+                </div>
+                            
+        @endif
     <div class="row" style="padding: 0px;">
         <div class="col-md-12 shadow" style="padding: 15px; margin-bottom: 15px;">
             <div class="alert alert-danger col-md-12" id="item_error_msg" style="display: none;">
@@ -177,6 +183,11 @@
                     <div class="col-md-2">
                         <label for="balance">Balance</label>
                         <input type="text" name="Balance" id="balance" class="form-control" readonly="">
+                        <input type="hidden" name="Cheque_No" id="Cheque_No">
+                        <input type="hidden" name="Cheque_Date" id="Cheque_Date">
+                        <input type="hidden" name="Bank" id="Bank">
+                        <input type="hidden" name="Cheque_Amount" id="Cheque_Amount">
+                       
                     </div>
                 </div>
                 
@@ -227,7 +238,7 @@
                         <label for="amount">Amount</label>
                     </div>
                     <div class="col-md-9">
-                        <input type="text" name="Amount" id="amount" class="form-control" onkeypress="return isNumberKey(event);">
+                        <input type="text" name="Amount" id="amount" class="form-control" >
                     </div>
                 </div>
             </div>
@@ -384,6 +395,187 @@ function updateInvoiceNumber(locationTypeField) {
     });
     
 }
+
+function showInvoiceChequeModal(paymentTypeField) {
+    var grnDetailsTBody = document.getElementById("invoice_details_tbody");
+    var invoiceNumberField = document.getElementById("invoice_no");
+    var locationTypeField = document.getElementById("sale_location");
+    var paymentField = document.getElementById("payment");
+    var balanceField = document.getElementById("balance");
+    var netAmountField = document.getElementById("net_amount");
+    var discountField = document.getElementById("total_discount");
+    var grossAmountField = document.getElementById("gross_amount");
+
+    paymentField.value = "0.00";
+    discountField.value = "0";
+    netAmountField.value = grossAmountField.value;
+    balanceField.value = netAmountField.value;
+
+    discountField.readOnly = false;
+    paymentField.readOnly = false;
+
+
+
+
+    if (grnDetailsTBody.rows.length === 0) {
+
+
+        paymentTypeField.selectedIndex = 0;
+
+        return false;
+    }
+
+    var bankField = document.getElementById("bank");
+
+    var banks = [
+        "Bank of Ceylon", "Cargills Bank Ltd.", "Commercial Bank of Ceylon PLC",
+        "DFCC Vardhana Bank PLC", "Habib Bank Ltd.", "Hatton National Bank PLC",
+        "National Development Bank PLC", "Nations Trust Bank PLC", "Pan Asia Banking Corporation PLC", "Peoples Bank",
+        "Sampath Bank PLC", "Seylan Bank PLC", "Standard Chartered Bank",
+        "Union Bank of Colombo PLC"
+    ];
+
+    for (i = 0; i < banks.length; i++) {
+        bankField.innerHTML += "<option value='" + banks[i] + "'>" + banks[i] + "</option>";
+    }
+
+    var chequeAmountField = document.getElementById("amount");
+    //var netAmountField = document.getElementById("net_amount");
+    var paymentField = document.getElementById("net_amount");
+
+    chequeAmountField.value = paymentField.value;
+
+    $("#myModal").modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+
+    var chequeNoField = document.getElementById("chq_number");
+    chequeNoField.focus();
+
+    var invoiceValue = invoiceNumberField.value;
+    if (invoiceValue.includes("FOC")) {
+        updateInvoiceNumber(locationTypeField);
+    }
+}
+
+function addInvoiceChequeDetails() {
+    var chqNoField = document.getElementById("chq_number");
+    var chqDateField = document.getElementById("chq_date");
+    var bankField = document.getElementById("bank");
+    var amountField = document.getElementById("amount");
+
+    var errorAlert = document.getElementById("modal_error_msg");
+
+    if (chqNoField.value === "") {
+        chqNoField.style.border = "1px solid #ed5565";
+        chqNoField.focus();
+
+        errorAlert.style.display = "block";
+        errorAlert.children[1].innerHTML = "Enter a Cheque Number";
+
+        return false;
+    } else {
+        chqNoField.style.border = "1px solid #ccc";
+
+        errorAlert.style.display = "none";
+        errorAlert.children[1].innerHTML = "";
+    }
+
+    if (chqDateField.value === "") {
+        chqDateField.style.border = "1px solid #ed5565";
+        chqDateField.focus();
+
+        errorAlert.style.display = "block";
+        errorAlert.children[1].innerHTML = "Select a Cheque Date";
+
+        return false;
+    } else {
+        chqDateField.style.border = "1px solid #ccc";
+
+        errorAlert.style.display = "none";
+        errorAlert.children[1].innerHTML = "";
+    }
+
+    if (bankField.value === "") {
+        bankField.style.border = "1px solid #ed5565";
+        bankField.focus();
+
+        errorAlert.style.display = "block";
+        errorAlert.children[1].innerHTML = "Select a Bank";
+
+        return false;
+    } else {
+        bankField.style.border = "1px solid #ccc";
+
+        errorAlert.style.display = "none";
+        errorAlert.children[1].innerHTML = "";
+    }
+
+    if (amountField.value === "") {
+        amountField.style.border = "1px solid #ed5565";
+        amountField.focus();
+
+        errorAlert.style.display = "block";
+        errorAlert.children[1].innerHTML = "Select a Bank";
+
+        return false;
+    } else {
+        amountField.style.border = "1px solid #ccc";
+
+        errorAlert.style.display = "none";
+        errorAlert.children[1].innerHTML = "";
+    }
+
+    var form = document.forms[0];
+
+
+
+    var chqNumberHiddenField = document.createElement("input");
+    chqNumberHiddenField.setAttribute("type", "hidden");
+    chqNumberHiddenField.setAttribute("name", "Cheque_No");
+    chqNumberHiddenField.setAttribute("value", chqNoField.value);
+
+    var chqDateHiddenField = document.createElement("input");
+    chqDateHiddenField.setAttribute("type", "hidden");
+    chqDateHiddenField.setAttribute("name", "Cheque_Date");
+    chqDateHiddenField.setAttribute("value", chqDateField.value);
+
+    var bankHiddenField = document.createElement("input");
+    bankHiddenField.setAttribute("type", "hidden");
+    bankHiddenField.setAttribute("name", "Bank");
+    bankHiddenField.setAttribute("value", bankField.value);
+
+    var amountHiddenField = document.createElement("input");
+    amountHiddenField.setAttribute("type", "hidden");
+    amountHiddenField.setAttribute("id", "cheque_amount");
+    amountHiddenField.setAttribute("name", "Cheque_Amount");
+    amountHiddenField.setAttribute("value", amountField.value);
+
+    form.appendChild(chqNumberHiddenField);
+    form.appendChild(chqDateHiddenField);
+    form.appendChild(bankHiddenField);
+    form.appendChild(amountHiddenField);
+    alert(amountField.value)
+
+
+
+    var netAmountField = document.getElementById("net_amount");
+    var paymentField = document.getElementById("payment");
+    var balanceField = document.getElementById("balance");
+
+    var netAmount = parseFloat((netAmountField.value === "" ? "0" : netAmountField.value));
+    var chequeAmount = parseFloat((amountField.value === "" ? "0" : amountField.value));
+
+    var balance = netAmount - chequeAmount;
+
+    balanceField.value = balance.toFixed(2);
+    paymentField.value = chequeAmount;
+    paymentField.readOnly = true;
+
+    $("#myModal").modal('hide');
+}
+
 
 </script>
 @endsection

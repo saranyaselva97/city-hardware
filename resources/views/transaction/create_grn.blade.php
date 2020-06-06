@@ -191,6 +191,8 @@
                     <div class="col-md-2">
                         <label for="balance">Balance</label>
                         <input type="text" name="Balance" id="balance" class="form-control" readonly="">
+                  
+
                     </div>
                 </div>
                 <div class="col-md-12" style="margin-top: 20px;">
