@@ -14,6 +14,7 @@ use App\Cash_credit;
 use App\Cheques;
 use App\Invoice_header;
 use App\Invoice_details;
+use App\Suppliers;
 use Auth;
 use DB;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -186,7 +187,10 @@ class GrnController extends Controller
            
             $grnreport = $this->printGRN(); 
 
-        return redirect('/printgrn')->with('success','GRN Added Successfully');
+           /**To sent the print GRN page */
+            $grnID=$grnHeader->id;
+            return redirect('/printgrn')->with('grn',$grnHead);
+           
        
     }
     public function printGRN(){
@@ -196,6 +200,7 @@ class GrnController extends Controller
         return view('reports.printinvo');
     }
 
+  
     
 
     public function get_prefix(Request $request){

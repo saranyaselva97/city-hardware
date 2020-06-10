@@ -37,14 +37,14 @@
 <div class="row" style="padding:15px; margin-left: 0px; margin-right: 0px;">
     <div class="col-md-5 pull-left">
         <ul style="list-style: none; font-size: 13px; font-weight: bold;">
-            <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><li style="padding-top: 5px" id="supplier_name" class="ui-autocomplete-input" autocomplete="off">Customer Name : jf</li>
+            <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><li style="padding-top: 5px" id="supplier_name" class="ui-autocomplete-input" autocomplete="off">Supplier Name : </li>
             <li style="padding-top: 5px" id="address">Address : aD</li>
             <li style="padding-top: 5px" id="telephone">Telephone : </li>
         </ul>
     </div>
     <div class="col-md-5 pull-right">
         <ul style="list-style: none; font-size: 13px; font-weight: bold; padding-left: 0px">
-            <li style="padding-top: 5px;" id="grn_no">GRN No. GRN000016</li>
+            <li style="padding-top: 5px;" id="grn_no">GRN No. {{ $grn->id }}</li>
         </ul>
         <table style="width: 100%">
             <tbody><tr>

@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="/css/jquery-ui.min.css">
   
 
-
+    <link type="text/css"  href="/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
  <link href="assests/css/bootstrap.css" rel="stylesheet" />
 <link href="assests/css/simple-sidebar.css" rel="stylesheet" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />
@@ -55,7 +55,7 @@
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"> </a>
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -132,7 +132,7 @@
       <ul class="sidebar-menu">
 
         <li class="treeview ">
-          <a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+          <a href="/dashboard"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
         </li>
 
         @can('admin')

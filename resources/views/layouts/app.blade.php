@@ -5,7 +5,42 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/Ionicons/css/ionicons.min.css">
+
+<link href="/css/app.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/AdminLTE.min.css">
+<link rel="stylesheet" href="/css/bootstrapValidator.min.css">{{-- resources/views/layouts/app.blade.php --}}
+<!DOCTYPE html>
+<html lang="{{ config('app.locale') }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/Ionicons/css/ionicons.min.css">
+
+<link href="/css/app.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/AdminLTE.min.css">
+<link rel="stylesheet" href="/css/bootstrapValidator.min.css">
+<link rel="stylesheet" href="/css/bootstrap-table.css">
+<link rel="stylesheet" href="/css/jquery-ui.min.css">
+
+
+
+<link href="assests/css/bootstrap.css" rel="stylesheet" />
+<link href="assests/css/simple-sidebar.css" rel="stylesheet" />
+
+<link href="../assests/css/bootstrap-datepicker.css" rel="stylesheet" />
+<link href="../assests/css/jquery.timepicker.css" rel="stylesheet" />
+<link href="../assests/css/notie.css" rel="stylesheet" />
+
+
+<link href="../assests/css/styles.css" rel="stylesheet" id="dynamic_styles" />
+<link href="../assests/css/main.css" rel="stylesheet" />
+<link href="../assests/css/dashboard_styles.css" rel="stylesheet" />
+<link href="../assests/css/jquery.dataTables.css" rel="stylesheet"/>
+<link href="../assests/css/jquery-ui.css" rel="stylesheet"/>
+
+
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -14,7 +49,24 @@
 
     <!-- Styles -->
     
+    <style type="text/css">
+    .justify-content-center {
+         margin: 150px !important; 
+         align:center;
+  
+    }
+    html,body{
+        background-image:url("assests/images/bg.jpg");
+        
+  /* Full height */
+  height: 100%;
 
+/* Center and scale the image nicely */
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+    }
+</style>
 
     
     <!-- Scripts -->
@@ -23,7 +75,8 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
-    <script src="https://use.fontawesome.com/9712be8772.js"></script>
+
+    
 </head>
 <body>
     <div id="app">
