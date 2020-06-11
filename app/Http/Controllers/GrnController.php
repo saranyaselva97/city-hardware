@@ -15,6 +15,7 @@ use App\Cheques;
 use App\Invoice_header;
 use App\Invoice_details;
 use App\Suppliers;
+use App\Items;
 use Auth;
 use DB;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -179,17 +180,40 @@ class GrnController extends Controller
             $cashCreditAccount->save();
             }
             }
+
            
             $docSettings = Doc_settings::where('Prefix',"GRN")->first();
     
             $docSettings->Next_No += 1;
             $docSettings->save();
-           
-            $grnreport = $this->printGRN(); 
+
+         /******************************************************************************************************************** */
+       
 
            /**To sent the print GRN page */
-            $grnID=$grnHeader->id;
-            return redirect('/printgrn')->with('grn',$grnHead);
+           $suppliers = Suppliers::where('id',$supplierId)->first();
+           if($grnHeader->Payment_Type === "CA"){
+               $payment_type="Cash";
+           }
+           else if($grnHeader->Payment_Type === "CR"){
+            $payment_type="Credit";
+           }
+           else if($grnHeader->Payment_Type === "CH"){
+            $payment_type="Cheque";
+           }
+            $data=array(
+                'grncode' => $grnHeader->Grn_Code,
+                'supplier'=>$suppliers,
+                'paymentType'=>$payment_type,
+                'grossamount'=>$grnHeader->Gross_Amount,
+                'grndate'=>date("Y-m-d   H:i"),
+                'grnDetails'=>$grnDetail,
+                'itemid'=>$grnDetail->Item,
+                'grnheader'=>$grnHeader,
+                
+            );
+          
+           return view('reports.printgrn')->with($data);
            
        
     }

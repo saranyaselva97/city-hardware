@@ -37,23 +37,23 @@
 <div class="row" style="padding:15px; margin-left: 0px; margin-right: 0px;">
     <div class="col-md-5 pull-left">
         <ul style="list-style: none; font-size: 13px; font-weight: bold;">
-            <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><li style="padding-top: 5px" id="supplier_name" class="ui-autocomplete-input" autocomplete="off">Supplier Name : </li>
-            <li style="padding-top: 5px" id="address">Address : aD</li>
-            <li style="padding-top: 5px" id="telephone">Telephone : </li>
+            <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><li style="padding-top: 5px" id="supplier_name" class="ui-autocomplete-input" autocomplete="off">Supplier Name : {{$supplier->supplier_name}} </li>
+            <li style="padding-top: 5px" id="address">Address : {{$supplier->address}}</li>
+            <li style="padding-top: 5px" id="telephone">Telephone :{{$supplier->contact}} </li>
         </ul>
     </div>
     <div class="col-md-5 pull-right">
         <ul style="list-style: none; font-size: 13px; font-weight: bold; padding-left: 0px">
-            <li style="padding-top: 5px;" id="grn_no">GRN No. {{ $grn->id }}</li>
+            <li style="padding-top: 5px;" id="grn_no">GRN No : {{$grncode}}</li>
         </ul>
         <table style="width: 100%">
             <tbody><tr>
-                <td style="border: 1px solid black; padding: 5px; font-size: 13px" id="payment_type">Cash </td>
-                <td style="border: 1px solid black; padding: 5px; font-size: 13px" id="amount">1,050.00</td>
+                <td style="border: 1px solid black; padding: 5px; font-size: 13px" id="payment_type">{{$paymentType}} </td>
+                <td style="border: 1px solid black; padding: 5px; font-size: 13px" id="amount">{{$grossamount}} LKR</td>
             </tr>
             <tr>
                 <td style="border: 1px solid black; padding: 5px; font-size: 13px">Date </td>
-                <td style="border: 1px solid black; padding: 5px; font-size: 13px" id="grn_date">2020-06-06</td>
+                <td style="border: 1px solid black; padding: 5px; font-size: 13px" id="grn_date">{{$grndate}}</td>
             </tr>
         </tbody></table>
     </div>
@@ -67,26 +67,27 @@
                 <td style="padding: 5px; font-size: 13px; text-align: center">Unit Price</td>
                 <td style="padding: 5px; font-size: 13px; text-align: center">Discount(%)</td>
                 <td style="padding: 5px; font-size: 13px; text-align: center">Rs.</td>
-                <td style="padding: 5px; font-size: 13px; text-align: center">Cts.</td>
+             
             </tr>
         </thead>
         <tbody>
-                        <tr>
-                <td style="padding: 5px; font-size: 13px">noodels</td>
-                <td style="padding: 5px; font-size: 13px">10</td>
-                <td style="padding: 5px; font-size: 13px; text-align: right;">105</td>
-                <td style="padding: 5px; font-size: 13px; text-align: right;">0</td>
-                <td style="text-align: right; padding: 5px; font-size: 13px;">1,050</td>
-                <td style="padding: 5px; font-size: 13px">00</td>
-            </tr>
-                        <tr>
-                <td style="padding: 5px; font-size: 13px"></td>
-                <td style="padding: 5px; font-size: 13px"></td>
-                <td style="padding: 5px; font-size: 13px"></td>
-                <td style="padding: 5px; font-size: 13px; text-align: right;">Total</td>
-                <td style="text-align: right; padding: 5px; font-size: 13px;">1,050</td>
-                <td style="padding: 5px; font-size: 13px">00</td>
-            </tr>
+             @foreach($grnDetails as $grnD)
+             <?php 
+                $totalAmount=0;
+              $item = App\Items::where('id',$itemid)->first();
+              
+             ?>      
+
+
+             @endforeach
+             <tr>
+                <td style="padding: 5px; font-size: 13px">{{$item->item_name}}</td>
+                <td style="padding: 5px; font-size: 13px">{{$grnDetails->Quantity}}</td>
+                <td style="padding: 5px; font-size: 13px">{{$grnDetails->Unit_Price}}</td>
+                <td style="padding: 5px; font-size: 13px">{{$grnDetails->Discount}}</td>
+                <td style="padding: 5px; font-size: 13px">{{$grnDetails->Gross_Amount}}</td>
+            </tr> 
+             
         </tbody>
     </table>
 </div>
@@ -98,21 +99,21 @@
                 <table id="payment_details" class="table table-bordered">
             <thead>
                 <tr>
-                    <td colspan="2" style="text-align: center; font-size: 15px; font-weight: bold;">Cash</td>
+                    <td colspan="2" style="text-align: center; font-size: 15px; font-weight: bold;">{{$paymentType}}</td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td style="width: 100px;">Total Amount</td>
-                    <td style="width: 200px;">1,050.00</td>
+                    <td style="width: 200px;">{{$grnDetails->Net_Amount}}</td>
                 </tr>
                 <tr>
                     <td style="width: 100px;">Total Discount(%)</td>
-                    <td style="width: 200px;">0</td>
+                    <td style="width: 200px;">{{$grnheader->Total_Discount}}</td>
                 </tr>
                 <tr>
                     <td style="width: 100px;">Total Payment</td>
-                    <td style="width: 200px;">0.00</td>
+                    <td style="width: 200px;">{{$grnheader->Payment}}</td>
                 </tr>
             </tbody>
         </table>
@@ -120,7 +121,7 @@
 </div>
 <div class="row" style="padding:15px; margin-left: 0px; margin-right: 0px;">
     <div class="col-md-12">
-        <button type="button" class="btn btn-primary pull-right" onclick="exportGRNToPDF('grn_details');"><span class="fa fa-print"></span> Print GRN</button>
+        <button type="button" class="btn btn-primary pull-right" onclick="window.print();"><span class="fa fa-print"></span> Print GRN</button>
     </div>
 </div>                                </div>
 

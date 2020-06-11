@@ -103,7 +103,7 @@ background-size: cover;
                     <ul class="nav navbar-nav">
                         <li><a href="{{ url('/') }}">Home</a></li>
                         @if (!Auth::guest())
-                            <li><a href="{{ route('posts.create') }}">New Article</a></li>
+                            <li><a href="{{ url('dashboard') }}">Back To Dashboard</a></li>
                          @endif
                     </ul>
 
@@ -136,6 +136,8 @@ background-size: cover;
                                     </li>
                                 </ul>
                             </li>
+
+                           
                         @endif
                     </ul>
                 </div>
@@ -154,8 +156,15 @@ background-size: cover;
                 @include ('admin.errors.list') {{-- Including error file --}}
             </div>
         </div>
-
+        @if (!Auth::guest())
+                           
+        @else
         @yield('content')
+
+        @endif
+       
+ 
+      
 
     </div>
 
