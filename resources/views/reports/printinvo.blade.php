@@ -39,26 +39,26 @@
 <div class="row" style="padding:15px; margin-left: 0px; margin-right: 0px;">
     <div class="col-md-5 pull-left">
         <ul style="list-style: none; font-size: 13px; font-weight: bold;">
-            <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><li style="padding-top: 5px" id="customer_name" class="ui-autocomplete-input" autocomplete="off">Customer Name : jatha</li>
-            <li style="padding-top: 5px" id="address">Address : </li>
-            <li style="padding-top: 5px" id="telephone">Telephone : </li>
+            <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><li style="padding-top: 5px" id="customer_name" class="ui-autocomplete-input" autocomplete="off">Customer Name : {{$customer->customer_name}}</li>
+            <li style="padding-top: 5px" id="address">Address : {{$customer->address}} </li>
+            <li style="padding-top: 5px" id="telephone">Telephone : {{$customer->contact}}</li>
         </ul>
     </div>
     <div class="col-md-5 pull-right">
         <ul style="list-style: none; font-size: 13px; font-weight: bold; padding-left: 0px">
-            <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><li style="padding-top: 5px;" id="invoice_no" class="ui-autocomplete-input" autocomplete="off">Invoice No. INVO000005</li>
+            <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><li style="padding-top: 5px;" id="invoice_no" class="ui-autocomplete-input" autocomplete="off">Invoice No : {{$invoice}}</li>
                             
 
             
         </ul>
         <table style="width: 100%">
             <tbody><tr>
-                <td style="border: 1px solid black; padding: 5px; font-size: 13px" id="payment_type">Cheque </td>
-                <td style="border: 1px solid black; padding: 5px; font-size: 13px" id="amount">495.00</td>
+                <td style="border: 1px solid black; padding: 5px; font-size: 13px" id="payment_type">{{$payment_type}} </td>
+                <td style="border: 1px solid black; padding: 5px; font-size: 13px" id="amount">{{$grossamount}}</td>
             </tr>
             <tr>
                 <td style="border: 1px solid black; padding: 5px; font-size: 13px">Date </td>
-                <td style="border: 1px solid black; padding: 5px; font-size: 13px" id="invoice_date">2020-06-06</td>
+                <td style="border: 1px solid black; padding: 5px; font-size: 13px" id="invoice_date">{{$grndate}}</td>
             </tr>
         </tbody></table>
     </div>
@@ -73,62 +73,78 @@
                 <td style="padding: 5px; font-size: 13px; text-align: center">Discount(%)</td>
                 <td style="padding: 5px; font-size: 13px; text-align: center">Rs.</td>
                 <td style="padding: 5px; font-size: 13px; text-align: center">Cts.</td>
+  
             </tr>
         </thead>
-        <tbody>
-                        <tr>
-                <td style="padding: 5px; font-size: 13px">10</td>
-                <td style="padding: 5px; font-size: 13px">Steel</td>
-                <td style="padding: 5px; font-size: 13px; text-align: right;">55</td>
-                <td style="padding: 5px; font-size: 13px; text-align: right;">10</td>
-                <td style="text-align: right; padding: 5px; font-size: 13px;">495</td>
-                <td style="padding: 5px; font-size: 13px">00</td>
-            </tr>
-                        <tr>
+         
+          
+            
+        @foreach($invoiceDetail as $grnD)
+             <?php 
+                $totalAmount=0;
+              $item = App\Items::where('id',$itemid)->first();
+              
+             ?>      
+
+
+             @endforeach
+             <tr>
+                <td style="padding: 5px; font-size: 13px">{{$item->item_name}}</td>
+                <td style="padding: 5px; font-size: 13px">{{$invoiceDetail->Quantity}}</td>
+                <td style="padding: 5px; font-size: 13px">{{$invoiceDetail->Unit_Price}}</td>
+                <td style="padding: 5px; font-size: 13px">{{$invoiceDetail->Discount}}</td>
+                <td style="padding: 5px; font-size: 13px">{{$invoiceDetail->Gross_Amount}}</td>
+            </tr> 
+             
+            
+          
+            
+            <tr>
                 <td style="padding: 5px; font-size: 13px"></td>
                 <td style="padding: 5px; font-size: 13px"></td>
                 <td style="padding: 5px; font-size: 13px; text-align: right;">Total</td>
                 <td style="padding: 5px; font-size: 13px"></td>
-                <td style="text-align: right; padding: 5px; font-size: 13px;">495</td>
+                <td style="text-align: right; padding: 5px; font-size: 13px;">{{$invoiceDetail->Gross_Amount}}</td>
                 <td style="padding: 5px; font-size: 13px">00</td>
             </tr>
         </tbody>
     </table>
 </div>
 <div class="row" style="margin-left: 0px; margin-right: 0px;">
-    <div class="col-md-12">
+<div class="col-md-12">
         <p style="font-weight: bold; font-size: 15px;">Payment Details</p>
     </div>
     <div class="col-md-6" style="padding-left: 15px;">
                 <table id="payment_details" class="table table-bordered">
             <thead>
                 <tr>
-                    <td colspan="2" style="text-align: center; font-size: 15px; font-weight: bold;">Cheque</td>
+                    <td colspan="2" style="text-align: center; font-size: 15px; font-weight: bold;">{{$payment_type}}</td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td style="width: 100px;">Bank</td>
-                    <td style="width: 200px;">Axis Bank Ltd.</td>
+                    <td style="width: 100px;">Total Amount</td>
+                    <td style="width: 200px;">{{$invoiceDetail->Gross_Amount}}</td>
                 </tr>
                 <tr>
-                    <td style="width: 100px;">Cheque No.</td>
-                    <td style="width: 200px;">4727272</td>
+                    <td style="width: 100px;">Total Discount(%)</td>
+                    <td style="width: 200px;">{{$invoiceheader->Total_Discount}}</td>
                 </tr>
                 <tr>
-                    <td style="width: 100px;">Deposit Date</td>
-                    <td style="width: 200px;">2020-06-03</td>
+                    <td style="width: 100px;">Total Payment</td>
+                    <td style="width: 200px;">{{$invoiceheader->Payment}}</td>
+                </tr>
+                <tr>
+                    <td style="width: 100px;">Balance</td>
+                    <td style="width: 200px;">{{$invoiceheader->Balance}}</td>
                 </tr>
             </tbody>
         </table>
-        <ul>
-           
-        </ul>
             </div>
 </div>
 <div class="row" style="padding:15px; margin-left: 0px; margin-right: 0px;">
     <div class="col-md-12">
-                <button type="button" class="btn btn-primary pull-right" onclick="exportInvoiceToPDF('invoice_details');"><span class="fa fa-print"></span> Print Invoice</button>
+                <button type="button" class="btn btn-primary pull-right" onclick="window.print();"><span class="fa fa-print"></span> Printed Invoice</button>
             </div>
 </div>                                </div>
 

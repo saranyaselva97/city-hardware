@@ -16,6 +16,7 @@ use App\Invoice_header;
 use App\Invoice_details;
 use App\Suppliers;
 use App\Items;
+use App\Customers;
 use Auth;
 use DB;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -376,7 +377,32 @@ class GrnController extends Controller
         $docSettings->next_no += 1;
         $docSettings->save();
 
-    return redirect('/printinvo')->with('success','Invoice Added Successfully');
+
+             $customers = Customers::where('id',$customer)->first();
+             if($invoiceHeader->Payment_Type === "CA"){
+                $payment_type="Cash";
+            }
+            else if($invoiceHeader->Payment_Type === "CR"){
+             $payment_type="Credit";
+            }
+            else if($invoiceHeader->Payment_Type === "CH"){
+             $payment_type="Cheque";
+            }
+            
+            $invoice_det=Invoice_details::where('Invoice_Header',$invoiceHeader->id)->first();
+            $data=array(
+            'invoice' => $invoiceHeader->Invoice_Number,
+            'customer'=>$customers,
+            'payment_type'=>$payment_type,
+            'grossamount'=>$invoiceHeader->Gross_Amount,
+            'grndate'=>date("Y-m-d   H:i"),
+            'invoiceDetail'=>$invoice_det,
+            'itemid'=>$invoiceDetail->Item,
+            'invoiceheader'=>$invoiceHeader,
+
+            );
+
+        return view('reports.printinvo')->with($data);;
 }
 
     /**
