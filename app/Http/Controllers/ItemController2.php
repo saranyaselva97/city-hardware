@@ -94,6 +94,27 @@ class ItemController2 extends Controller
 		
     	return response()->json($stocks);
 	}
+public function autocomplete_Item(Request $req){
+    $item_name = $req->item_name;
+    $location =$req->location;
+
+    $items = Items::where('item_name', 'LIKE',"%"."$item_name"."%" )->get();
+    $itemList = array();
+
+    foreach($items as $item){
+        $matchThese = ['Item' => $item->id, 'Location' => $location];
+            $stocks=Stocks::select('id','Quantity','Average_Price','Location')->where($matchThese)->first();
+        $avilablestocks = 0;
+      if($stocks){
+        $avilablestocks=$stocks->Quantity;
+      }
+        
+                
+        $itemList[] = array("label"=>$item->item_name, "value"=>$item->id, "avb_qty"=>$avilablestocks, "unit_price"=>$item->label_price);
+    }
+    return json_encode($itemList);
+
 
     
+}    
 }

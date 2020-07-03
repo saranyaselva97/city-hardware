@@ -48,10 +48,12 @@ Route::get('/get_prefix','GrnController@get_prefix');
 Route::post('/add_invoice','GrnController@add_invoice');
 Route::get('/printgrn', 'GrnController@printGRN');
 Route::get('/printivo', 'GrnController@printInvo');
+Route::post('/Transfer_History','GrnController@itemTrasnfer');
+
 /**Supplier */
 Route::get('/suplier_master', 'SupplierController2@create');
 Route::post('/store_supplier', 'SupplierController2@store');
-
+Route::get('/item_autocomplete', 'ItemController2@autocomplete_Item')->name('item_autocomplete');;
 /**Customer */
 Route::get('/customer_master', 'CustomerController2@create');
 Route::post('/store_customer', 'CustomerController2@store');

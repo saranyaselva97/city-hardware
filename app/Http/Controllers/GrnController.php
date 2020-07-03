@@ -17,6 +17,7 @@ use App\Invoice_details;
 use App\Suppliers;
 use App\Items;
 use App\Customers;
+use App\Item_transfer_history;
 use Auth;
 use DB;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -404,6 +405,84 @@ class GrnController extends Controller
 
         return view('reports.printinvo')->with($data);;
 }
+
+
+
+
+/***********Item Transfer History */
+
+
+public function itemTrasnfer(Request $request){
+          $user_id = Auth::user()->id;
+    $rowCount = filter_input(INPUT_POST, "Row_Count", FILTER_SANITIZE_NUMBER_INT);
+    $transferCode = filter_input(INPUT_POST, "transfer_number", FILTER_SANITIZE_STRING);
+    for($i=0; $i<=$rowCount; $i++){
+        $fromLocation = filter_input(INPUT_POST, "FromLocation".$i, FILTER_SANITIZE_STRING);
+
+        $toLocation = filter_input(INPUT_POST, "ToLocation".$i, FILTER_SANITIZE_STRING);
+        $itemId = filter_input(INPUT_POST, "ItemId".$i, FILTER_SANITIZE_NUMBER_INT);
+        $transferQty = filter_input(INPUT_POST, "TransferQty".$i, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        
+        $transferDetails = array("Transfer_Number"=>$transferCode, "From_location"=>$fromLocation, "To_location"=>$toLocation, "Quantity"=>$transferQty,
+                           "Item"=>$itemId, "user_id"=>$user_id);
+        
+        $itemTransfer = new Item_transfer_history($transferDetails);
+        $itemTransfer->save();
+
+        $matchThese1 = ['Item' => $itemId, 'Location' => $fromLocation];
+        $fromStock=Stocks::select('id','Quantity','Average_Price','Location','Item')->where($matchThese1)->first();
+        $matchThese2 = ['Item' => $itemId, 'Location' => $toLocation];
+        $toStock=Stocks::select('id','Quantity','Average_Price','Location','Item')->where($matchThese2)->first();
+        
+
+        $fromPreviousQty = ($fromStock === null ? 0 : $fromStock->Quantity);
+        $toPreviousQty = ($toStock === null ? 0 : $toStock->Quantity);
+
+        $fromStock->Quantity -= $transferQty;
+        $fromStock->save();
+
+        if($toStock !== null){
+            $toStock->Quantity += $transferQty;
+            $toStock->save();
+        }else{
+            $stockDetails = array("Quantity"=>$transferQty, "Average_Price"=>$fromStock->average_price, "Location"=>$tolocation, 
+                            "Item"=>$itemId);
+            $toStock = new Stocks($stockDetails);
+            $toStock->save();
+        }
+
+        
+        $fromtransactionDetails = array("Tran_Type"=>"A", "DocType" => "ITR", "DocId" => $itemTransfer->id, "Unit_Price" => $fromStock->Average_Price, "Quantity" => $transferQty,
+        "Net_Amount" =>($transferQty * $fromStock->Average_Price), "Discount" => 0, "Gross_Amount" => ($transferQty * $fromStock->Average_Price), "Previous_Quantity" => $fromPreviousQty,
+        "New_Quantity" => $fromStock->Quantity, "Location" => $fromLocation,"Item" => $itemId, "user_id" => $user_id);
+
+         $fromTransaction = new Transactions($fromtransactionDetails);
+         $fromTransaction->save();  
+
+         $toTransactionDetails = array("Tran_Type"=>"A", "DocType" => "ITR", "DocId" => $itemTransfer->id, "Unit_Price" => $toStock->Average_Price, "Quantity" => $transferQty,
+        "Net_Amount" =>($transferQty * $toStock->Average_Price), "Discount" => 0, "Gross_Amount" => ($transferQty * $toStock->Average_Price), "Previous_Quantity" => $toPreviousQty,
+        "New_Quantity" => $toStock->Quantity, "Location" => $toLocation,"Item" => $itemId, "user_id" => $user_id);
+
+         $toTransaction = new Transactions($fromtransactionDetails);
+         $toTransaction->save();  
+
+         
+
+    }
+    $docSettings = Doc_settings::where('Prefix',"TNN")->first();
+    $docSettings->next_no += 1;
+    $docSettings->save();
+
+  return redirect('/item_transfer')->with('success','Items Transfer Saved Successfully');
+}
+
+
+
+
+
+
+
+
 
     /**
      * Display the specified resource.

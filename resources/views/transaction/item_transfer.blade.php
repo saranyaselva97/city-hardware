@@ -11,6 +11,12 @@
             </ol>
         </div>
     </div>
+    @if(\Session::has('success'))
+               <div class="alert alert-success">
+                <p>{{\Session::get('success')}}</p>
+                </div>
+                            
+        @endif
     <div class="row" style="padding: 15px;">
         <div class="col-md-12 shadow" style="padding: 15px; margin-bottom: 15px;">
             <div class="alert alert-danger col-md-12" id="item_error_msg" style="display: none;">
@@ -41,7 +47,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <input type="text" name="transfer_number" id="transfer_number" class="form-control" value="TNN000009" readonly="" style="background-color: #fff">
+                            <input type="text" name="transfer_number" id="transfer_number" class="form-control" value="{{$tnn}}" readonly="" style="background-color: #fff">
                         </td>
                         <td>
                             <select id="from_location" class="form-control">
@@ -54,10 +60,10 @@
                         <td>
                             <select id="to_location" class="form-control">
                                 <option value="">-Select-</option>
-                                                                          @foreach($locations as $it)
-                                                                        <option value='{{ $it->loc_code}}'>{{ $it->loc_name }}</option>
-                                                                        @endforeach
-                                                                </select>
+                              @foreach($locations as $it)
+                                       <option value='{{ $it->loc_code}}'>{{ $it->loc_name }}</option>
+                                        @endforeach
+                                       </select>
                         </td>
                         <td>
                             <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input type="text" id="transfer_item" class="form-control ui-autocomplete-input" autocomplete="off">
@@ -77,11 +83,12 @@
                 </tbody></table>
 
             </div>
-            <form action="c_transactions.php?action=strn" method="post" id="item_transfer_form">
+            <form action="{{action('GrnController@itemTrasnfer')}}" method="post">
+            @csrf
                 <div id="printDiv">
                     <table id="printFullTable" style="border:none;width: 100%">
                         <tbody><tr>
-                            <td><h4>Transfer Note -TNN000000</h4><p style="float: right; font-weight: bold; font-size: 12px; margin-right: 15px">Transferred Date : 2020-03-30</p></td>
+                            <td><h4>Transfer Note -{{$tnn}}</h4><p style="float: right; font-weight: bold; font-size: 12px; margin-right: 15px">Transferred Date : 2020-03-30</p></td>
                         </tr>
                         <tr>
                             <td>
@@ -118,7 +125,7 @@
                 </div>
                 <div class="col-md-12">
                     <input type="hidden" name="Row_Count" id="row_count">
-                    <input type="hidden" name="transfer_number" id="transfer_number" value="TNN000000">
+                    <input type="hidden" name="transfer_number" id="transfer_number" value="{{$tnn}}">
                     <button type="submit" class="btn btn-primary pull-right" id="transfer_button" style="display: none" disabled="true">
                         <span class="fa fa-send"></span> Transfer Items
                     </button>
@@ -131,4 +138,38 @@
     </div>
 </div>
                                 </div>
+@endsection
+
+
+@section('scripts')
+
+<script>
+
+$(function() {
+    $("#transfer_item").autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                type: "GET",
+                url: "{{ url('/item_autocomplete') }}",
+                data: {
+                    item_name: request.term,
+                    location: $("#from_location").val()
+                },
+                success: function(data) {
+                    response(JSON.parse(data));
+                }
+            });
+        },
+        minLength: 1,
+        select: function(event, ui) {
+            $(this).val(ui.item.label);
+            $("#item_id").val(ui.item.value);
+           $("#avb_qty").val(ui.item.avb_qty);
+            $("#unit_price").val(ui.item.unit_price);
+            return false;
+        }
+    });
+});
+
+</script>
 @endsection

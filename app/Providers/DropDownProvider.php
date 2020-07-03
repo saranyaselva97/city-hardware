@@ -44,7 +44,7 @@ class DropDownProvider extends ServiceProvider
             $view->with('expence',Expences::all());
             $view->with('exp',ExpencesTypes::all());
             $view->with('grn',Doc_settings::createDocNo("GRN"));
-
+            $view->with('tnn',Doc_settings::createDocNo("TNN"));
           
         });
       
