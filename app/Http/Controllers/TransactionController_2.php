@@ -58,6 +58,10 @@ class TransactionController_2 extends Controller
         return view('transaction.item_transfer');
     }
     
-    
+    public function  salesinvoice()
+    {
+
+        return view('transaction.sales_invoice');
+    }
     
 }

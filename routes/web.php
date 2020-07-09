@@ -49,6 +49,10 @@ Route::post('/add_invoice','GrnController@add_invoice');
 Route::get('/printgrn', 'GrnController@printGRN');
 Route::get('/printivo', 'GrnController@printInvo');
 Route::post('/Transfer_History','GrnController@itemTrasnfer');
+Route::get('salestoinvoice/{id?}', 'GrnController@action_session');
+Route::post('/new_sales_order','GrnController@newsalesorder');
+Route::get('/sales_invoice', 'TransactionController_2@salesinvoice');
+Route::post('/salesinvoicestore','GrnController@salesinvoicestore');
 
 /**Supplier */
 Route::get('/suplier_master', 'SupplierController2@create');

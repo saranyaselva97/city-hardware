@@ -11,6 +11,23 @@
             </ol>
         </div>
     </div>
+
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+    @if(\Session::has('success'))
+               <div class="alert alert-success">
+                <p>{{\Session::get('success')}}</p>
+                </div>
+                            
+        @endif
     
     <div class="row" style="padding: 15px;">
         <div class="col-md-12 shadow" style="padding: 15px; margin-bottom: 15px;">
@@ -19,7 +36,8 @@
                 <span id="error_msg"></span>
             </div>
                         
-            <form action="c_transactions.php?action=ssrd" method="post" id="sales_order_form" onsubmit="return validateSalesOrderForm();">
+            <form action="{{action('GrnController@newsalesorder')}}" method="post">
+                @csrf
                 <div class="col-md-4">
                     <table style="width: 100%; border: none">
                         <tbody><tr style="padding: 5px">
@@ -27,7 +45,7 @@
                                 <label for="order_no">Order Number</label>
                             </td>
                             <td style="padding-top: 5px; padding-bottom: 5px">
-                                <input type="text" name="Order_Number" id="order_no" class="form-control" value="SOR000000" readonly="" style="background-color: #fff">
+                                <input type="text" name="Order_Number" id="order_no" class="form-control" value="{{$sor}}" readonly="" style="background-color: #fff">
                             </td>
                         </tr> 
                         <tr style="padding: 5px">
@@ -37,10 +55,10 @@
                             <td style="padding-top: 5px; padding-bottom: 5px">
                                 <select name="Sale_Location" id="sale_location" class="form-control">
                                     <option value="">-Select-</option>
-                                                                        <option value="O">Outlet</option>
-                                                                        <option value="V">Vehicle</option>
-                                                                        <option value="W">Warehouse</option>
-                                                                    </select>
+                                    @foreach($locations as $it)
+                                  <option value='{{ $it->loc_code}}'>{{ $it->loc_name }}</option>
+                                   @endforeach
+                                 </select>
                             </td>
                         </tr> 
                         <tr>
@@ -65,13 +83,13 @@
                     <table style="width: 100%; border: none">
                         <tbody><tr>
                             <td style="padding-top: 5px; padding-bottom: 5px">
-                                <select name="Item" id="item_list" class="form-control" size="9" onchange="getStockDetailsByItem(this);">
-                                                                         @foreach($items as $it)
+                                <select name="Item" id="item_list" class="form-control product" size="9">
+                                    @foreach($items as $it)
 
-                                                                        <option value='{{ $it->id }}'>{{ $it->item_name }}</option>
+                                       <option value='{{ $it->id }}'>{{ $it->item_name }}</option>
                                                                         
-                                                                        @endforeach
-                                                                        </select>
+                                  @endforeach
+                               </select>
                             </td>
                         </tr>
                     </tbody></table>
@@ -159,4 +177,97 @@
         </div>
     </div>
 </div>                                </div>
+@endsection
+
+@section('scripts')
+
+<script>
+$(function () {
+    $("#customer_name").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                type: "GET",
+      
+                url: "{{ url('/customer_autocomplete') }}",
+                data: {
+                    term: request.term
+                },
+                success: function (data) {
+                    response(JSON.parse(data));
+                }
+            });
+        },
+        minLength: 1,
+        select: function (event, ui) {
+            $(this).val(ui.item.label);
+           // $("#supplier_due").val(ui.item.due);
+            $("#customer_id").val(ui.item.value);
+
+            return false;
+        }
+    });
+});
+$(document).ready(function(){
+        $(document).on('change','.product',function(){
+           var item_id=$(this).val();
+         
+           $.ajax({
+            type:'get',
+            url: '{!!URL::to('itemlist')!!}',
+            data:{'id':item_id},
+            dataType:'json',
+            success:function(data){
+              if(data.length > 0)
+                            {
+                                for(key in data)
+                                {
+                                    var tmp = data[key];
+                                    /*console.log(tmp.id);
+                                    console.log(tmp.item_name);
+                                    console.log(tmp.label_price);*/
+                                   // a.find('.itm_name').val(tmp.item_name);
+                                    document.getElementById("item_name").value = tmp.item_name;
+                                    document.getElementById("line_item_name").value =tmp.item_name;
+                                    document.getElementById("item_id").value =tmp.id;
+                                    document.getElementById("unit_price").value =tmp.label_price;
+                               }
+                            }
+                            else
+                            {
+                               alert("No Item Found")
+                            }
+            },
+            error:function(){
+            }
+           });
+        });
+        $(document).on('change','.product',function(){
+        var item_id=$(this).val();
+           $.ajax({
+            type:'get',
+            url: '{!!URL::to('itemqty')!!}',
+            data:{'id':item_id},
+            dataType:'json',
+            success:function(qtydata){
+                if(qtydata.length > 0)
+                            {
+                                for(key in qtydata)
+                                {
+                                    var tmp = qtydata[key];
+                                     document.getElementById("available_qty").value =tmp.Quantity;
+                                }
+                            }
+                            else{
+                                document.getElementById("available_qty").value =0;
+                            }
+                      },
+            
+            error:function(){
+            }
+           });
+        });
+    });
+
+
+</script>
 @endsection

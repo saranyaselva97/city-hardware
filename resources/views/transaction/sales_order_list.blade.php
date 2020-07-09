@@ -11,6 +11,18 @@
             </ol>
         </div>
     </div>
+    <?php 
+                if(isset($_SESSION["save_success"])){
+            ?>
+            <div class="alert alert-danger col-md-12" id="item_error_msg">
+                <span class="closebtn" onclick="closeAlert(this.parentElement)">&times;</span>
+                <span><?php echo $_SESSION["save_success"] ?></span>
+            </div>
+            <?php 
+                unset($_SESSION["save_success"]);
+                }
+            ?>
+            
     
     <div class="row" style="padding: 15px;">
         <div class="col-md-12 shadow" style="padding: 15px; margin-bottom: 15px;">
@@ -26,20 +38,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                                        <tr>
-                        <td>SOR000010</td>
-                        <td>2020-03-12</td>
-                        <td>110.00</td>
-                        <td>cash</td>
-                        <td>User</td>
+                @foreach($sales as $sale =>$sale_vale)
+                    <tr>
+                        <td>{{$sale_vale->Order_Number}}</td>
+                        <td>{{$sale_vale->Order_Date}}</td>
+                        <td>{{$sale_vale->Net_Amount}}</td>
+                        <td>{{$sale_vale->customer->customer_name}}</td>
+                        <td>{{$sale_vale->user->name}}</td>
                         <td>
-                            <a href="#" class="btn btn-primary"><span class="fa fa-plus"></span> Create Invoice</a>
+                            <a href="salestoinvoice/{{$sale_vale->id}}"class="btn btn-primary"><span class="fa fa-plus"></span> Create Invoice</a>
                         </td>
                     </tr>
-                                    </tbody>
+                    @endforeach
+                  </tbody>
             </table>
         </div>
     </div>
-</div>                                </div>
+</div> 
+   </div>
 
 @endsection

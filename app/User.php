@@ -48,4 +48,8 @@ class User extends Authenticatable
     return $this->hasMany(Expences::class);
    }
 
+   public function sales_order_header(){
+    return $this->hasMany(Sales_order_header::class);
+   }
+
 }

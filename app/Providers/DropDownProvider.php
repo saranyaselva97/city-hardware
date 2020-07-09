@@ -13,6 +13,7 @@ use App\Doc_settings;
 use App\Suppliers;
 use App\Customers;
 use App\Transactions;
+use App\Sales_order_header;
 class DropDownProvider extends ServiceProvider
 {
     /**
@@ -45,7 +46,9 @@ class DropDownProvider extends ServiceProvider
             $view->with('exp',ExpencesTypes::all());
             $view->with('grn',Doc_settings::createDocNo("GRN"));
             $view->with('tnn',Doc_settings::createDocNo("TNN"));
-          
+            $view->with('sor',Doc_settings::createDocNo("SOR"));
+            $view->with('sales',Sales_order_header::where('status',"2")->get());
+            
         });
       
     }

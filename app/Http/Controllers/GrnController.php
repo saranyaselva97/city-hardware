@@ -18,6 +18,10 @@ use App\Suppliers;
 use App\Items;
 use App\Customers;
 use App\Item_transfer_history;
+use App\Sales_order_header;
+use App\Sales_order_details;
+use App\Locations;
+
 use Auth;
 use DB;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -375,7 +379,7 @@ class GrnController extends Controller
         }
         
         $docSettings = Doc_settings::where('Prefix',$prefix)->first();
-        $docSettings->next_no += 1;
+        $docSettings->Next_No  += 1;
         $docSettings->save();
 
 
@@ -403,7 +407,7 @@ class GrnController extends Controller
 
             );
 
-        return view('reports.printinvo')->with($data);;
+        return view('reports.printinvo')->with($data);
 }
 
 
@@ -445,7 +449,7 @@ public function itemTrasnfer(Request $request){
             $toStock->Quantity += $transferQty;
             $toStock->save();
         }else{
-            $stockDetails = array("Quantity"=>$transferQty, "Average_Price"=>$fromStock->average_price, "Location"=>$tolocation, 
+            $stockDetails = array("Quantity"=>$transferQty, "Average_Price"=>$fromStock->Average_Price, "Location"=>$toLocation, 
                             "Item"=>$itemId);
             $toStock = new Stocks($stockDetails);
             $toStock->save();
@@ -465,20 +469,279 @@ public function itemTrasnfer(Request $request){
 
          $toTransaction = new Transactions($fromtransactionDetails);
          $toTransaction->save();  
-
-         
-
+        
+         $docSettings = Doc_settings::where('Prefix',"TNN")->first();
+         $docSettings->Next_No  += 1;
+         $docSettings->save();
     }
-    $docSettings = Doc_settings::where('Prefix',"TNN")->first();
-    $docSettings->next_no += 1;
-    $docSettings->save();
+    
 
   return redirect('/item_transfer')->with('success','Items Transfer Saved Successfully');
 }
 
 
 
+public function newsalesorder(Request $request){
 
+    $this->validate($request,[
+        'Sale_Location'=>'required',
+        'Order_Date'=>'required',
+        'Customer_Id'=>'required',
+        'Item_Id'=>'required',
+        'Total_Net_Amount'=>'required',
+      
+    
+        'Unit_Price'=>'required',
+      
+     
+      ]);
+
+    $user_id = Auth::user()->id;
+    $orderNo = filter_input(INPUT_POST, "Order_Number", FILTER_SANITIZE_STRING);
+    $saleLocation = filter_input(INPUT_POST, "Sale_Location", FILTER_SANITIZE_STRING);
+    $orderDate = filter_input(INPUT_POST, "Order_Date", FILTER_SANITIZE_STRING);
+    $customerId = filter_input(INPUT_POST, "Customer_Id", FILTER_SANITIZE_NUMBER_INT);
+    $totalNetAmounr = filter_input(INPUT_POST, "Total_Net_Amount", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+
+    
+    $pendingStatus = System_status::where('Code',"PND")->first();
+
+    $orderHeaderDetails = array("Order_Number" => $orderNo, "Location"=>$saleLocation, "Order_Date" => date("Y-m-d", strtotime($orderDate)), "Net_Amount" => $totalNetAmounr, "System_Date" => date("Y-m-d H:i:s"),
+    "customer_id" => $customerId, "user_id" => $user_id, "status" => $pendingStatus->id);
+
+    $orderHeader = new Sales_order_header($orderHeaderDetails);
+    $orderHeader->save();
+
+    $rowCount = filter_input(INPUT_POST, "Row_Count", FILTER_SANITIZE_NUMBER_INT);
+
+    for ($i = 0; $i <= $rowCount; $i++) {
+        $itemId = filter_input(INPUT_POST, "Item_Id" . $i, FILTER_SANITIZE_NUMBER_INT);
+        $quantity = filter_input(INPUT_POST, "Quantity" . $i, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $unitPrice = filter_input(INPUT_POST, "Unit_Price" . $i, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $discountRate = filter_input(INPUT_POST, "Discount_Rate" . $i, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $netAmount = filter_input(INPUT_POST, "Net_Amount" . $i, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+
+        $orderDetails = array("Quantity" => $quantity, "Unit_Price" => $unitPrice, "Discount" => $discountRate, "Net_Amount" => $netAmount, "Item" => $itemId, "Sales_Order_Header" => $orderHeader->id);
+
+        $orderDetail = new Sales_order_details($orderDetails);
+        $orderDetail->save();
+    }
+    $docSettings = Doc_settings::where('Prefix',"SOR")->first();
+    $docSettings->Next_No += 1;
+    $docSettings->save();
+
+
+    return redirect('/sales_order_list');
+}
+
+public function action_session($id = null) {
+
+    $user_id = Auth::user()->id;
+    $salesorder = Sales_order_header::where('id',$id)->first();
+    $status = System_status::where('id',$salesorder->status)->first();
+
+    $saleLocation=Locations::where('loc_code',$salesorder->Location)->first();
+
+    if($saleLocation->loc_code == 'B1'){
+        $invoiceNumber = Doc_settings::createDocNo("INVB1");
+    }elseif ($saleLocation->loc_code == 'B2') {
+        $invoiceNumber = Doc_settings::createDocNo("INVB2");
+    }elseif ($saleLocation->loc_code == 'B3') {
+        $invoiceNumber =Doc_settings::createDocNo("INVB3");
+    }
+    elseif ($saleLocation->loc_code == 'W') {
+        $invoiceNumber = Doc_settings::createDocNo("INVW");
+    }
+    
+    
+    $saleOrderDetails = Sales_order_details::where('Sales_Order_Header',$salesorder->id)->get();
+    
+    $customer = Customers::where('id',$salesorder->customer_id)->first();
+    
+
+    $salesRep = Auth::user()::where('id',$salesorder->user_id)->first();
+
+    $data=array(
+       'saleorder' => $salesorder, 
+       'customer' => $customer, 
+       'salesRep' => $salesRep , 
+       'invoiceNumber' => $invoiceNumber , 
+       'location'=>$salesorder->Location,
+       'saleOrderDetails'=>$saleOrderDetails
+        );
+
+       
+
+       // return $data;
+       return view('transaction.sales_invoice')->with($data);
+    
+}
+
+public function salesinvoicestore (Request $request){
+    $user_id = Auth::user()->id;
+
+    $invoiceNumber = filter_input(INPUT_POST, "Invoice_No", FILTER_SANITIZE_STRING);
+    $saleLocation = filter_input(INPUT_POST, "Sale_Location", FILTER_SANITIZE_STRING);
+    $invoiceDate = filter_input(INPUT_POST, "Invoice_Date", FILTER_SANITIZE_STRING);
+    $customer = filter_input(INPUT_POST, "Customer_Id", FILTER_SANITIZE_NUMBER_INT);
+    $paymentType = filter_input(INPUT_POST, "Payment_Type", FILTER_SANITIZE_STRING);
+    $grossAmount = filter_input(INPUT_POST, "Gross_Amount", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $totalDiscount = filter_input(INPUT_POST, "Total_Discount", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $netAmount = filter_input(INPUT_POST, "Net_Amount", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $payment = filter_input(INPUT_POST, "Payment", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $balance = filter_input(INPUT_POST, "Balance", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $prefix = "";
+    
+
+    $pendingStatus = System_status::where('Code',"PND")->first();
+
+    $invoiceHeaderDetails = array("Invoice_Number" => $invoiceNumber, "Invoice_Date" => $invoiceDate, "Net_Amount" => $grossAmount,
+        "Total_Discount" => $totalDiscount, "Gross_Amount" => $netAmount, "Payment_Type" => $paymentType, "Payment" => $payment,
+        "Balance" => $balance, "Location" => $saleLocation, "customer_id" => $customer, "user_id" => $user_id,
+        "status" => $pendingStatus->id);
+
+    $invoiceHeader = new Invoice_header($invoiceHeaderDetails);
+    $invoiceHeader->save();
+
+
+        
+    $rowCount = filter_input(INPUT_POST, "Row_Count", FILTER_SANITIZE_NUMBER_INT);
+
+    for ($i = 0; $i <= $rowCount; $i++) {
+       if (isset($_POST["Item_Id" . $i])) {
+           $itemId = filter_input(INPUT_POST, "Item_Id" . $i, FILTER_SANITIZE_NUMBER_INT);
+           $quantity = filter_input(INPUT_POST, "Quantity" . $i, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+           $unitPrice = filter_input(INPUT_POST, "Unit_Price" . $i, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+           $lineGrossAmount = filter_input(INPUT_POST, "Gross_Amount" . $i, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+           $discount = filter_input(INPUT_POST, "Discount" . $i, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+           $lineNetAmount = filter_input(INPUT_POST, "Net_Amount". $i, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+
+           $discountPrice = ($lineGrossAmount - $lineNetAmount);
+           $matchThese = ['Item' => $itemId, 'Location' => $saleLocation];
+           $stock=Stocks::where($matchThese)->first();
+
+           if($stock){
+
+            $Average_Price=$stock->Average_Price;
+            $profit = 0;
+ 
+            if ($stock !== null) {
+                if($paymentType == 'FR'){
+                    $profit = 0.00;
+                }  else {
+                   $profit = ($lineNetAmount - ($Average_Price * $quantity)); 
+                }
+                
+            }
+ 
+            $invoiceDetails = array("Quantity" => $quantity, "Unit_Price" => $unitPrice, "Net_Amount" => $lineGrossAmount, "Discount" => $discount,
+                "Discount_Price" => $discountPrice, "Gross_Amount" => $lineNetAmount, "Profit" => $profit, "Item" => $itemId, "Invoice_Header" => $invoiceHeader->id);
+ 
+            $invoiceDetail = new Invoice_details($invoiceDetails);
+            $invoiceDetail->save();
+        
+            $previousQty = $stock->Quantity;
+            $newQty = $previousQty - $quantity;
+            $stock->Quantity -= $quantity;
+            $stock->save();
+
+            $transactionDetails = array("Tran_Type"=>"D", "DocType" => "INV", "DocId" => $invoiceHeader->id, "Unit_Price" => $unitPrice, "Quantity" => $quantity,
+                "Net_Amount" => $grossAmount, "Discount" => $discount, "Gross_Amount" => $netAmount, "Previous_Quantity" => $previousQty,
+                "New_Quantity" => $newQty, "Location" => $saleLocation,"Item" => $itemId, "user_id" => $user_id);
+
+            $transaction = new Transactions($transactionDetails);
+            $transaction->save();  
+
+
+           }
+           else{
+            $_SESSION["save_success"] = "Selected Items Not Found the Location";
+           }
+          
+
+        }
+    }
+    if ($invoiceHeader->Payment_Type === "CA") {
+        $paymentDetails = array("Doc_Type" => "GRN", "Doc_No" => $invoiceHeader->Invoice_Number, "Due_Amount" => $invoiceHeader->Gross_Amount,
+            "Payment_Amount" => $invoiceHeader->Payment, "Balance" => $invoiceHeader->Balance, "Payment_Type" => "CA",
+            "Payment_Date" => $invoiceHeader->created_at, "System_Date" => date("Y-m-d H:i:s"), "user_id" => $user_id,
+            "status" => $pendingStatus->id);
+
+        $payment = new Payment($paymentDetails);
+        $payment->save();
+     }
+     else if ($invoiceHeader->Payment_Type === "CR") {
+        $creditDetails = array("Doc_type" => "INV", "Doc_Id" => $invoiceHeader->id, "Amount" => $invoiceHeader->Gross_Amount, "System_Date" => date("Y-m-d H:i:s"),
+            "user_id" => $user_id, "status" => $pendingStatus->id);
+
+        $cashCreditAccount = new Cash_credit($creditDetails);
+        $cashCreditAccount->save();
+    }
+    else if ($invoiceHeader->Payment_Type === "CH") {
+        $chequeNumber = filter_input(INPUT_POST, "Cheque_No", FILTER_SANITIZE_STRING);
+        $chequeDate = filter_input(INPUT_POST, "Cheque_Date", FILTER_SANITIZE_STRING);
+        $bank = filter_input(INPUT_POST, "Bank", FILTER_SANITIZE_STRING);
+        $amount = filter_input(INPUT_POST, "Cheque_Amount", FILTER_SANITIZE_NUMBER_FLOAT);
+
+        $paymentDetails = array("Doc_Type" => "INV", "Doc_No" => $invoiceHeader->Invoice_Number, "Due_Amount" => $invoiceHeader->Gross_Amount,
+        "Payment_Amount" => $invoiceHeader->Payment, "Balance" => $invoiceHeader->Balance, "Payment_Type" => "CA",
+        "Payment_Date" => $invoiceHeader->created_at, "System_Date" => date("Y-m-d H:i:s"), "user_id" => $user_id,
+        "status" => $pendingStatus->id);
+
+         $payment = new Payment($paymentDetails);
+         $payment->save();
+
+        $chequeDetails = array("Chq_Number" => $chequeNumber, "Chq_Date" =>$chequeDate, "Bank" => $bank, "Amount" => $invoiceHeader->Payment,
+           "Payment" => $payment->id, "user_id" => $user_id, "status" => $pendingStatus->id);
+
+        $cheque = new Cheques($chequeDetails);
+        $cheque->save();
+        
+    }
+    if ($invoiceHeader->Payment_Type != "CR"){
+        if($invoiceHeader->balance > 0){
+            $creditDetails = array("Doc_Type" => "INV", "Doc_Id" => $invoiceHeader->id, "Amount" => $invoiceHeader->Balance, "System_Date" => date("Y-m-d H:i:s"),
+                "user_id" => $user->id, "status" => $pendingStatus->id);
+    
+            $cashCreditAccount = new Cash_credit($creditDetails);
+            $cashCreditAccount->save();
+        }
+        }
+        if($saleLocation == "B1"){
+            $prefix = "INVB1";
+        }elseif ($saleLocation == "B2") {
+             $prefix = "INVB2";
+        }elseif ($saleLocation == "B3") {
+             $prefix = "INVB3";
+        }
+        elseif ($saleLocation == "W") {
+            $prefix = "INVW";
+       }
+        
+        if ($paymentType == "FR") {
+             $prefix = "FOC";
+        }
+        
+        $docSettings = Doc_settings::where('Prefix',$prefix)->first();
+        $docSettings->Next_No  += 1;
+        $docSettings->save();
+
+
+        if(isset($_POST["Order_Number"])){
+            $orderNumber = filter_input(INPUT_POST, "Order_Number", FILTER_SANITIZE_STRING);
+            
+            $settledStatus = System_status::where('code',"STL")->first();
+            
+            $orderHeader = Sales_order_header::where('Order_Number',$orderNumber)->first();
+            
+            if($orderHeader !== null){
+                $orderHeader->status = $settledStatus->id;
+                $orderHeader->save();
+            }
+        }
+
+    return view('transaction.sales_order_list')->with('success','Invoice Created Successfully');
+}
 
 
 
