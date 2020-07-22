@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Suppliers;
+use App\Grn_Header;
 use DB;
 class SupplierController2 extends Controller
 {
@@ -39,18 +40,21 @@ class SupplierController2 extends Controller
 
        $term = $request->term;
        $suppliers = Suppliers::where('supplier_name', 'LIKE',"%"."$term"."%" )->get();
-    
+       
        $supplierDetails = array();
        if(count($suppliers)==0){
         $supplierDetails[] = "No Such Supplier";
        }
        else{
        foreach($suppliers as $supplier){
-    
-           $supplierDetails[] = array("label"=>$supplier->supplier_name, "value"=>$supplier->id);
+        
+        $dueamount= Suppliers::getSupplierDueBySupplierId($supplier->id);
+           $supplierDetails[] = array("label"=>$supplier->supplier_name, "value"=>$supplier->id,"due"=>$dueamount);
        }
     }
        return json_encode($supplierDetails);
     }
+
+   
     
 }

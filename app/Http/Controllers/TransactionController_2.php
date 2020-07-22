@@ -63,5 +63,11 @@ class TransactionController_2 extends Controller
 
         return view('transaction.sales_invoice');
     }
+    public function  getstock()
+    {
+
+        return view('stock.stockdetails');
+    }
+    
     
 }

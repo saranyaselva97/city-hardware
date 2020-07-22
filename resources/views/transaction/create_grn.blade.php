@@ -25,7 +25,7 @@
                 <span id="error_msg"></span>
             </div>
             
-            <form action="{{action('GrnController@itemTrasnfer')}}" method="post">
+            <form action="{{action('GrnController@store')}}" method="post">
                 @csrf
                 <div class="col-md-4">
                     <table style="width: 100%; border: none">
@@ -371,7 +371,7 @@ $(function () {
             $(this).val(ui.item.label);
            // $("#supplier_due").val(ui.item.due);
             $("#supplier_id").val(ui.item.value);
-
+            $("#supplier_due").val(ui.item.due);
             return false;
         }
     });

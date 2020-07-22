@@ -13,11 +13,12 @@
         </div>
     </div>
         
-    
+
         
     <div class="row" style="padding: 15px;">
         <div class="col-md-12 shadow no-print" style="padding: 15px; margin-bottom: 15px;">
-            <form action="c_transactions.php" method="get">
+            <form action="{{action('GrnController@duerecive')}}" method="post">
+            @csrf
             <input type="hidden" name="action" id="action" value="ncspym">
                 <table>
                     <tbody><tr>
@@ -35,33 +36,8 @@
             </form>
         </div>
         
-        <div class="col-md-12 shadow no-print" style="padding: 15px; margin-bottom: 15px;">
-        <form action="c_transactions.php" method="get">
-            <input type="hidden" name="action" value="ncspym">
-            <div class="col-md-3">
-                <label for="customer_name">Customer Name</label>
-                <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input type="text" name="customer_name" id="customer_name" class="form-control ui-autocomplete-input" value="" autocomplete="off">
-                <input type="hidden" name="idn" id="idn" class="form-control">
-                
-            </div>
-            <div class="col-md-3">
-                
-                <label for="frdte">From Date</label>
-                <input type="text" name="frdte" id="frdte" class="form-control datepicker" placeholder="From Date" readonly="" required="">
-            </div>
-            <div class="col-md-3">
-                <label for="todte">To Date</label>
-                <input type="text" name="todte" id="todte" class="form-control datepicker" placeholder="To Date" readonly="" required="">
-            </div>
-            <div class="col-md-3">
-                <br>
-                
-                <button type="submit" class="btn btn-primary"><span class="fa fa-send"></span> View</button>
-            </div>
-            
-        </form>
+      
     </div>
-    </div>
-                                    </div>
-                            </div>
+     </div>
+      </div>
 @endsection

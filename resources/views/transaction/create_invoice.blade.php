@@ -284,7 +284,7 @@ $(function () {
             $(this).val(ui.item.label);
            // $("#supplier_due").val(ui.item.due);
             $("#customer_id").val(ui.item.value);
-
+            $("#customer_due").val(ui.item.due);
             return false;
         }
     });

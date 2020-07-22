@@ -148,9 +148,7 @@
               <li><a href="/create_grn"><i class="fa fa-map-o"></i>GRN</a></li>
               <li><a href="/create_invoice"><i class="fa fa-newspaper-o"></i> Invoice</a></li>
               <li><a href="/sales_order_list"><i class="fa fa-indent"></i>Sales Order List</a></li>
-              <li><a href="/invoice_return"><i class="fa fa-file-o"></i>Invoice Return</a></li>
               <li><a href="/duerecive"><i class="fa fa-money"></i> Due Receivable</a></li>
-              <li><a href="/grn_return"><i class="fa fa-file-o"></i> GRN Return</a></li>
               <li><a href="/expenses"><i class="fa fa-asl-interpreting"></i>Expences</a></li>
               <li><a href="/sales_order"><i class="fa fa-list-alt"></i> Sales Orders</a></li>
               <li><a href="/item_transfer"><i class="fa fa-puzzle-piece"></i>Item Transfer</a></li>
@@ -178,34 +176,7 @@
             </ul>
           </li>
           @endcan
-          @can('admin')
-          <li class="treeview ">
-            <a href="#">
-              <i class="glyphicon glyphicon-folder-open"></i> <span>Supplier Reports</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li class=""><a href="http://127.0.0.1:8000/sales/create"><i class="fa fa-file-o"></i>Return GRN</a></li>
-              <li class=""><a href="http://127.0.0.1:8000/sales/view"><i class="fa fa-file-o"></i> All Suppier Report</a></li>
-            </ul>
-          </li>
-          @endcan
-          @can('admin')
-          <li class="treeview ">
-            <a href="#">
-              <i class="glyphicon glyphicon-folder-open"></i> <span>Customer Reports</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li class=""><a href="http://127.0.0.1:8000/sales/create"><i class="fa fa-file-o"></i>Return Invoice</a></li>
-              <li class=""><a href="http://127.0.0.1:8000/sales/view"><i class="fa fa-file-o"></i> All Customer Report</a></li>
-            </ul>
-          </li>
-          @endcan
+         
           @can('admin')
           <li class="treeview ">
             <a href="#">
@@ -215,7 +186,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li class=""><a href="http://127.0.0.1:8000/sales/create"><i class="fa fa-file-o"></i>Stock Sheets</a></li>
+              <li class=""><a href="/stock_details"><i class="fa fa-file-o"></i>Stock Sheets</a></li>
             </ul>
           </li>
           @endcan

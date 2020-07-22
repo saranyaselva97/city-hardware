@@ -743,8 +743,43 @@ public function salesinvoicestore (Request $request){
     return view('transaction.sales_order_list')->with('success','Invoice Created Successfully');
 }
 
+public function duerecive (Request $request){
+   
+        //        $invoiceId = "";
+        $due_invoice_no = $request->due_invoice_no;
+                $invoiceId = Invoice_header::where('Invoice_Number',$due_invoice_no)->first();
+              $results=Payment::getCustomerDueByCustomerId($invoiceId->customer_id);
+                $invoice_date = $invoiceId->Invoice_Date;
+                $customer = Customers::where('id',$invoiceId->customer_id)->first();
+                $invoice_details = Invoice_details::where('Invoice_Header',$invoiceId->id)->first();
+                $data=array(
+                    'due_invoice_no' => $due_invoice_no, 
+                    'customer' => $customer->customer_name, 
+                    'invoice_date' => $invoice_date , 
+                    'Gross_amount' => $invoiceId->Net_Amount , 
+                    'Discount' => $invoice_details->Discount , 
+                    'net_amount' => $invoiceId->Net_Amount , 
+                    'Paid' =>$invoiceId->Payment ,
+                    'Balance' => $invoiceId->Balance ,
+                     );
+                
+         return view('transaction.dueview')->with($data);
+        
 
+  
 
+}
+
+public function stockreport(Request $request)
+{
+   $location= $request->loc;
+    $reportDetails=Stocks::getStockReport($location);
+    $data=array(
+        'reportDetails' => $reportDetails, 
+         );
+    return view('reports.stockreport')->with($data);
+
+}
 
 
     /**

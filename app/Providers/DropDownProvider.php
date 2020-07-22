@@ -14,6 +14,7 @@ use App\Suppliers;
 use App\Customers;
 use App\Transactions;
 use App\Sales_order_header;
+use App\Stocks;
 class DropDownProvider extends ServiceProvider
 {
     /**
@@ -48,7 +49,7 @@ class DropDownProvider extends ServiceProvider
             $view->with('tnn',Doc_settings::createDocNo("TNN"));
             $view->with('sor',Doc_settings::createDocNo("SOR"));
             $view->with('sales',Sales_order_header::where('status',"2")->get());
-            
+            $view->with('stocksdetails',Stocks::all());
         });
       
     }

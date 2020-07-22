@@ -43,8 +43,8 @@ class CustomerController2 extends Controller
        }
        else{
        foreach($customers as $customer){
-    
-           $customerDetails[] = array("label"=>$customer->customer_name, "value"=>$customer->id);
+        $customerdue=Customers::getCustomerDueByCustomerId($customer->id);
+           $customerDetails[] = array("label"=>$customer->customer_name, "value"=>$customer->id,"due"=>$customerdue);
        }
     }
        return json_encode($customerDetails);

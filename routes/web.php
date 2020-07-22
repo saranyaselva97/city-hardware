@@ -53,7 +53,8 @@ Route::get('salestoinvoice/{id?}', 'GrnController@action_session');
 Route::post('/new_sales_order','GrnController@newsalesorder');
 Route::get('/sales_invoice', 'TransactionController_2@salesinvoice');
 Route::post('/salesinvoicestore','GrnController@salesinvoicestore');
-
+Route::post('/due','GrnController@duerecive');
+Route::post('/stockreport','GrnController@stockreport');
 /**Supplier */
 Route::get('/suplier_master', 'SupplierController2@create');
 Route::post('/store_supplier', 'SupplierController2@store');
@@ -61,7 +62,7 @@ Route::get('/item_autocomplete', 'ItemController2@autocomplete_Item')->name('ite
 /**Customer */
 Route::get('/customer_master', 'CustomerController2@create');
 Route::post('/store_customer', 'CustomerController2@store');
-
+Route::get('/stock_details', 'TransactionController_2@getstock');
 
 /**Item master */
 
