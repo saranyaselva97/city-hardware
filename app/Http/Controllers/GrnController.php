@@ -780,6 +780,67 @@ public function stockreport(Request $request)
     return view('reports.stockreport')->with($data);
 
 }
+public function totalsalesamount(Request $request)
+{
+    $user_id = Auth::user()->id;
+  
+
+        $fromDate = filter_input(INPUT_GET, "frdte", FILTER_SANITIZE_STRING);
+        $fromDate = date("Y-m-d", strtotime($fromDate));
+        
+        $toDate = filter_input(INPUT_GET, "todte", FILTER_SANITIZE_STRING);
+        $toDate = date("Y-m-d", strtotime($toDate));
+       
+        $locationCode = $request->loc;
+     
+        if($locationCode === ""){
+            $locationName = "All";
+        }else{
+            $location = Locations::where('loc_code',$request->loc)->first();
+            
+            $locationName = $location->loc_name;
+        }
+     
+        $dategraph = Invoice_Header::where('Location',$request->loc)
+        
+        ->whereBetween(
+            'Invoice_Date', 
+            [
+                $request->get('frdte'),
+                $request->get('todte')
+            ]
+        )->get();
+        $dates = $dategraph;
+        $data=array(
+            'details' => $dates, 
+            'locationName'=> $locationName,
+            'fromDate'=>$request->frdte,
+            'toDate'=>$request->todte
+             );
+        return view('reports.total_sales_report_view')->with($data);
+      
+}
+public function item_wise_sales(Request $request){
+
+      $itemName = $request->item_name;
+      $startDate = $request->frdte;
+      $endDate = $request->todte;
+      $location = $request->loc;
+      $location = Locations::where('loc_code',$request->loc)->first();
+            
+      $locationName = $location->loc_name;
+
+   $results=Items::getItemWiseSalesReport($itemName,$startDate,$endDate, $request->loc);
+   $data=array(
+    'details' => $results, 
+    'locationName'=> $locationName,
+    'fromDate'=>$startDate,
+    'toDate'=>$endDate
+     );
+
+    return view('reports.item_report_view')->with($data);
+//return $request;
+}
 
 
     /**

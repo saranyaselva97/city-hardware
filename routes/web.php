@@ -55,6 +55,10 @@ Route::get('/sales_invoice', 'TransactionController_2@salesinvoice');
 Route::post('/salesinvoicestore','GrnController@salesinvoicestore');
 Route::post('/due','GrnController@duerecive');
 Route::post('/stockreport','GrnController@stockreport');
+Route::post('/totalsales', 'GrnController@totalsalesamount');
+Route::get('/total_sales_report', 'TransactionController_2@total_sales_amount_report');
+Route::get('/item_wise_sales', 'TransactionController_2@item_wise_sales');
+Route::post('/item_wise_data', 'GrnController@item_wise_sales');
 /**Supplier */
 Route::get('/suplier_master', 'SupplierController2@create');
 Route::post('/store_supplier', 'SupplierController2@store');

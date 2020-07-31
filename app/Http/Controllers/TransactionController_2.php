@@ -68,6 +68,17 @@ class TransactionController_2 extends Controller
 
         return view('stock.stockdetails');
     }
+    public function  total_sales_amount_report()
+    {
+
+        return view('reports.total_sales_amount_reports');
+    }
+    public function  item_wise_sales()
+    {
+
+        return view('reports.item_wise_sales');
+    }
+    
     
     
 }
