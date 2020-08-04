@@ -861,11 +861,11 @@ public function date_payment(Request $request){
     )->get();
     $dates = $dategraph;
 
-    foreach($dates as $dummy){
-        $supplier = Suppliers::where('id',$dummy->supplier_id)->first();
+    
+        $supplier = Suppliers::where('id','1')->first();
 
 
-    }
+    
 
     $data=array(
         'details' => $dates, 

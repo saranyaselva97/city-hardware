@@ -29,6 +29,7 @@
                           
                           
                             <th>Payments</th>
+                            <th>Payment Type</th>
                          
                         </tr>
                     </thead>
@@ -52,13 +53,26 @@
                          
                      
                             ?>
+                            <?php 
+                            
+                            if($detail["Payment_Type"] == "CA") {
+                                $payment_type = "Cash";
+                            }
+                            else if($detail["Payment_Type"] == "CH") {
+                                $payment_type = "Cheque";
+                            }
+                            else if($detail["Payment_Type"] == "CR") {
+                                $payment_type = "Credit";
+                            }
+                            
+                            ?>
                             <tr>
                                 <td><?php echo $detail["created_at"] ?></td>
                                 <td>{{$supplier}}</td>
                                 <td><?php echo $detail["Grn_Code"] ?></td>
                             
-                                <td class="number-column"><?php echo $detail["Payments"] === "0.00" ? "-" : number_format($detail["Payment"], 2, ".", ",") ?></td>
-                    
+                                <td class="number-column"><?php echo $detail["Payments"] === "0.00" ? "-" : number_format($detail["Gross_Amount"], 2, ".", ",") ?></td>
+                                <td><?php echo $payment_type ?></td>
                             </tr>
                             <?php
                             
