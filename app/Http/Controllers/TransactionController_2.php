@@ -79,6 +79,10 @@ class TransactionController_2 extends Controller
         return view('reports.item_wise_sales');
     }
     
-    
-    
+    public function   date_wise_payments()
+    {
+
+        return view('reports.date_vice_payments');
+    }
+   
 }

@@ -168,7 +168,7 @@
               <li class=""><a href="/item_wise_sales"><i class="fa fa-cubes"></i> Item wise Sales Report</a></li>
           
               <li class=""><a href="http://127.0.0.1:8000/sales/view"><i class="fa fa-file-o"></i>Date wise Incomes</a></li>
-              <li class=""><a href="http://127.0.0.1:8000/sales/create"><i class="fa fa-asl-interpreting "></i>Date wise Payments</a></li>
+              <li class=""><a href="/date_wise_payments"><i class="fa fa-asl-interpreting "></i>Date wise Payments</a></li>
               <li class=""><a href="http://127.0.0.1:8000/sales/view"><i class="fa fa-file-o"></i> Date wise GRN</a></li>
               
             </ul>

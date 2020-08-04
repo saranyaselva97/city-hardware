@@ -839,9 +839,49 @@ public function item_wise_sales(Request $request){
      );
 
     return view('reports.item_report_view')->with($data);
-//return $request;
+
 }
 
+public function date_payment(Request $request){
+
+    $startDate = $request->frdte;
+    $endDate = $request->todte;
+    $location = $request->loc;
+    $location = Locations::where('loc_code',$request->loc)->first();
+          
+    $locationName = $location->loc_name;
+    $dategraph = Grn_Header::where('Location',$request->loc)
+        
+    ->whereBetween(
+        'created_at', 
+        [
+            $request->get('frdte'),
+            $request->get('todte')
+        ]
+    )->get();
+    $dates = $dategraph;
+
+    foreach($dates as $dummy){
+        $supplier = Suppliers::where('id',$dummy->supplier_id)->first();
+
+
+    }
+
+    $data=array(
+        'details' => $dates, 
+        'locationName'=> $locationName,
+        'fromDate'=>$startDate,
+        'toDate'=>$endDate,
+    'supplier'=>$supplier->supplier_name,
+         );
+    
+
+    
+  
+
+         return view('reports.date_payment_view')->with($data);
+//return $data;
+}
 
     /**
      * Display the specified resource.
