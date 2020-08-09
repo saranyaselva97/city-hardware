@@ -61,6 +61,7 @@ Route::get('/item_wise_sales', 'TransactionController_2@item_wise_sales');
 Route::post('/item_wise_data', 'GrnController@item_wise_sales');
 Route::get('/date_wise_payments', 'TransactionController_2@date_wise_payments');
 Route::post('/date_payment', 'GrnController@date_payment');
+Route::get('/allstockreport','TransactionController_2@allstockreport');
 /**Supplier */
 Route::get('/suplier_master', 'SupplierController2@create');
 Route::post('/store_supplier', 'SupplierController2@store');

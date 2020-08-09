@@ -119,6 +119,15 @@
         </table>
             </div>
 </div>
+
+<div class="full-width">
+        <br>
+        <br>
+        <br>
+        <br>
+            <p>.................................................................................................</p>
+                    <p>    Owner / Warehouse Keeper / Cashier   </p>
+        </div>
 <div class="row" style="padding:15px; margin-left: 0px; margin-right: 0px;">
     <div class="col-md-12">
         <button type="button" class="btn btn-primary pull-right" onclick="window.print();"><span class="fa fa-print"></span> Printed GRN</button>

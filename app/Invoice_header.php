@@ -10,4 +10,6 @@ class Invoice_header extends Model
     protected $fillable = [
           'Invoice_Number','Invoice_Date', 'Net_Amount', 'Total_Discount','Gross_Amount', 
           'Payment_Type','Payment','Balance','Location', 'customer_id', 'user_id','status'];
+
+
 }

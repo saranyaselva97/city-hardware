@@ -15,6 +15,8 @@ use App\Customers;
 use App\Transactions;
 use App\Sales_order_header;
 use App\Stocks;
+use App\Invoice_header;
+use DB;
 class DropDownProvider extends ServiceProvider
 {
     /**
@@ -50,6 +52,12 @@ class DropDownProvider extends ServiceProvider
             $view->with('sor',Doc_settings::createDocNo("SOR"));
             $view->with('sales',Sales_order_header::where('status',"2")->get());
             $view->with('stocksdetails',Stocks::all());
+            $view->with('warehousedetails',Stocks::getStockReport("W"));
+            $view->with('Branch1',Stocks::getStockReport("B1"));
+            $view->with('Branch2',Stocks::getStockReport("B2"));
+            $view->with('Branch3',Stocks::getStockReport("B3"));
+         
+          
         });
       
     }

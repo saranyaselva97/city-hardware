@@ -773,9 +773,14 @@ public function duerecive (Request $request){
 public function stockreport(Request $request)
 {
    $location= $request->loc;
+  
     $reportDetails=Stocks::getStockReport($location);
+    $locations = Locations::where('loc_code',$request->loc)->first();
+          
+    $locationName = $locations->loc_name;
     $data=array(
         'reportDetails' => $reportDetails, 
+        'locationName'=>$locationName,
          );
     return view('reports.stockreport')->with($data);
 

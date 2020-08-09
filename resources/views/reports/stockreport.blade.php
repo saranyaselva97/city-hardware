@@ -12,8 +12,8 @@
             <p>K.K.S Road,Jaffna. Sri Lanka</p>
         </div>
         <div class="full-width">
-            <h3>Stock Sheet | <span style="font-size: 15px; font-weight: 900;">Location : Outlet</span></h3>
-            <p style="float: right; font-weight: bold; font-size: 12px; margin-right: 15px">Printed On : 2020-07-22</p>
+            <h3>Stock Sheet | <span style="font-size: 15px; font-weight: 900;">Location :  {{$locationName}}</span></h3>
+            <p style="float: right; font-weight: bold; font-size: 12px; margin-right: 15px"><?php echo "Printed On : " . date("Y-m-d") ?></p>
         </div>
         <div class="full-width">
             <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper"><div class="dataTables_length" id="DataTables_Table_0_length"><label>Show <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class=""><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div><div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Search:<input type="search" class="" placeholder="" aria-controls="DataTables_Table_0"></label></div><table class="item-table dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
@@ -68,7 +68,17 @@
                         <td></td>
                     </tr>-->
                 
-            </table><div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing 1 to 3 of 3 entries</div><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><a class="paginate_button previous disabled" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" id="DataTables_Table_0_previous">Previous</a><span><a class="paginate_button current" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a></span><a class="paginate_button next disabled" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" id="DataTables_Table_0_next">Next</a></div></div>
+            </table>
+            <div class="full-width">
+        <br>
+        <br>
+        <br>
+        <br>
+            <p>.................................................................................................</p>
+                    <p>    Owner / Warehouse Keeper / Cashier   </p>
+        </div>
+            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite"></div>
+            <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><a class="paginate_button previous disabled" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" id="DataTables_Table_0_previous">Previous</a><span><a class="paginate_button current" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a></span><a class="paginate_button next disabled" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" id="DataTables_Table_0_next">Next</a></div></div>
         </div>
         <div class="full-width">
             <button class="btn btn-primary no-print" style="float: right; margin-right: 30px; margin-top: 30px;" onclick="window.print();"><span class="fa fa-print"></span>&nbsp;Print</button>

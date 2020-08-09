@@ -84,5 +84,9 @@ class TransactionController_2 extends Controller
 
         return view('reports.date_vice_payments');
     }
-   
+    public function   allstockreport()
+    {
+
+        return view('stock.fullstock');
+    }
 }

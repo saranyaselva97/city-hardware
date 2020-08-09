@@ -102,7 +102,14 @@
                     </tbody>
                 </table>
             </div>
-
+            <div class="full-width">
+        <br>
+        <br>
+        <br>
+        <br>
+            <p>.................................................................................................</p>
+                    <p>    Owner / Warehouse Keeper / Cashier   </p>
+        </div>
             <div class="full-width">
             <button class="btn btn-primary no-print" style="float: right; margin-right: 30px; margin-top: 30px;" onclick="window.print();"><span class="fa fa-print"></span>&nbsp;Print</button>
         </div>
